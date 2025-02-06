@@ -21,12 +21,12 @@ namespace MarvelHeroes
 
         public static void ViewScene(Scene scene)
         {
-            PrintText(scene, 0, ConsoleColor.Green);
+            //매개변수로 받은 SCene에 대한 정보(씬 이름, 씬 설명)를 출력하기
         }
 
-        public static void ViewSceneInfo(Scene scene)
+        public static void ViewItemInfo(Scene scene)
         {
-
+            //매개변수로 받은 (info가 필요한 씬인 경우) Scene에 대한 정보(씬 이름, 씬 설명)를 출력하기
         }
 
         public static void ViewSceneSelect(Scene scene)
@@ -38,5 +38,6 @@ namespace MarvelHeroes
         {
 
         }
+
     }
 }
