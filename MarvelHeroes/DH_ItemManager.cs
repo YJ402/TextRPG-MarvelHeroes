@@ -108,19 +108,19 @@ namespace MarvelHeroes
             {
                 this.IsEquip = false;
 
-                if (this.ItemType == ItemType.Weapon) { }
-                //EquipAtk -= this.Value;
-                else if (this.ItemType == ItemType.Amor) { }
-                //EquipDef -= this.Value;
+                if (this.ItemType == ItemType.Weapon)
+                EquipAtk -= this.Value;
+                else if (this.ItemType == ItemType.Amor)
+                EquipDef -= this.Value;
             }
             else //아이템 착용
             {
                 this.IsEquip = true;
 
-                if (this.ItemType == ItemType.Weapon) { } //타입이 무기일 경우 공격력 증가 
-                    //EquipAtk += this.Value;
-                else if (this.ItemType == ItemType.Amor) { } //타입이 갑옷일 경우 방어력 증가
-                    //EquipDef += this.Value;
+                if (this.ItemType == ItemType.Weapon) //타입이 무기일 경우 공격력 증가 
+                EquipAtk += this.Value;
+                else if (this.ItemType == ItemType.Amor) //타입이 갑옷일 경우 방어력 증가
+                EquipDef += this.Value;
             }
         }
 
@@ -157,7 +157,7 @@ namespace MarvelHeroes
             }
             else
             {
-                Console.WriteLine($"{Name}은(는) 사용할 수 없는 아이템입니다.")
+                Console.WriteLine($"{Name}은(는) 사용할 수 없는 아이템입니다.");
             }
         }
     }
