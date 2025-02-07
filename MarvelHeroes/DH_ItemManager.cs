@@ -23,10 +23,10 @@ namespace MarvelHeroes
             //public EquipItem(string name, ItemType itemtype, JobType jobType, int value, string descrip, int cost)
             equipItems = new List<EquipItem>
             {
-                new EquipItem("아이언맨 기본 무기", ItemType.Weapon, JobType.IronMan, 5,"아이언맨의 기본무기", 500),
-                new EquipItem("스파이더맨 기본 무기", ItemType.Weapon, JobType.Spiderman, 5,"스파이더맨의 기본무기", 500),
-                new EquipItem("닥터스트레인지 기본 무기", ItemType.Weapon, JobType.Dr, 5,"닥터스트레인지의 기본무기", 500),
-                new EquipItem("헐크 기본 무기", ItemType.Weapon, JobType.Hulk, 5,"헐크의 기본무기", 500)
+                new EquipItem("아이언맨 기본 무기", ItemType.Weapon, ITemJobType.IronMan, 5,"아이언맨의 기본무기", 500),
+                new EquipItem("스파이더맨 기본 무기", ItemType.Weapon, ITemJobType.Spiderman, 5,"스파이더맨의 기본무기", 500),
+                new EquipItem("닥터스트레인지 기본 무기", ItemType.Weapon, ITemJobType.Dr, 5,"닥터스트레인지의 기본무기", 500),
+                new EquipItem("헐크 기본 무기", ItemType.Weapon, ITemJobType.Hulk, 5,"헐크의 기본무기", 500)
             };
 
             //public UsingItem(string name, ItemType type, int value, string descrip, int cost)
@@ -39,7 +39,7 @@ namespace MarvelHeroes
 
     }
     //직업종류의 상수
-    public enum JobType
+    public enum ITemJobType
     {
         IronMan,
         Spiderman,
@@ -73,32 +73,31 @@ namespace MarvelHeroes
             Cost = cost;
         }
 
-        public abstract void Use(BW_Player.player, BW_Job.jobType);
+        public abstract void Use(Player Player);
 
     }
 
     //장착아이템 클래스
-    public class EquipItem : Item
+    public class EquipItem : Item 
     {
-        public JobType JobType { get; set; }
+        public ITemJobType ItemJobType { get; set; }
         public bool IsPurchase { get; set; }
         public bool IsEquip { get; set; }
 
         //public Child(int X) : base(X) { } //base키워드를 이용하여 상속
-        public EquipItem(string name, ItemType itemtype, JobType jobType, int value, string descrip, int cost) : base(name, itemtype, value, descrip, cost)
+        public EquipItem(string name, ItemType itemtype, ITemJobType itemJobType, int value, string descrip, int cost) : base(name, itemtype, value, descrip, cost)
         {
-            JobType = jobType;
-            IsPurchase = false;
-            IsEquip = false;
+            this.ItemJobType = itemJobType;
+            this.IsPurchase = false;
+            this.IsEquip = false;
         }
 
-        public override void Use(BW_Player.player, BW_Job.jobType)
+        public override void Use(Player player)
         {
             //플레이어의 직업의 종류를 불러옴
-            BW_Player.Job playerjob = new BW_Player.Job;
             //조건문if 사용해서 플래이어의 직업과 무기의 직업을 비교하는 조건
             //착용 불가 메세지 후 return
-            if (playerjob != this.JobType)
+            if (player.Job != this.ItemJobType.ToString())
             {
                 Console.WriteLine("사용이 불가능한 장비입니다!");
                 return;
@@ -109,18 +108,18 @@ namespace MarvelHeroes
                 this.IsEquip = false;
 
                 if (this.ItemType == ItemType.Weapon)
-                EquipAtk -= this.Value;
+                player.EquipAtk -= this.Value;
                 else if (this.ItemType == ItemType.Amor)
-                EquipDef -= this.Value;
+                player.EquipDef -= this.Value;
             }
             else //아이템 착용
             {
                 this.IsEquip = true;
 
                 if (this.ItemType == ItemType.Weapon) //타입이 무기일 경우 공격력 증가 
-                EquipAtk += this.Value;
+                player.EquipAtk += this.Value;
                 else if (this.ItemType == ItemType.Amor) //타입이 갑옷일 경우 방어력 증가
-                EquipDef += this.Value;
+                player.EquipDef += this.Value;
             }
         }
 
@@ -136,7 +135,7 @@ namespace MarvelHeroes
             Quantity = quantity;
         }
 
-        public override void Use(BW_Player.player, BW_Job.jobType)
+        public override void Use(Player player)
         {
             //플레이어의 체력을 불러옴
             //조건문if 사용해서 포션 수량을 비교하는 조건
@@ -150,7 +149,11 @@ namespace MarvelHeroes
             //아이템타입이 힐링일경우 회복
             if (ItemType == ItemType.Healing)
             {
-                player.Heal(Value);
+                player.Hp += this.Value;
+
+                if (player.Hp > player.MaxHp)
+                    player.Hp = player.MaxHp;
+
                 Quantity--;
                 Console.WriteLine($"{player.Name}이(가) {Name}을 사용하였습니다.");
                 Console.WriteLine($"체력을 {Value}만큼 회복합니다.(남은 개수 : {Quantity})");
