@@ -62,7 +62,7 @@ namespace MarvelHeroes
 
         public void Execute()
         {
-            SceneManager.ChangeCurrentScene("Town");
+            SceneManager.ChangeCurrentScene(SceneNum.Town);
         }
 
         public string GetSelectionDesc()
@@ -76,7 +76,7 @@ namespace MarvelHeroes
 
         public void Execute()
         {
-            SceneManager.ChangeCurrentScene("Dungeon");
+            SceneManager.ChangeCurrentScene(SceneNum.Dungeon);
         }
 
         public string GetSelectionDesc()
