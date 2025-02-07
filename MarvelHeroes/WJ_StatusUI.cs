@@ -8,11 +8,11 @@ namespace MarvelHeroes
 {
     public class WJ_StatusUI
     {
-        public int UIStateScene(int tmep)
+        public int UIStateScene(int tmep) // 상태정보창
         {
             int sceneTemp = tmep;
             Console.Clear();
-            Console.WriteLine("상태 보기");
+            GameView.PrintText("상태 보기", 0, ConsoleColor.Magenta);
             Console.WriteLine();
             Console.WriteLine("캐릭터의 정보가 표시됩니다.");
             Console.WriteLine();
