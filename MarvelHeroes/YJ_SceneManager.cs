@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace MarvelHeroes
 {
-    internal class Monster
+    internal class YJ_SceneManager
     {
     }
 }
