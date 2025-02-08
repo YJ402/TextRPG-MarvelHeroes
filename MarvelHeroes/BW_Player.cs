@@ -98,12 +98,12 @@ namespace MarvelHeroes
             if (player.Hp <= 0)
             {
                 int newHp = 0;
-                Console.WriteLine("HP {플레이어 이전 hp} -> Dead\n");
+                Console.WriteLine("HP {0} -> Dead\n", beforeHp);
                 return new Player(Level, Name, Job, Atk, EquipAtk, Def, EquipDef, Gold, newHp, Mp, MaxHp, Critical, Dexterity);
             }
             else
             {
-                Console.WriteLine("HP {플레이어 이전 hp} -> {플레이어 변경된 hp}\n");
+                Console.WriteLine("HP {0} -> {1}\n", beforeHp, player.Hp);
                 return new Player(Level, Name, Job, Atk, EquipAtk, Def, EquipDef, Gold, Hp, Mp, MaxHp, Critical, Dexterity);
             }
 
