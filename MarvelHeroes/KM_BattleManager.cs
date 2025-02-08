@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.Design;
 using System.Linq;
 using System.Net.Http.Headers;
 using System.Numerics;
@@ -451,11 +452,17 @@ namespace MarvelHeroes
                             player = player.IronManAddDex(skills[input-1].Adddex, 1);
                             break;
                         case "스파이더맨":
-                            if (input == 1) player = player.NanoSuit();
-
+                            if (input == 1) player = player.NanoSuit(skills[input-1].skillAtk, skills[input-1].Adddef, 0);
+                            else if(input == 2) floormonsters = SpiderManSkillPage(player, floormonsters, skills,input);
+                            player = MonasterAttack(player, floormonsters);                
+                            foreach(var monster in floormonsters)
+                            {
+                                monster.Dexterity += skills[input - 1].Adddex;
+                            }
                             break;
                         case "닥터스트레인지":
-
+                            if (input == 1)
+                           
                             break;
                         case "헐크":
 
@@ -465,6 +472,7 @@ namespace MarvelHeroes
                 }
                 else Console.WriteLine("잘못된 입력입니다.");
 
+                return;
             }
         }
 
@@ -479,7 +487,7 @@ namespace MarvelHeroes
 
                 Console.WriteLine("Battle\n");
                 Console.WriteLine("{0} 의 공격", player.Name);
-                Console.WriteLine("Lv.{0} {1} 을(를) 맞췄습니다. [데미지 : {2}] - 치명타 공격!!\n", monster.Level, monster.Name, skill[input - 1].skillAtk);
+                Console.WriteLine("Lv.{0} {1} 을(를) 맞췄습니다. [데미지 : {2}] - 스킬 공격!!\n", monster.Level, monster.Name, skill[input - 1].skillAtk);
                 Console.WriteLine("Lv. {0} {1}", monster.Level, monster.Name);
 
                 if (monster.Hp <= 0)
@@ -504,163 +512,55 @@ namespace MarvelHeroes
             return floormonster;
         }
 
-        public TestMonster SpiderManSkillPage(Player player, List<TestMonster> floormonster, List<Skill> skill, int input)
+        public List<TestMonster> SpiderManSkillPage(Player player, List<TestMonster> floormonster, List<Skill> skill, int input)
         {
+            int monsterBefor_hp;
 
-        }
-
-        public TestMonster DoctorStrangeSkillPage(Player player, List<TestMonster> floormonster, List<Skill> skill, int input)
-        {
-            int attackPencent = random.Next(0, 10); // 맞을 확률
-            int hitNumber = random.Next(0, 10); // 치명타 확률
-            int attackError = (int)Math.Round(player.Atk * 0.1);
-            int finalDamage = random.Next(player.Atk - attackError, player.Atk + attackError);
-            // 현재 몬스터 hp 이전
-            int monsterBefor_hp = floormonster.Hp;
-
-            while (true)
+            foreach (var monster in floormonster)
             {
-                // 몬스터가 데미지를 받는지 확인
-                if (attackPencent < player.Dexterity)
+                monsterBefor_hp = monster.Hp;
+                monster.Hp -= skill[input - 1].skillAtk;
+                monster.Dexterity -= skill[input - 1].Adddex;
+
+                Console.WriteLine("Battle\n");
+                Console.WriteLine("{0} 의 공격", player.Name);
+                Console.WriteLine("Lv.{0} {1} 을(를) 맞췄습니다. [데미지 : {2}] - 스킬 공격!!\n", monster.Level, monster.Name, skill[input - 1].skillAtk);
+                Console.WriteLine("Lv. {0} {1}", monster.Level, monster.Name);
+                
+                if (monster.Hp <= 0)
                 {
-                    // 몬스터에게 치명타가 터지는지 확인
-                    if (hitNumber < player.Critical)
-                    {
-                        int hitDamage = (int)Math.Round(finalDamage * 1.6); // 1.6으로 수정 할 것
-                        floormonster.Hp -= hitDamage;
-
-                        Console.WriteLine("Battle\n");
-                        Console.WriteLine("{0} 의 공격", player.Name);
-                        Console.WriteLine("Lv.{0} {1} 을(를) 맞췄습니다. [데미지 : {2}] - 치명타 공격!!\n", floormonster.Level, floormonster.Name, hitDamage);
-                        Console.WriteLine("Lv. {0} {1}", floormonster.Level, floormonster.Name);
-
-                        if (floormonster.Hp <= 0)
-                        {
-                            floormonster.Hp = 0;
-                            floormonster.isDead = true;
-                            Console.WriteLine("HP {0} -> Dead\n", monsterBefor_hp);
-                        }
-                        else
-                        {
-                            Console.WriteLine("HP {0} -> {1}\n", monsterBefor_hp, floormonster.Hp);
-                        }
-                    }
-                    // 치명타 안 터지면 출력
-                    else
-                    {
-                        floormonster.Hp -= finalDamage;
-
-                        Console.WriteLine("Battle\n");
-                        Console.WriteLine("{0} 의 공격", player.Name);
-                        Console.WriteLine("Lv.{0} {1} 을(를) 맞췄습니다. [데미지 : {2}]\n", floormonster.Level, floormonster.Name, floormonster.Atk);
-                        Console.WriteLine("Lv. {0} {1}", floormonster.Level, floormonster.Name);
-
-                        if (floormonster.Hp <= 0)
-                        {
-                            floormonster.Hp = 0;
-                            floormonster.isDead = true;
-                            Console.WriteLine("HP {0} -> Dead\n", monsterBefor_hp);
-                        }
-                        else
-                        {
-                            Console.WriteLine("HP {0} -> {1}\n", monsterBefor_hp, floormonster.Hp);
-                        }
-
-                    }
+                    monster.Hp = 0;
+                    monster.isDead = true;
+                    Console.WriteLine("HP {0} -> Dead\n", monsterBefor_hp);
                 }
-                // 공격 실패 시 출력
                 else
                 {
-                    Console.WriteLine("Battle\n");
-                    Console.WriteLine("Lv. {0} {1} 을(를) 공격했지만 아무일도 일어나지 않았습니다.\n", floormonster.Level, floormonster.Name);
-
+                    Console.WriteLine("HP {0} -> {1}\n", monsterBefor_hp, monster.Hp);
                 }
-
-                Console.WriteLine("0. 다음\n");
-
-                int input = GetInput(0, 0);
-
-                if (input == 0) return floormonster;
-                else Console.WriteLine("잘못된 입력입니다.");
             }
 
+            Console.WriteLine("0. 다음\n");
+            int select = GetInput(0, 0);
+
+            if (select != 0)
+            {
+                Console.WriteLine("잘못된 입력입니다.");
+            }
+
+            return floormonster;         
         }
 
-        public TestMonster HulkSkillPage(Player player, List<TestMonster> floormonster, List<Skill> skill, int input)
+        public List<TestMonster> DoctorStrangeSkillPage(Player player, List<TestMonster> floormonster, List<Skill> skill, int input)
         {
-            int attackPencent = random.Next(0, 10); // 맞을 확률
-            int hitNumber = random.Next(0, 10); // 치명타 확률
-            int attackError = (int)Math.Round(player.Atk * 0.1);
-            int finalDamage = random.Next(player.Atk - attackError, player.Atk + attackError);
-            // 현재 몬스터 hp 이전
-            int monsterBefor_hp = floormonster.Hp;
 
-            while (true)
-            {
-                // 몬스터가 데미지를 받는지 확인
-                if (attackPencent < player.Dexterity)
-                {
-                    // 몬스터에게 치명타가 터지는지 확인
-                    if (hitNumber < player.Critical)
-                    {
-                        int hitDamage = (int)Math.Round(finalDamage * 1.6); // 1.6으로 수정 할 것
-                        floormonster.Hp -= hitDamage;
 
-                        Console.WriteLine("Battle\n");
-                        Console.WriteLine("{0} 의 공격", player.Name);
-                        Console.WriteLine("Lv.{0} {1} 을(를) 맞췄습니다. [데미지 : {2}] - 치명타 공격!!\n", floormonster.Level, floormonster.Name, hitDamage);
-                        Console.WriteLine("Lv. {0} {1}", floormonster.Level, floormonster.Name);
 
-                        if (floormonster.Hp <= 0)
-                        {
-                            floormonster.Hp = 0;
-                            floormonster.isDead = true;
-                            Console.WriteLine("HP {0} -> Dead\n", monsterBefor_hp);
-                        }
-                        else
-                        {
-                            Console.WriteLine("HP {0} -> {1}\n", monsterBefor_hp, floormonster.Hp);
-                        }
-                    }
-                    // 치명타 안 터지면 출력
-                    else
-                    {
-                        floormonster.Hp -= finalDamage;
+            return floormonster;
+        }
 
-                        Console.WriteLine("Battle\n");
-                        Console.WriteLine("{0} 의 공격", player.Name);
-                        Console.WriteLine("Lv.{0} {1} 을(를) 맞췄습니다. [데미지 : {2}]\n", floormonster.Level, floormonster.Name, floormonster.Atk);
-                        Console.WriteLine("Lv. {0} {1}", floormonster.Level, floormonster.Name);
-
-                        if (floormonster.Hp <= 0)
-                        {
-                            floormonster.Hp = 0;
-                            floormonster.isDead = true;
-                            Console.WriteLine("HP {0} -> Dead\n", monsterBefor_hp);
-                        }
-                        else
-                        {
-                            Console.WriteLine("HP {0} -> {1}\n", monsterBefor_hp, floormonster.Hp);
-                        }
-
-                    }
-                }
-                // 공격 실패 시 출력
-                else
-                {
-                    Console.WriteLine("Battle\n");
-                    Console.WriteLine("Lv. {0} {1} 을(를) 공격했지만 아무일도 일어나지 않았습니다.\n", floormonster.Level, floormonster.Name);
-
-                }
-
-                Console.WriteLine("0. 다음\n");
-
-                int input = GetInput(0, 0);
-
-                if (input == 0) return floormonster;
-                else Console.WriteLine("잘못된 입력입니다.");
-            }
-
+        public List<TestMonster> HulkSkillPage(Player player, List<TestMonster> floormonster, List<Skill> skill, int input)
+        {
+            return floormonster;
         }
 
 
@@ -856,7 +756,7 @@ namespace MarvelHeroes
         public int Atk { get; }
         int floor { get; set; }
         public int Critical { get; }
-        public int Dexterity { get; }
+        public int Dexterity { get; set; }
         public bool isDead { get; set; }
 
         private static Random rand = new Random();
@@ -895,6 +795,8 @@ namespace MarvelHeroes
 
             return monsters;
         }
+
+
 
     }
 
