@@ -146,7 +146,7 @@ namespace MarvelHeroes
 
             }
 
-            return new Player(Level, Name, Job, newAtk, EquipAtk, newDef, EquipDef, Gold, Hp, Mp, MaxHp, Critical, newDex);
+            return new Player(Level, Name, Job, newAtk, EquipAtk, newDef, EquipDef, Gold, Hp, Mp, MaxHp, Critical, Dexterity);
 
         }
 
