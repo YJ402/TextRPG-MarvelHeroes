@@ -66,33 +66,34 @@ namespace MarvelHeroes
             Dexterity = Dxi;
         }
 
+        // 체력 감소
         public Player TakeDamge(int damge)
         {
             int newHp = Hp - damge;
 
             return new Player(Level, Name, Job, Atk, EquipAtk, Def, EquipDef, Gold, newHp, Mp, MaxHp, Critical, Dexterity);
         }
-
-        public Player TakeMana(int takeMp)
+        // 마나 감소
+        public Player TakeMana(int useMp)
         {
-            int newMp = Mp - takeMp;
+            int newMp = Mp - useMp;
 
             return new Player(Level, Name, Job, Atk, EquipAtk, Def, EquipDef, Gold, Hp, newMp, MaxHp, Critical, Dexterity);
         }
-
+        // 체력 회복
         public Player TakeHpHeal(int heal)
         {
             int newHp = Hp + heal;
             return new Player(Level, Name, Job, Atk, EquipAtk, Def, EquipDef, Gold, newHp, Mp, MaxHp, Critical, Dexterity);
         }
-
+        // 마나 회복
         public Player TakeMpHeal(int heal)
         {
             int newMp = Mp + heal;
             return new Player(Level, Name, Job, Atk, EquipAtk, Def, EquipDef, Gold, Hp, newMp, MaxHp, Critical, Dexterity);
         }
-
-        public Player IsDead(Player player)
+        // 플레이어 생존 확인
+        public Player IsDead(Player player, int beforeHp)
         {
             if (player.Hp <= 0)
             {
