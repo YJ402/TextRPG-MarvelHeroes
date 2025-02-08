@@ -14,10 +14,25 @@ namespace MarvelHeroes
 {
     internal class BattleManager
     {
-  
-        BW_Player player = new BW_Player();
-        List<BW_Monster> monsters = new List<BW_Monster>();
-        List<BW_Job> job = new List<BW_Job>();
+
+        static BattleManager Battleinstance;
+
+        private BattleManager() { }
+
+        // 배틀메니저 싱글톤 패턴 구현
+        public static BattleManager Getinstance()
+        {
+            if(Battleinstance == null)
+            {
+                Battleinstance = new BattleManager();
+            }
+
+            return Battleinstance;
+        }
+
+        Player player = new Player();
+        List<Monster> monsters = new List<Monster>();
+        List<Job> job = new List<Job>();
         Random random = new Random();
         Floor[] floors = new Floor[]
         {
