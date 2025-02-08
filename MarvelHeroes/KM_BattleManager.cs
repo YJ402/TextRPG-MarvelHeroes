@@ -30,7 +30,7 @@ namespace MarvelHeroes
             return Battleinstance;
         }
 
-        Player player = new Player(1, "cha", "아이언맨", 10, 0, 5, 0, 1000, 100,100, 100, 1, 3);
+        Job player = new Job(JobType.IronMan,1, "아이언맨", 1000);
         List<TestMonster> monsters1 = TestMonster.GenerateRandomMonsters(5, 1);
         List<TestMonster> monsters2 = TestMonster.GenerateRandomMonsters(5, 2);
         List<TestMonster> monsters3 = TestMonster.GenerateRandomMonsters(5, 3);
@@ -182,7 +182,7 @@ namespace MarvelHeroes
                         AttackPlayerPage(player, floormonsters, floorinput);
                         break;
                     case 2:
-                        SkillPlayerPage(player, job, floormonsters, floorinput);
+                        SkillPlayerPage(player, floormonsters, floorinput);
                         break;
                     case 3:
                         PotionPlayerPage(player, floormonsters, floorinput);
@@ -363,8 +363,10 @@ namespace MarvelHeroes
             // 전투 중 플레이어 데미지 받기 전 hp
             int playerBeforHp = player.Hp;
 
+
             for (int i = 0;  i < floormonsters.Count; i++)
             {
+                Console.Clear();
                 int attackPecent = random.Next(0, 9);
                 int hitNumber = random.Next(0, 9);
                 int attackError = (int)Math.Round(floormonsters[i].Atk * 0.1);
@@ -380,9 +382,9 @@ namespace MarvelHeroes
                         player = player.TakeDamge(hitdamage);
 
                         Console.WriteLine("Battle\n");
-                        Console.WriteLine("Lv. {몬스터 레벨} {몬스터 이름}의 공격!");
-                        Console.WriteLine("{플레이어 이름} 을(를 맞췄습니다.) [데미지 : {몬스터 데미지}] - 치명타 데미지\n");
-                        Console.WriteLine("Lv. {플레이어 레벨} {플레이어 이름}");
+                        Console.WriteLine("Lv. {0} {1}의 공격!", floormonsters[i].Level, floormonsters[i].Name);
+                        Console.WriteLine("{0} 을(를) 맞췄습니다.) [데미지 : {1}] - 치명타 데미지\n", player.Name, hitdamage);
+                        Console.WriteLine("Lv. {0} {1}", player.Level, player.Name);
 
                         player = player.IsDead(player, playerBeforHp);
                         playerBeforHp -= hitdamage;
@@ -393,15 +395,14 @@ namespace MarvelHeroes
                         player = player.TakeDamge(finalDamage);
 
                         Console.WriteLine("Battle\n");
-                        Console.WriteLine("Lv. {몬스터 레벨} {몬스터 이름}의 공격!");
-                        Console.WriteLine("{플레이어 이름} 을(를 맞췄습니다.) [데미지 : {몬스터 데미지}]\n");
-                        Console.WriteLine("Lv. {플레이어 레벨} {플레이어 이름}");
+                        Console.WriteLine("Lv. {0} {1}의 공격!", floormonsters[i].Level, floormonsters[i].Name);
+                        Console.WriteLine("{0} 을(를) 맞췄습니다. [데미지 : {1}]\n", player.Name, finalDamage);
+                        Console.WriteLine("Lv. {0} {1}", player.Level, player.Name);
 
                         player = player.IsDead(player, playerBeforHp);
                         playerBeforHp -= finalDamage;
                     }
                 }
-
                 // 공격 실패 시 출력
                 else
                 {
@@ -409,9 +410,6 @@ namespace MarvelHeroes
                     Console.WriteLine("Lv. {0} {1} 가 공격했지만 아무일도 일어나지 않았습니다.\n");
 
                 }
-
-               
-
                 Console.WriteLine("아무키나 누르세요.");
                 Console.ReadKey();
             }
@@ -419,7 +417,7 @@ namespace MarvelHeroes
         }
 
         // 플레이어 스킬 선택하는 메서드
-        public void SkillPlayerPage(Player player,List<Job> job, List<TestMonster> floormonsters, int floorinput)
+        public void SkillPlayerPage(Player player, List<TestMonster> floormonsters, int floorinput)
         {
             while (true)
             {
@@ -427,9 +425,9 @@ namespace MarvelHeroes
 
                 Console.WriteLine("");
                 Console.WriteLine("[내정보]\n");
-                Console.WriteLine("Lv + Name + (job)");
-                Console.WriteLine("hp/maxhp");
-                Console.WriteLine("mp/maxmp\n");
+                Console.WriteLine("{0} {1} ({2})", player.Level, player.Name, player.Job);
+                Console.WriteLine("{0}/{1}", player.Hp, player.MaxHp);
+                Console.WriteLine("{0}/{1}\n", player.Mp, player.MaxHp);
 
                 for (int i = 0; i < job.Count; i++)
                 {
