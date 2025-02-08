@@ -80,12 +80,25 @@ namespace MarvelHeroes
     {
         public List<Skill> spiderManSkills = new List<Skill>()
         {
-            new Skill(_Level: 1, SkillNames.NanoSuit,"나노슈트 발동!", " 공격력, 방어력을 20씩 올립니다.", _skillAtk:20, _Adddef: 20,_UseMp: 50),
-            new Skill(_Level: 1, SkillNames.SpiderWeb,"거미줄 발사!","거미줄 발사해 10의 데미지와 명중률을 50% 다운 시킵니다.",_skillAtk: 10, _Adddex: 5, _UseMp:50)
+            new Skill(_Level: 1, SkillNames.NanoSuit,"나노슈트 발동!", " 공격력, 방어력을 20씩 올립니다.", _skillAtk:20, _Adddef: 20,_UseMp: 25),
+            new Skill(_Level: 1, SkillNames.SpiderWeb,"거미줄 발사!","거미줄 발사해 10의 데미지와 명중률을 50% 다운 시킵니다.",_skillAtk: 20, _Adddex: 5, _UseMp:25)
         };
         public List<Skill> SpiderManSKills
         {
             get { return spiderManSkills; }
+        }
+    }
+
+    public class DoctorStrange : Skill
+    {
+        public List<Skill> doctorStrangeSkills = new List<Skill>()
+        {
+            new Skill(_Level: 1, SkillNames.NanoSuit,"발탁의 화살", " 지면에 폭발을 일으켜 랜덤한 데미지를 줍니다.(10~50)", _UseMp: 50),
+            new Skill(_Level: 1, SkillNames.SpiderWeb,"호고스의 백마법","상대방의 공격페이지 무효화하고 20의 데미지를 줍니다.",_skillAtk: 20, _UseMp:20)
+        };
+        public List<Skill> DoctorStrangeSKills
+        {
+            get { return doctorStrangeSkills; }
         }
     }
 
