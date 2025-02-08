@@ -65,5 +65,48 @@ namespace MarvelHeroes
             Critical = CH;
             Dexterity = Dxi;
         }
+
+        public Player TakeDamge(int damge)
+        {
+            int newHp = Hp - damge;
+
+            return new Player(Level, Name, Job, Atk, EquipAtk, Def, EquipDef, Gold, newHp, Mp, MaxHp, Critical, Dexterity);
+        }
+
+        public Player TakeMana(int takeMp)
+        {
+            int newMp = Mp - takeMp;
+
+            return new Player(Level, Name, Job, Atk, EquipAtk, Def, EquipDef, Gold, Hp, newMp, MaxHp, Critical, Dexterity);
+        }
+
+        public Player TakeHpHeal(int heal)
+        {
+            int newHp = Hp + heal;
+            return new Player(Level, Name, Job, Atk, EquipAtk, Def, EquipDef, Gold, newHp, Mp, MaxHp, Critical, Dexterity);
+        }
+
+        public Player TakeMpHeal(int heal)
+        {
+            int newMp = Mp + heal;
+            return new Player(Level, Name, Job, Atk, EquipAtk, Def, EquipDef, Gold, Hp, newMp, MaxHp, Critical, Dexterity);
+        }
+
+        public Player IsDead(Player player)
+        {
+            if (player.Hp <= 0)
+            {
+                int newHp = 0;
+                Console.WriteLine("HP {플레이어 이전 hp} -> Dead\n");
+                return new Player(Level, Name, Job, Atk, EquipAtk, Def, EquipDef, Gold, newHp, Mp, MaxHp, Critical, Dexterity);
+            }
+            else
+            {
+                Console.WriteLine("HP {플레이어 이전 hp} -> {플레이어 변경된 hp}\n");
+                return new Player(Level, Name, Job, Atk, EquipAtk, Def, EquipDef, Gold, Hp, Mp, MaxHp, Critical, Dexterity);
+            }
+
+        }
+
     }
 }
