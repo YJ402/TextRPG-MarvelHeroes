@@ -190,7 +190,6 @@ namespace MarvelHeroes
                     default:
                         Console.WriteLine("잘못된 입력입니다.");
                         break;
-
                 }
                 Console.ReadKey();
             }
@@ -385,7 +384,8 @@ namespace MarvelHeroes
                         Console.WriteLine("{플레이어 이름} 을(를 맞췄습니다.) [데미지 : {몬스터 데미지}] - 치명타 데미지\n");
                         Console.WriteLine("Lv. {플레이어 레벨} {플레이어 이름}");
 
-                        player = player.IsDead(player);
+                        player = player.IsDead(player, playerBeforHp);
+                        playerBeforHp -= hitdamage;
                     }
                     // 치명타 안 터지면 출력
                     else
@@ -397,12 +397,11 @@ namespace MarvelHeroes
                         Console.WriteLine("{플레이어 이름} 을(를 맞췄습니다.) [데미지 : {몬스터 데미지}]\n");
                         Console.WriteLine("Lv. {플레이어 레벨} {플레이어 이름}");
 
-
-                        player = player.IsDead(player);
-
-
+                        player = player.IsDead(player, playerBeforHp);
+                        playerBeforHp -= finalDamage;
                     }
                 }
+
                 // 공격 실패 시 출력
                 else
                 {
@@ -410,6 +409,8 @@ namespace MarvelHeroes
                     Console.WriteLine("Lv. {0} {1} 가 공격했지만 아무일도 일어나지 않았습니다.\n");
 
                 }
+
+               
 
                 Console.WriteLine("아무키나 누르세요.");
                 Console.ReadKey();
