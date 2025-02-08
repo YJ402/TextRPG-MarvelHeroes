@@ -109,5 +109,68 @@ namespace MarvelHeroes
 
         }
 
+        // 아이언맨 리펄서건 스킬
+        public Player IronManAddDex(int Adddex, int number)
+        {
+            int newDex = 0;
+
+            switch(number)
+            {
+                case 0:
+                    newDex = Dexterity + Adddex;
+                    break;
+                case 1:
+                    newDex = Dexterity - Adddex;
+                    break;
+                    
+            }
+
+            return new Player(Level, Name, Job, Atk, EquipAtk, Def, EquipDef, Gold, Hp, Mp, MaxHp, Critical, newDex);
+        }
+        // 스파이더맨 나노슈트 스킬
+        public Player NanoSuit(int addatk, int adddef, int number)
+        {
+            int newAtk = 0;
+            int newDef = 0;
+           
+            switch (number)
+            {
+                case 0:
+                    newAtk = Atk + addatk;
+                    newDef = Def + adddef;
+                    break;
+                case 1:
+                    newAtk = Atk - addatk;
+                    newDef = Def - adddef;
+                    break;
+
+            }
+
+            return new Player(Level, Name, Job, newAtk, EquipAtk, newDef, EquipDef, Gold, Hp, Mp, MaxHp, Critical, newDex);
+
+        }
+
+
+        // 직업 스킬 리스트 가져오기
+        public List<Skill> JobSkills(Player player)
+        {
+            List<Skill> skills = new List<Skill>();
+
+            switch (player.Job)
+            {
+                case "아이어맨":
+                    IronMan ironMan = new IronMan();
+                    skills = ironMan.IronManSKills;
+                    break;
+                case "스파이더맨":
+                    break;
+                case "닥터스트레인지":
+                    break;
+                case "헐크":
+                    break;
+            }
+            return skills;
+        }
+
     }
 }
