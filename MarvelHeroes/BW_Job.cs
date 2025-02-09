@@ -26,16 +26,17 @@ namespace MarvelHeroes
                 { JobType.IronMan, (atk: 50, def: 30, hp: 100, mp: 200) },   //즉, 어떤 직업(JobType)을 키로 사용하여, 해당 직업의 기본 능력치를 값으로 저장하는 구조
                 { JobType.SpiderMan, (atk: 60, def: 25, hp: 120, mp: 150) },   //JobType을 키(key)로 사용하고,
                 { JobType.DoctorStrange, (atk: 40, def: 20, hp: 80, mp: 300) }, //(int atk, int def, int hp, int mp) 튜플을 값(value)으로 저장
-                { JobType.Hulk, (atk: 80, def: 50, hp: 200, mp: 50) }           // Dictionary를 사용한 이유?
-                                                                                // 만약 직업이 10개, 20개로 늘어나더라도 쉽게 관리할 수 있음!
+                { JobType.Hulk, (atk: 80, def: 50, hp: 200, mp: 50) }           // Dictionary를 사용한 이유?                                                                               // 만약 직업이 10개, 20개로 늘어나더라도 쉽게 관리할 수 있음!
             };
 
         //BW_Job 생성자는 캐릭터를 만들 때 사용됨.
 
 
         public Job(JobType job, int level, string name, int gold)
-            : base(level, name, job.ToString(), jobStats[job].atk, 0, jobStats[job].def, 0, gold, jobStats[job].hp, jobStats[job].mp, jobStats[job].hp, 0, 0)
+            : base(level, name, job.ToString(), jobStats[job].atk, 0, jobStats[job].def, 0, gold, jobStats[job].hp, jobStats[job].mp, jobStats[job].hp, 0, 0, false)
         {
+
+            
             Console.WriteLine($"[{job}] 직업이 선택되었습니다!");  //캐릭터가 생성될 때, 어떤 직업을 선택했는지 출력해줌.
         }                                                          //jobStats[job] → 직업에 맞는 능력치를 자동으로 설정
 
@@ -127,5 +128,10 @@ namespace MarvelHeroes
                     break;
             }
         }
+
+
+
+
+
     }
 }
