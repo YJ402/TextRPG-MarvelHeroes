@@ -1,8 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Reflection.Emit;
 using System.Text;
 using System.Threading.Tasks;
+using System.Xml.Linq;
 
 //함수나,클래스명은 PascalCase 메서드, 프로퍼티 이름 등에 사용됩니다. 단어의 첫 글자는 대문자로 시작하며, 이후 단어의 첫 글자도 대문자로 표기합니다
 //변수명은 camelCase 변수, 매개변수, 로컬 변수 이름 등에 사용됩니다 단어의 첫 글자는 소문자로 시작하며, 이후 단어의 첫 글자는 대문자로 표기합니다
@@ -30,83 +32,71 @@ namespace MarvelHeroes
     //int CH → 크리티컬 
     //int Dxi → 민첩성
 
-    public class Player
+    public class Player : Unit
     {
-        public int Level { get; set; } 
-        public string Name { get; set; }
-        public string Job { get; }
-        public int Atk { get; }
-        public int EquipAtk { get; }
-        public int Def { get; }
-        public int EquipDef { get; }
-        public int Gold { get; set; }
-        public int Hp { get; }
-        public int Mp { get; }
-        public int MaxHp { get; }
-        public int Critical {  get; }
+        public string Name { get; private set; }
+        public string Job { get; private set; }
+        public int EquipAtk { get; private set; }
+        public int EquipDef { get; private set; }
+        public int Gold { get; private set; }
+        public int Mp { get; private set; }
+        public int MaxHp { get; private set; }
 
-        public int Dexterity { get; }
 
-        public Player(int level, string name, string job, int atk, int equipAtk, int def, int equipDef, int gold, int hp, int mp, int maxHp, int CH, int Dxi)
+        public Player(int _Level, string name, string job, int _Atk, int equipAtk, int _Def, int equipDef, int gold, int _Hp, int mp, int maxHp, int _Critical, int _Dexterity, bool _isDead)
+            : base (_Level, _Atk, _Def, _Hp, _Critical, _Dexterity, false)
         {
-            // 이런식으로 되있는게 속성
-
-            Level = 1;    
+            // 이런식으로 되있는게 속성   
             Name = name;
             Job = job;
-            Atk = atk;
             EquipAtk = 0;
-            Def = def;
             EquipDef = 0;
             Gold = 1500;
-            Hp = hp;
             Mp = mp;
             MaxHp = maxHp;
-            Critical = CH;
-            Dexterity = Dxi;
         }
 
-        // 체력 감소
-        public Player TakeDamge(int damge)
+        public override Player TakeDamge(int damge)
         {
-            int newHp = Hp - damge;
+            int newHp;
+            if (Hp <= 0)
+            {   
+                newHp = 0;
+                isDead = true;
+            }
+            else newHp = Hp - damge;
 
-            return new Player(Level, Name, Job, Atk, EquipAtk, Def, EquipDef, Gold, newHp, Mp, MaxHp, Critical, Dexterity);
+            return new Player(Level, Name, Job, Atk, EquipAtk, Def, EquipDef, Gold, newHp, Mp, MaxHp, Critical, Dexterity, isDead);
         }
-        // 마나 감소
+        public override Player TakeHpHeal(int heal)
+        {
+            int newHp;
+
+            if(Hp >= 100) newHp = 100;
+            else newHp = Hp + heal;
+
+            return new Player(Level, Name, Job, Atk, EquipAtk, Def, EquipDef, Gold, newHp, Mp, MaxHp, Critical, Dexterity, isDead);
+        }
         public Player TakeMana(int useMp)
         {
-            int newMp = Mp - useMp;
+            int newMp;
 
-            return new Player(Level, Name, Job, Atk, EquipAtk, Def, EquipDef, Gold, Hp, newMp, MaxHp, Critical, Dexterity);
+            if (Mp <= 0)
+            {
+                newMp = 0;
+            }
+            else newMp = Mp - useMp;
+
+            return new Player(Level, Name, Job, Atk, EquipAtk, Def, EquipDef, Gold, Hp, newMp, MaxHp, Critical, Dexterity, isDead);
         }
-        // 체력 회복
-        public Player TakeHpHeal(int heal)
-        {
-            int newHp = Hp + heal;
-            return new Player(Level, Name, Job, Atk, EquipAtk, Def, EquipDef, Gold, newHp, Mp, MaxHp, Critical, Dexterity);
-        }
-        // 마나 회복
         public Player TakeMpHeal(int heal)
         {
-            int newMp = Mp + heal;
-            return new Player(Level, Name, Job, Atk, EquipAtk, Def, EquipDef, Gold, Hp, newMp, MaxHp, Critical, Dexterity);
-        }
-        // 플레이어 생존 확인
-        public Player IsDead(Player player, int beforeHp)
-        {
-            if (player.Hp <= 0)
-            {
-                int newHp = 0;
-                Console.WriteLine("HP {0} -> Dead\n", beforeHp);
-                return new Player(Level, Name, Job, Atk, EquipAtk, Def, EquipDef, Gold, newHp, Mp, MaxHp, Critical, Dexterity);
-            }
-            else
-            {
-                Console.WriteLine("HP {0} -> {1}\n", beforeHp, player.Hp);
-                return new Player(Level, Name, Job, Atk, EquipAtk, Def, EquipDef, Gold, Hp, Mp, MaxHp, Critical, Dexterity);
-            }
+            int newMp;
 
+            if (Hp >= 100) newMp = 100;
+            else newMp = Hp + heal;
+
+            return new Player(Level, Name, Job, Atk, EquipAtk, Def, EquipDef, Gold, Hp, newMp, MaxHp, Critical, Dexterity, isDead);
         }
 
         // 아이언맨 리펄서건 스킬
@@ -125,7 +115,7 @@ namespace MarvelHeroes
                     
             }
 
-            return new Player(Level, Name, Job, Atk, EquipAtk, Def, EquipDef, Gold, Hp, Mp, MaxHp, Critical, newDex);
+            return new Player(Level, Name, Job, Atk, EquipAtk, Def, EquipDef, Gold, Hp, Mp, MaxHp, Critical, newDex, isDead);
         }
         // 스파이더맨 나노슈트 스킬
         public Player NanoSuit(int addatk, int adddef, int number)
@@ -146,10 +136,9 @@ namespace MarvelHeroes
 
             }
 
-            return new Player(Level, Name, Job, newAtk, EquipAtk, newDef, EquipDef, Gold, Hp, Mp, MaxHp, Critical, Dexterity);
+            return new Player(Level, Name, Job, newAtk, EquipAtk, newDef, EquipDef, Gold, Hp, Mp, MaxHp, Critical, Dexterity, isDead);
 
         }
-
 
         // 직업 스킬 리스트 가져오기
         public List<Skill> JobSkills(Player player)
@@ -163,10 +152,16 @@ namespace MarvelHeroes
                     skills = ironMan.IronManSKills;
                     break;
                 case "스파이더맨":
+                    SpiderMan spiderMan = new SpiderMan();
+                    skills = spiderMan.SpiderManSKills;
                     break;
                 case "닥터스트레인지":
+                    DoctorStrange doctorStrange = new DoctorStrange();
+                    skills = doctorStrange.DoctorStrangeSKills;
                     break;
                 case "헐크":
+                    Hulk hulk = new Hulk();
+                    skills = hulk.HulkSKills;
                     break;
             }
             return skills;
