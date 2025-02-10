@@ -44,8 +44,20 @@ namespace MarvelHeroes
             new Floor(4, "잠김", false, false){ floorName = "보스방" }
         };
 
+        public void BattleStart()
+        {
+            bool isClear = false;
 
-        // 도전할 층 선택
+            while(!isClear)
+            {
+                
+
+            }
+
+
+        }
+
+        // 도전할 층 선택 씬으로 넣기 ㅅ
         public void SelectBattlePage()
         {
             int nextFloorNumber = Floor.nextFloorNumber;
@@ -301,7 +313,7 @@ namespace MarvelHeroes
                         Console.WriteLine("Lv.{0} {1} 을(를) 맞췄습니다. [데미지 : {2}] - 치명타 공격!!\n", floormonster.Level, floormonster.MonsterName, hitDamage);
                         Console.WriteLine("Lv. {0} {1}", floormonster.Level, floormonster.MonsterName);
 
-                        floormonster.IsDead(floormonster, monsterBefor_hp);
+                        floormonster.IsDeadBattle(floormonster, monsterBefor_hp);
 
                     }
                     // 치명타 안 터지면 출력
@@ -316,7 +328,7 @@ namespace MarvelHeroes
                         Console.WriteLine("Lv.{0} {1} 을(를) 맞췄습니다. [데미지 : {2}]\n", floormonster.Level, floormonster.MonsterName, floormonster.Atk);
                         Console.WriteLine("Lv. {0} {1}", floormonster.Level, floormonster.MonsterName);
 
-                        floormonster.IsDead(floormonster, monsterBefor_hp);
+                        floormonster.IsDeadBattle(floormonster, monsterBefor_hp);
 
                     }
                 }
@@ -346,6 +358,11 @@ namespace MarvelHeroes
 
             for (int i = 0; i < floormonsters.Count; i++)
             {
+                if (floormonsters[i].isDead)
+                {
+                    continue;
+                }
+
                 Console.Clear();
                 int attackPecent = random.Next(0, 9);
                 int hitNumber = random.Next(0, 9);
@@ -383,10 +400,6 @@ namespace MarvelHeroes
                     }
                 }
                 // 공격 실패 시 출력
-                else if (!floormonsters[i].IsAtk)
-                {
-                    Console.WriteLine("죽은몬스터 입니다.");
-                }
                 else
                 {
                     Console.WriteLine("Battle\n");

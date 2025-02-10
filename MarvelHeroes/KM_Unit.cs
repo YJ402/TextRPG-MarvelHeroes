@@ -13,7 +13,21 @@ namespace MarvelHeroes
         public int Level { get; set; }
         public int Atk { get; set; }
         public int Def { get; set; }
-        public int Hp { get; set; }
+        public int hp;
+        public int Hp
+        {
+            get => hp;
+
+            set
+            {
+                if (value <= 0)
+                {
+                    hp = 0;
+                    isDead = true;
+                }
+                else hp = value;
+            }
+        }
         public int Critical { get; set; }
         public int Dexterity { get; set; }
         public bool isDead { get; set; }
@@ -26,6 +40,7 @@ namespace MarvelHeroes
             Hp = _Hp;
             Critical = _Critical;
             Dexterity = _Dexterity;
+            isDead = _isdDead;
             
         }
 
