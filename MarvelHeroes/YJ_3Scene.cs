@@ -57,7 +57,7 @@ namespace MarvelHeroes
 
     public class DungeonScene : Scene//, ISelections
     {
-        int challengingFloor = 10;
+        int challengingFloor = 1;
 
         public DungeonScene()
         {
