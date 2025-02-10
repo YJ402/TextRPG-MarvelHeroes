@@ -13,10 +13,6 @@ namespace MarvelHeroes
         public string GetSelectionDesc();
     }
 
-
-
-
-
     public class TalkToChief : ISelections
     {
         private Quest quest;
