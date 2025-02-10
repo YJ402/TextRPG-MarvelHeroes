@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Numerics;
 using System.Reflection.Emit;
 using System.Text;
 using System.Threading.Tasks;
@@ -41,6 +42,7 @@ namespace MarvelHeroes
         public int Gold { get; set; }
         public int Mp { get; set; }
         public int MaxHp { get; set; }
+        public int MaxMp { get; set; }
         
 
 
@@ -56,6 +58,7 @@ namespace MarvelHeroes
             Mp = Job.jobStats[jobtypeName].mp;
             Gold = 1500;
             MaxHp = Hp;
+            MaxMp = Job.jobStats[jobtypeName].mp;
          
         }
 
@@ -102,6 +105,7 @@ namespace MarvelHeroes
             {
                 case 0:
                     newDex = Dexterity + Adddex;
+
                     break;
                 case 1:
                     newDex = Dexterity - Adddex;
@@ -134,19 +138,19 @@ namespace MarvelHeroes
 
             switch (player.PlayerJob)
             {
-                case "IronMan":
+                case "아이언맨":
                     IronMan ironMan = new IronMan();
                     skills = ironMan.IronManSKills;
                     return skills;
-                case "SpiderMan":
+                case "스파이더맨":
                     SpiderMan spiderMan = new SpiderMan();
                     skills = spiderMan.SpiderManSKills;
                     return skills;
-                case "DoctorStrange":
+                case "닥터스트레인지":
                     DoctorStrange doctorStrange = new DoctorStrange();
                     skills = doctorStrange.DoctorStrangeSKills;
                     return skills;
-                case "Hulk":
+                case "헐크":
                     Hulk hulk = new Hulk();
                     skills = hulk.HulkSKills;
                     return skills;
