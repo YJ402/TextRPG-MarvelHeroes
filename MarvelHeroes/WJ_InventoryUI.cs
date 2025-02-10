@@ -7,12 +7,9 @@ using System.Threading.Tasks;
 
 namespace MarvelHeroes
 {
-    // 인벤토리에서 리스트 가져올때 리스트 static으로 선언하자고 해야함 그래야 선언과 상관없이 리스트를 가져올 수 있음
-    // 장착시 공격력 방어력 더해줄려면 static으로 선언해야할듯함? 아니면 item에 메서드 추가해달라해야함
     public class WJ_InventoryUI
     {
         YJ_GameManager gameManager = new YJ_GameManager();
-        BW_Player player = new BW_Player();
         public int InventoryScene(int temp)
         {
             int sceneTemp = temp;
