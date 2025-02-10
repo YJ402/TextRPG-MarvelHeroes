@@ -113,20 +113,30 @@ namespace MarvelHeroes
 
     public class ToFloor : ISelections
     {
-        int floor;
+        int farmingFloor;
+        int tryFloor;
 
-        public ToFloor(int i)
+        public ToFloor(int trying, int high)
         {
-            floor = i;
+            farmingFloor = trying;
+            tryFloor = high;
         }
         public void Execute()
         {
-            SceneManager.ChangeCurrentScene(sceneNum);
+            if (GameView.SceneSelectYN("정말로 도전하시겠습니까?"))
+            {
+                Console.WriteLine($"{farmingFloor}층 공략하기");
+                //배틀매니저의 전투 시작 메서드 호출(매개변수:목적 층 );
+                //BattleManager BM = new BattleManager();
+                //BM.BattleStart(farmingFloor);
+            }
         }
 
         public string GetSelectionDesc()
         {
-            floor
+            if (farmingFloor == tryFloor)
+                return $"{tryFloor}층 [도전]";
+            else return $"{farmingFloor}층 [완료]";
         }
     }
 
