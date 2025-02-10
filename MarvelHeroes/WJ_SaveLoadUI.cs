@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace MarvelHeroes
 {
-    internal class WJ_SaveLoadUI
+    internal class SaveLoadUI
     {
         public int SaveLoadScene(int temp)
         {

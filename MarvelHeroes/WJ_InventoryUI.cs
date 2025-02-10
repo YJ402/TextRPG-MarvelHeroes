@@ -19,7 +19,7 @@ namespace MarvelHeroes
             Console.WriteLine();
             Console.WriteLine("[아이템 목록]");
             Console.WriteLine();
-            foreach (int i in gameManager.inventory) // 게임매니저에서 선언한 인벤토리 리스트를 가져옴
+            foreach (int i in GameManager.inventory) // 게임매니저에서 선언한 인벤토리 리스트를 가져옴
             {
                 DisplayInven(i,0);
             }
