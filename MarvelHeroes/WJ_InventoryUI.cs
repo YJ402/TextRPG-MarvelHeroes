@@ -98,7 +98,7 @@ namespace MarvelHeroes
 
         public void Equip(int choice)
         {
-            DH_ItemManager select = gameManager.inventory[choice - 1]; 
+            ItemManager select = gameManager.inventory[choice - 1]; 
 
             for (int i = 0; i < gameManager.inventory.Count; i++)
             {

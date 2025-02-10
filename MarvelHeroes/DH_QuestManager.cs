@@ -7,12 +7,12 @@ using System.Threading.Tasks;
 
 namespace MarvelHeroes
 {
-    internal class DH_QuestManager
+    internal class QuestManager
     {
         List<Quest> questlist; //모든퀘스트 목록
         List<Quest> acceptQuest; //플레이어가 받은 퀘스트
 
-        public DH_QuestManager()
+        public QuestManager()
         {
             questlist = new List<Quest>
             {

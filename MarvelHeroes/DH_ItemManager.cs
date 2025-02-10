@@ -12,13 +12,13 @@ namespace MarvelHeroes
 
     //아이템 - 장착유무, 이름, 공력력||방어력||회복량, 설명, 가격
 
-    internal class DH_ItemManager
+    internal class ItemManager
     {
         List<EquipItem> equipItems;
         List<UsingItem> usingItems;
 
         //DH_ItemManager 호출시 실행
-        public DH_ItemManager()
+        public ItemManager()
         {
             //public EquipItem(string name, ItemType itemtype, JobType jobType, int value, string descrip, int cost)
             equipItems = new List<EquipItem>
@@ -97,7 +97,7 @@ namespace MarvelHeroes
             //플레이어의 직업의 종류를 불러옴
             //조건문if 사용해서 플래이어의 직업과 무기의 직업을 비교하는 조건
             //착용 불가 메세지 후 return
-            if (player.Job != this.ItemJobType.ToString())
+            if (player.PlayerJob != this.ItemJobType.ToString())
             {
                 Console.WriteLine("사용이 불가능한 장비입니다!");
                 return;
