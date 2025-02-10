@@ -53,20 +53,12 @@ namespace MarvelHeroes
 
             sceneSelections = new Dictionary<int, ISelections>() { {0, UI }, { 1, action1 }, { 2, action2}, {3, action3 } };
         }
-
-        //public void Execute()
-        //{
-        //    SM.ChangeCurrentScene("Town");
-        //}
-
-        //public string GetSelectionDesc()
-        //{
-        //    return "마을로 이동하기";
-        //}
     }
 
     public class DungeonScene : Scene//, ISelections
     {
+        int challengingFloor = 1;
+        int conqueredFloor;
         public DungeonScene()
         {
             Name = "던전";
@@ -75,19 +67,25 @@ namespace MarvelHeroes
 
             ISelections UI = new ToUI(SceneNum.Dungeon);
             ISelections action1 = new ToWhere(SceneNum.Town);
+            ISelections action2 = new ToFloor();
 
             sceneSelections = new Dictionary<int, ISelections>() { { 0, UI }, { 1, action1 } };
+            for (int i = 0; i < TryFloor; i++) {
+                sceneSelections += }
         }
 
-        //public void Execute()
-        //{
-        //    SM.ChangeCurrentScene("Dungeon");
-        //}
+    }
 
-        //public string GetSelectionDesc()
-        //{
-        //    return "마을로 이동하기";
-        //}
+    public class BattleScene : Scene
+    {
+        int Floor;
+
+        public BattleScene()
+        {
+            Name = "Battle";
+            Description = "~~~~??아브라카다브라";
+            Description2 = "FloorScene.디스크립션2";
+        }
     }
 }
 

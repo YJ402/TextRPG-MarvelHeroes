@@ -111,6 +111,25 @@ namespace MarvelHeroes
         }
     }
 
+    public class ToFloor : ISelections
+    {
+        int floor;
+
+        public ToFloor(int i)
+        {
+            floor = i;
+        }
+        public void Execute()
+        {
+            SceneManager.ChangeCurrentScene(sceneNum);
+        }
+
+        public string GetSelectionDesc()
+        {
+            floor
+        }
+    }
+
     //public class ToTown : ISelections
     //{
 
