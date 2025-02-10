@@ -9,7 +9,7 @@ namespace MarvelHeroes
 {
     internal class WJ_SaveLoadUI
     {
-        public int InventoryScene(int temp)
+        public int SaveLoadScene(int temp)
         {
             int sceneTemp = temp;
             Console.Clear();

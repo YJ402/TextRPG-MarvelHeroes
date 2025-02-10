@@ -15,7 +15,7 @@ namespace MarvelHeroes
 
         public int UIMainScene(int temp)
         {
-            int sceneTmep = temp; // UI 전 씬에서 씬의 정보를 저장함
+            int sceneTemp = temp; // UI 전 씬에서 씬의 정보를 저장함
             Console.Clear();
             Console.WriteLine("UI");
             Console.WriteLine();
@@ -39,10 +39,11 @@ namespace MarvelHeroes
                     {
                         case 1:
                             // 캐릭터정보
-                            sceneTmep = statusUI.UIStateScene(sceneTmep); // 씬의 정보를 잃지 않기 위해서 상태창 갈때도 보내주고 그대로 반환받음
+                            sceneTemp = statusUI.UIStateScene(sceneTemp); // 씬의 정보를 잃지 않기 위해서 상태창 갈때도 보내주고 그대로 반환받음
                             break;
                         case 2:
                             // 인벤토리
+                            sceneTemp = inventoryUI.InventoryScene(sceneTemp);
                             break;
                         case 3:
                             // 게임저장
@@ -58,7 +59,7 @@ namespace MarvelHeroes
                     Console.WriteLine("입력을 다시시도해 주세요"); // 오류처리
                 }
             }
-            return sceneTmep; // 저장한 씬 정보를 반환
+            return sceneTemp; // 저장한 씬 정보를 반환
         }
     }
 
