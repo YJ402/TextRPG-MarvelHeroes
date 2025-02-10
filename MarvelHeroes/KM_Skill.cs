@@ -56,8 +56,8 @@ namespace MarvelHeroes
         {
             for (int i = 1; i <= skills.Count; i++)
             {
-                Console.WriteLine("{0} {1} - MP {2}\n", i, skills[i].SkillName, skills[i].UseMp);
-                Console.WriteLine("{0}", skills[i].Description);
+                Console.WriteLine("{0} {1} - MP {2}\n", i, skills[i-1].SkillName, skills[i-1].UseMp);
+                Console.WriteLine("{0}", skills[i - 1].Description);
             }
 
         }

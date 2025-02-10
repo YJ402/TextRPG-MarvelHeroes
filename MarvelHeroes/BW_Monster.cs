@@ -78,9 +78,18 @@ namespace MarvelHeroes
             return monster;
         }
 
-        public Monster IsStun(Monster monster)
+        public Monster IsStun(Monster monster, int number)
         {
-            monster.IsAtk = false;
+            switch(number)
+            {
+                case 0:
+                    monster.IsAtk = false;
+                    break;
+                case 1:
+                    monster.IsAtk = true;
+                    break;
+            }
+
             return monster;
         }
 
