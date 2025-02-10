@@ -41,7 +41,19 @@ namespace MarvelHeroes
             }
         }
 
-        
+        public void CompleteQuest(Quest quest)
+        {
+            if (acceptQuest.Contains(quest)) // 받은 퀘스트인지 확인
+            {
+                acceptQuest.Remove(quest); // 완료된 퀘스트 제거
+                Console.WriteLine($"[퀘스트 완료] {quest.Name} 퀘스트를 완료했습니다!");
+            }
+            else
+            {
+                Console.WriteLine("받지 않은 퀘스트입니다.");
+            }
+        }
+
 
     }
 
@@ -65,40 +77,43 @@ namespace MarvelHeroes
 
     public class ItemQuest : Quest
     {
-        public ItemQuest(string name, string descrip, int demand, int questId) : base(name, descrip, demand, questId)
+        public ItemQuest(string name, string descrip, int demand, int questId)
+            : base(name, descrip, demand, questId)
         {
 
         }
 
         public override void Questclear()
         {
-
+            Console.WriteLine($"[아이템 퀘스트 완료] {Name}");
         }
     }
 
     public class HuntQuest : Quest
     {
-        public HuntQuest(string name, string descrip, int demand, int questId) : base(name, descrip, demand, questId)
+        public HuntQuest(string name, string descrip, int demand, int questId)
+            : base(name, descrip, demand, questId)
         {
 
         }
 
         public override void Questclear()
         {
-
+            Console.WriteLine($"[사냥 퀘스트 완료] {Name}");
         }
     }
 
     public class LevelQuest : Quest
     {
-        public LevelQuest(string name, string descrip, int demand, int questId) : base(name, descrip, demand, questId)
+        public LevelQuest(string name, string descrip, int demand, int questId)
+            : base(name, descrip, demand, questId)
         {
 
         }
 
         public override void Questclear()
         {
-
+            Console.WriteLine($"[레벨업 퀘스트 완료] {Name}");
         }
     }
 
