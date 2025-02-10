@@ -52,20 +52,17 @@ namespace MarvelHeroes
         //}
 
         //// 플레이어 생존 확인
-        //public virtual Unit IsDead(Unit unit, int beforeHp)
-        //{
-        //    if (unit.Hp <= 0)
-        //    {
-        //        int newHp = 0;
-        //        Console.WriteLine("HP {0} -> Dead\n", beforeHp);
-        //        return new Unit(Level,Atk, Def, newHp, Critical, Dexterity);
-        //    }
-        //    else
-        //    {
-        //        Console.WriteLine("HP {0} -> {1}\n", beforeHp, unit.Hp);
-        //        return new Unit(Level,Atk, Def, Hp, Critical, Dexterity);
-        //    }
+        public virtual void IsDead(Unit unit, int beforeHp)
+        {
+            if (unit.Hp <= 0)
+            {
+                Console.WriteLine("HP {0} -> Dead\n", beforeHp);
+            }
+            else
+            {
+                Console.WriteLine("HP {0} -> {1}\n", beforeHp, unit.Hp);
+            }
 
-        //}
+        }
     }
 }
