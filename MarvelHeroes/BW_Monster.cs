@@ -78,16 +78,16 @@ namespace MarvelHeroes
             return monster;
         }
 
-        public Monster IsStun(Monster monster, int number)
+        public Monster HulkShouting(Monster monster, int beforAtk)
         {
-            switch(number)
+            if (monster.Atk <= 0)
             {
-                case 0:
-                    monster.IsAtk = false;
-                    break;
-                case 1:
-                    monster.IsAtk = true;
-                    break;
+                monster.Atk = 0;
+                Console.WriteLine("ATk {0} -> 0\n", beforAtk);
+            }
+            else
+            {
+                Console.WriteLine("ATK {0} -> {1}\n", beforAtk, monster.Atk);
             }
 
             return monster;
