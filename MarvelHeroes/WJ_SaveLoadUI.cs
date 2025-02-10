@@ -9,9 +9,8 @@ namespace MarvelHeroes
 {
     internal class SaveLoadUI
     {
-        public int SaveLoadScene(int temp)
+        public void SaveLoadScene()
         {
-            int sceneTemp = temp;
             Console.Clear();
             GameView.PrintText("게임 저장/불러오기", 0, ConsoleColor.Magenta);
             Console.WriteLine();
@@ -37,7 +36,6 @@ namespace MarvelHeroes
                     Console.WriteLine("입력을 다시시도해 주세요");
                 }
             }
-            return sceneTemp;
         }
     }
 }

@@ -9,9 +9,8 @@ namespace MarvelHeroes
 {
     internal class ExitUI
     {
-        public int ExitScene(int temp)
+        public void ExitScene()
         {
-            int sceneTemp = temp;
             Console.Clear();
             GameView.PrintText("게임종료", 0, ConsoleColor.Magenta);
             Console.WriteLine();
@@ -37,7 +36,6 @@ namespace MarvelHeroes
                     Console.WriteLine("입력을 다시시도해 주세요");
                 }
             }
-            return sceneTemp;
         }
     }
 }
