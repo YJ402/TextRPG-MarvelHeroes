@@ -47,9 +47,11 @@ namespace MarvelHeroes
                             break;
                         case 3:
                             // 게임저장
+                            sceneTemp = saveLoadUI.SaveLoadScene(sceneTemp);
                             break;
                         case 4:
                             // 게임종료
+                            sceneTemp = exitUI.ExitScene(sceneTemp);
                             break;
                     }
                     if (choice == 0) { break; } // 0일때 while문 break
