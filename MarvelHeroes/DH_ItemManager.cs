@@ -26,7 +26,11 @@ namespace MarvelHeroes
                 new EquipItem("아이언맨 기본 무기", ItemType.Weapon, ITemJobType.IronMan, 5,"아이언맨의 기본무기", 500),
                 new EquipItem("스파이더맨 기본 무기", ItemType.Weapon, ITemJobType.Spiderman, 5,"스파이더맨의 기본무기", 500),
                 new EquipItem("닥터스트레인지 기본 무기", ItemType.Weapon, ITemJobType.Dr, 5,"닥터스트레인지의 기본무기", 500),
-                new EquipItem("헐크 기본 무기", ItemType.Weapon, ITemJobType.Hulk, 5,"헐크의 기본무기", 500)
+                new EquipItem("헐크 기본 무기", ItemType.Weapon, ITemJobType.Hulk, 5,"헐크의 기본무기", 500),
+                new EquipItem("아이언맨 기본 갑옷", ItemType.Amor, ITemJobType.IronMan, 5,"아이언맨의 기본방어구", 1000),
+                new EquipItem("스파이더맨 기본 갑옷", ItemType.Amor, ITemJobType.Spiderman, 5,"스파이더맨의 기본방어구", 1000),
+                new EquipItem("닥터스트레인지 기본 갑옷", ItemType.Amor, ITemJobType.Dr, 5,"닥터스트레인지의 기본방어구", 1000),
+                new EquipItem("헐크 기본 갑옷", ItemType.Amor, ITemJobType.Hulk, 5,"헐크의 기본방어구", 1000)
             };
 
             //public UsingItem(string name, ItemType type, int value, string descrip, int cost)
