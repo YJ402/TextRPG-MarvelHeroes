@@ -6,16 +6,16 @@ using System.Threading.Tasks;
 
 namespace MarvelHeroes
 {
-    public class UIManager
+    public class WJ_UIManager
     {
-        StatusUI statusUI = new StatusUI(); // 상태창 class
-        InventoryUI inventoryUI = new InventoryUI(); // 인벤토리 class
-        SaveLoadUI saveLoadUI = new SaveLoadUI(); // save/Load class
-        ExitUI exitUI = new ExitUI(); // 게임종료 class
+        WJ_StatusUI statusUI = new WJ_StatusUI(); // 상태창 class
+        //WJ_InventoryUI inventoryUI = new WJ_InventoryUI(); // 인벤토리 class
+        WJ_SaveLoadUI saveLoadUI = new WJ_SaveLoadUI(); // save/Load class
+        WJ_ExitUI exitUI = new WJ_ExitUI(); // 게임종료 class
 
-        public int UIMainScene(int temp)
+        public void  UIMainScene(SceneNum temp)
         {
-            int sceneTemp = temp; // UI 전 씬에서 씬의 정보를 저장함
+            //int sceneTmep = temp; // UI 전 씬에서 씬의 정보를 저장함
             Console.Clear();
             Console.WriteLine("UI");
             Console.WriteLine();
@@ -39,19 +39,16 @@ namespace MarvelHeroes
                     {
                         case 1:
                             // 캐릭터정보
-                            sceneTemp = statusUI.UIStateScene(sceneTemp); // 씬의 정보를 잃지 않기 위해서 상태창 갈때도 보내주고 그대로 반환받음
+                            statusUI.UIStateScene(temp); // 씬의 정보를 잃지 않기 위해서 상태창 갈때도 보내주고 그대로 반환받음
                             break;
                         case 2:
                             // 인벤토리
-                            sceneTemp = inventoryUI.InventoryScene(sceneTemp);
                             break;
                         case 3:
                             // 게임저장
-                            sceneTemp = saveLoadUI.SaveLoadScene(sceneTemp);
                             break;
                         case 4:
                             // 게임종료
-                            sceneTemp = exitUI.ExitScene(sceneTemp);
                             break;
                     }
                     if (choice == 0) { break; } // 0일때 while문 break
@@ -61,7 +58,7 @@ namespace MarvelHeroes
                     Console.WriteLine("입력을 다시시도해 주세요"); // 오류처리
                 }
             }
-            return sceneTemp; // 저장한 씬 정보를 반환
+            // return sceneTmep; // 저장한 씬 정보를 반환
         }
     }
 
