@@ -59,19 +59,8 @@ namespace MarvelHeroes
          
         }
 
-       
-        //public override Player TakeDamge(int damge)
-        //{
-        //    int newHp;
-        //    if (Hp <= 0)
-        //    {   
-        //        newHp = 0;
-        //        isDead = true;
-        //    }
-        //    else newHp = Hp - damge;
 
-        //    return new Player(Level, Name, Gold, Critical, Dexterity, isDead, );
-        //}
+ 
         //public override Player TakeHpHeal(int heal)
         //{
         //    int newHp;
