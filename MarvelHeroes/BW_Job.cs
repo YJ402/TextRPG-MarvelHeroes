@@ -49,85 +49,85 @@ namespace MarvelHeroes
             }
         }
 
-        public void Skill(int index)
-        {
-            switch (Job)
-            {
-                case "IronMan":
-                    if (index  == 1)
-                    {
-                        Console.WriteLine("아이언맨이 레이저 커터를 발사했다!");
-                    }
-                    else if(index == 2)
-                    {
-                        Console.WriteLine("아이언맨이 리펄서건를 사용했다! 회피율이 증가한다.");
-                    }
-                    else
-                    {
-                        Console.WriteLine("입력이 잘못되었습니다");
-                    }
+        //public void Skill(int index)
+        //{
+        //    switch ()
+        //    {
+        //        case "IronMan":
+        //            if (index  == 1)
+        //            {
+        //                Console.WriteLine("아이언맨이 레이저 커터를 발사했다!");
+        //            }
+        //            else if(index == 2)
+        //            {
+        //                Console.WriteLine("아이언맨이 리펄서건를 사용했다! 회피율이 증가한다.");
+        //            }
+        //            else
+        //            {
+        //                Console.WriteLine("입력이 잘못되었습니다");
+        //            }
                     
-                    break;
-            }
+        //            break;
+        //    }
 
-            switch (Job)
-            {
-                case "SpiderMan":
-                    if (index == 1)
-                    {
-                        Console.WriteLine("나노슈트 발동 공격력, 방어력 등을 올립니다");
-                    }
-                    else if (index == 2)
-                    {
-                        Console.WriteLine("거미줄 발사  거미줄로 상대방을 공격.");
-                    }
-                    else
-                    {
-                        Console.WriteLine("입력이 잘못되었습니다");
-                    }
+        //    switch (Job)
+        //    {
+        //        case "SpiderMan":
+        //            if (index == 1)
+        //            {
+        //                Console.WriteLine("나노슈트 발동 공격력, 방어력 등을 올립니다");
+        //            }
+        //            else if (index == 2)
+        //            {
+        //                Console.WriteLine("거미줄 발사  거미줄로 상대방을 공격.");
+        //            }
+        //            else
+        //            {
+        //                Console.WriteLine("입력이 잘못되었습니다");
+        //            }
 
-                    break;
+        //            break;
             
-            }
+        //    }
             
-            switch (Job)
-            {
-                case "DoctorStrange":
-                    if (index == 1)
-                    {
-                        Console.WriteLine("발탁의 화살 = 지면에 폭발을 일으켜 상대방에게 대미지를 부여");
-                    }
-                    else if (index == 2)
-                    {
-                        Console.WriteLine("호고스의 백마법 = 상대방의 공격을 무효화 합니다.");
-                    }
-                    else
-                    {
-                        Console.WriteLine("입력이 잘못되었습니다");
-                    }
+        //    switch (Job)
+        //    {
+        //        case "DoctorStrange":
+        //            if (index == 1)
+        //            {
+        //                Console.WriteLine("발탁의 화살 = 지면에 폭발을 일으켜 상대방에게 대미지를 부여");
+        //            }
+        //            else if (index == 2)
+        //            {
+        //                Console.WriteLine("호고스의 백마법 = 상대방의 공격을 무효화 합니다.");
+        //            }
+        //            else
+        //            {
+        //                Console.WriteLine("입력이 잘못되었습니다");
+        //            }
 
-                    break;
-            }
+        //            break;
+        //    }
 
-            switch (Job)
-            {
-                case "Hulk":
-                    if (index == 1)
-                    {
-                        Console.WriteLine("비브라늄 펀치 = 비브라늄 너클을 사용하여 강력한 펀치를 날린다");
-                    }
-                    else if (index == 2)
-                    {
-                        Console.WriteLine("헐크의 샤우팅 = 분노와 함께 강력한 소리를 내뿜어 상대방이 1턴간 스턴된다");
-                    }
-                    else
-                    {
-                        Console.WriteLine("입력이 잘못되었습니다");
-                    }
+        //    switch (Job)
+        //    {
+        //        case "Hulk":
+        //            if (index == 1)
+        //            {
+        //                Console.WriteLine("비브라늄 펀치 = 비브라늄 너클을 사용하여 강력한 펀치를 날린다");
+        //            }
+        //            else if (index == 2)
+        //            {
+        //                Console.WriteLine("헐크의 샤우팅 = 분노와 함께 강력한 소리를 내뿜어 상대방이 1턴간 스턴된다");
+        //            }
+        //            else
+        //            {
+        //                Console.WriteLine("입력이 잘못되었습니다");
+        //            }
 
-                    break;
-            }
-        }
+        //            break;
+        //    }
+        //}
 
 
 
