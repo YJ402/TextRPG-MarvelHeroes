@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection.Emit;
+using System.Runtime.CompilerServices;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -15,7 +16,7 @@ namespace MarvelHeroes
 
         private static Random rand = new Random();
 
-        public Monster(int _Level, string _Name, int _Hp, int _Atk, int _Def, int _floor, int _Critical, int _Dex, bool _isDaed, bool _isAtk)
+        public Monster(int _Level, string _Name, int _Hp, int _Atk, int _Def, int _floor, int _Critical, int _Dex, bool _isDaed, bool _isAtk = true)
            :base(_Level, _Atk, _Def, _Hp, _Critical, _Dex, false)
         {
             Level = _Level;
@@ -29,16 +30,52 @@ namespace MarvelHeroes
             Dexterity = _Dex;
         }
 
-        public void IsDead(Monster monster, int beforeHp)
+        public Monster IsDeadBattle(Monster monster, int beforeHp)
         {
             if (monster.Hp <= 0)
             {
+                monster.isDead = true;
+                monster.IsAtk = false;
                 Console.WriteLine("HP {0} -> Dead\n", beforeHp);
             }
             else
             {
                 Console.WriteLine("HP {0} -> {1}\n", beforeHp, monster.Hp);
             }
+
+            return monster;
+        }
+
+        public Monster IsDeadview(Monster monster)
+        {
+
+                if (monster.Hp <= 0)
+                {
+                    monster.isDead = true;
+                    Console.WriteLine("Lv. {0}. {1} Dead", monster.Level, monster.MonsterName);
+                }
+                else
+                {
+                    Console.WriteLine("Lv. {0}. {1} HP {2} ", monster.Level, monster.MonsterName, monster.Hp);
+                }
+            
+            return monster;
+        }
+
+        public Monster IsDeadview2(Monster monster, int i)
+        {
+
+            if (monster.Hp <= 0)
+            {
+                monster.isDead = true;
+                Console.WriteLine("{0} Lv. {1}. {2} Dead", i, monster.Level, monster.MonsterName);
+            }
+            else
+            {
+                Console.WriteLine("{0} Lv. {1}. {2} HP {3} ", i, monster.Level, monster.MonsterName, monster.Hp);
+            }
+
+            return monster;
         }
 
         public Monster IsStun(Monster monster)
@@ -89,12 +126,6 @@ namespace MarvelHeroes
                     
             }
         }
-
-
-
-
-
-
 
     }
 }
