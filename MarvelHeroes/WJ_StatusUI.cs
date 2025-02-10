@@ -8,9 +8,9 @@ namespace MarvelHeroes
 {
     public class WJ_StatusUI
     {
-        public int UIStateScene(int tmep) // 상태정보창
+        public void UIStateScene(SceneNum temp) // 상태정보창
         {
-            int sceneTemp = tmep;
+            //int sceneTemp = tmep;
             Console.Clear();
             GameView.PrintText("상태 보기", 0, ConsoleColor.Magenta);
             Console.WriteLine();
@@ -18,12 +18,12 @@ namespace MarvelHeroes
             Console.WriteLine();
             Console.WriteLine(""); // 플레이어 레벨
             Console.WriteLine(""); // 플레이어 이름 및 직업
-            string attack = EquipAttack == 0 ? $"공격력 : {atk}" : $"공격력 : {atk} (+{EquipAttack})"; // 공격력 보여주기
-            Console.WriteLine(attack); // 플레이어 공격력
-            string deffence = EquipDefence == 0 ? $"방어력 : {def}" : $"공격력 : {def} (+{EquipDefence})"; // 방어력 보여주기
-            Console.WriteLine(deffence); // 플레이어 공격력
-            Console.WriteLine($"체력 : ({health} / {maxHealth})");
-            Console.WriteLine($"Gold : {gold} G");
+            //string attack = EquipAttack == 0 ? $"공격력 : {atk}" : $"공격력 : {atk} (+{EquipAttack})"; // 공격력 보여주기
+            //Console.WriteLine(attack); // 플레이어 공격력
+            //string deffence = EquipDefence == 0 ? $"방어력 : {def}" : $"공격력 : {def} (+{EquipDefence})"; // 방어력 보여주기
+            //Console.WriteLine(deffence); // 플레이어 공격력
+            //Console.WriteLine($"체력 : ({health} / {maxHealth})");
+            //Console.WriteLine($"Gold : {gold} G");
             Console.WriteLine();
             Console.WriteLine("0. 나가기");
             Console.WriteLine();
@@ -41,7 +41,7 @@ namespace MarvelHeroes
                     Console.WriteLine("입력을 다시시도해 주세요");
                 }
             }
-            return sceneTemp;
+            //return sceneTemp;
         }
     }
 }

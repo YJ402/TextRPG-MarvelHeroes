@@ -59,10 +59,16 @@ namespace MarvelHeroes
 
     public class ToUI : ISelections
     {
-
+        SceneNum currentScene;
+        public ToUI(SceneNum cucScene)
+        {
+            currentScene = cucScene;
+        }
         public void Execute()
         {
-            Console.WriteLine("UI 트리거");// 퀘스트 트리거
+            Console.WriteLine("UI 트리거");// UI 트리거
+            WJ_UIManager UIManager = new WJ_UIManager();
+            UIManager.UIMainScene(currentScene);
         }
 
         public string GetSelectionDesc()
