@@ -6,12 +6,12 @@ using System.Threading.Tasks;
 
 namespace MarvelHeroes
 {
-    public class WJ_UIManager
+    public class UIManager
     {
-        WJ_StatusUI statusUI = new WJ_StatusUI(); // 상태창 class
-        WJ_InventoryUI inventoryUI = new WJ_InventoryUI(); // 인벤토리 class
-        WJ_SaveLoadUI saveLoadUI = new WJ_SaveLoadUI(); // save/Load class
-        WJ_ExitUI exitUI = new WJ_ExitUI(); // 게임종료 class
+        StatusUI statusUI = new StatusUI(); // 상태창 class
+        InventoryUI inventoryUI = new InventoryUI(); // 인벤토리 class
+        SaveLoadUI saveLoadUI = new SaveLoadUI(); // save/Load class
+        ExitUI exitUI = new ExitUI(); // 게임종료 class
 
         public int UIMainScene(int temp)
         {

@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace MarvelHeroes
 {
-    internal class WJ_ExitUI
+    internal class ExitUI
     {
         public int ExitScene(int temp)
         {

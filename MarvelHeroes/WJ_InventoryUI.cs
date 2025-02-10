@@ -7,9 +7,8 @@ using System.Threading.Tasks;
 
 namespace MarvelHeroes
 {
-    public class WJ_InventoryUI
+    public class InventoryUI
     {
-        YJ_GameManager gameManager = new YJ_GameManager();
         public int InventoryScene(int temp)
         {
             int sceneTemp = temp;
@@ -22,7 +21,7 @@ namespace MarvelHeroes
             Console.WriteLine();
             foreach (int i in gameManager.inventory) // 게임매니저에서 선언한 인벤토리 리스트를 가져옴
             {
-                DisplayInven(i);
+                DisplayInven(i,0);
             }
             Console.WriteLine();
             Console.WriteLine("0. 나가기");
@@ -45,16 +44,23 @@ namespace MarvelHeroes
             return sceneTemp;
         }
 
-        public string DisplayInven(int i)
+        public string DisplayInven(int i, int j)
         {
-            string str = gameManager.inventory[i].isEquip ? "[E]" : "";
-            str = $"- {i+1}" + str + $"{gameManager.inventory[i].name}\t| {DisplayType(i)}\t | {gameManager.inventory[i].Descrip}\t| {gameManager.inventory[i].Cost}";
+            string str = GameManager.inventory[i].isEquip ? "[E]" : "";
+            if (j == 0)
+            {
+                str = $"- {i + 1}" + str + $"{GameManager.inventory[i].name}\t| {DisplayType(i)}\t | {GameManager.inventory[i].Descrip}\t| {gameManager.inventory[i].Cost}";
+            }
+            else
+            {
+                str = $"-  " + str + $"{GameManager.inventory[i].name}\t| {DisplayType(i)}\t | {GameManager.inventory[i].Descrip}\t| {gameManager.inventory[i].Cost}";
+            }
             return str;
         }
 
         public string DisplayType(int i)
         {
-            string str = gameManager.inventory[i].type == ItemType.Weapon ? $"공격력 : {gameManager.inventory[i].Value}" : $"방어력 : {gameManager.inventory[i].Value}";
+            string str = GameManager.inventory[i].type == ItemType.Weapon ? $"공격력 : {GameManager.inventory[i].Value}" : $"방어력 : {gameManager.inventory[i].Value}";
             return str;
         }
 
@@ -68,9 +74,9 @@ namespace MarvelHeroes
             Console.WriteLine();
             Console.WriteLine("[아이템 목록]");
             Console.WriteLine();
-            foreach (int i in gameManager.inventory) // 게임매니저에서 선언한 인벤토리 리스트를 가져옴
+            foreach (int i in GameManager.inventory) // 게임매니저에서 선언한 인벤토리 리스트를 가져옴
             {
-                DisplayInven(i);
+                DisplayInven(i,1);
             }
             Console.WriteLine();
             Console.WriteLine("0. 나가기");
@@ -95,11 +101,11 @@ namespace MarvelHeroes
 
         public void Equip(int choice)
         {
-            DH_ItemManager select = gameManager.inventory[choice - 1]; 
+            DH_ItemManager select = GameManager.inventory[choice - 1]; 
 
-            for (int i = 0; i < gameManager.inventory.Count; i++)
+            for (int i = 0; i < GameManager.inventory.Count; i++)
             {
-                if ((gameManager.inventory[choice - 1].isEquip = false) && (gameManager.inventory[choice - 1].Type == select.Type))
+                if ((GameManager.inventory[choice - 1].isEquip = false) && (GameManager.inventory[choice - 1].Type == select.Type))
                 {
                 }
             }
