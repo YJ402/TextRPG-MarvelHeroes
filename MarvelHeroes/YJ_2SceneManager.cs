@@ -8,8 +8,13 @@ namespace MarvelHeroes
 {
     public enum SceneNum
     {
-        Town = 1,
-        Dungeon = 2
+        State = 1,
+        Inventory,
+        SaveLoad,
+        Exit,
+
+        Town = 10,
+        Dungeon
     }
 
     public class SceneManager
@@ -27,6 +32,11 @@ namespace MarvelHeroes
             return _instance;
         }
 
+        //static DungeonScene dungeonScene = new DungeonScene();
+        //static DungeonScene dungeonScene = new DungeonScene();
+        //static DungeonScene dungeonScene = new DungeonScene();
+        //static DungeonScene dungeonScene = new DungeonScene();
+
         static TownScene townScene = new TownScene();
         static DungeonScene dungeonScene = new DungeonScene();
         public Scene currentScene;
@@ -35,8 +45,14 @@ namespace MarvelHeroes
         {
             switch ((int)sceneNum)
             {
-                case 1: _instance.currentScene = townScene; break;
-                case 2: _instance.currentScene = dungeonScene; break;
+                //case 1: _instance.currentScene = ExitUI; break;
+                //case 2: _instance.currentScene = StatusUI; break;
+                //case 3: _instance.currentScene = dungeonScene; break;
+                //case 4: _instance.currentScene = dungeonScene; break;
+
+                case 10: _instance.currentScene = townScene; break;
+                case 11: _instance.currentScene = dungeonScene; break;
+
             }
         }
     }

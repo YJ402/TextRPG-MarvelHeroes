@@ -3,9 +3,11 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using static MarvelHeroes.UIManager;
 
 namespace MarvelHeroes
 {
+
     public class UIManager
     {
         UIScene uiScene = new UIScene();
@@ -16,70 +18,99 @@ namespace MarvelHeroes
                 Name = "UI";
                 Description = "캐릭터 정보, 인벤토리, 저장, 종료를 할 수 있습니다";
 
-                ISelections state = new ToState();
-                ISelections inventory = new ToInven();
-                ISelections saveLoad = new ToSaveLoad();
-                ISelections Exit = new ToExit();
+                ISelections state = new ToUIBranch(SceneNum.State);
+                ISelections inventory = new ToUIBranch(SceneNum.Inventory);
+                ISelections saveLoad = new ToUIBranch(SceneNum.SaveLoad);
+                ISelections Exit = new ToUIBranch(SceneNum.Exit);
 
                 sceneSelections = new Dictionary<int, ISelections>() { { 1, state }, { 2, inventory }, { 3, saveLoad }, { 4, Exit } };
             }
         }
 
-        public class ToState : ISelections
+        public class ToUIBranch : ISelections
         {
+            SceneNum UIBranch;
+
+            public ToUIBranch(SceneNum i)
+            {
+                UIBranch = i;
+            }
+
             public void Execute()
             {
-                StatusUI statusUI = new StatusUI(); // 상태창 class
-                statusUI.UIStateScene();
+                //StatusUI statusUI = new StatusUI(); // 상태창 class
+                //statusUI.UIStateScene();
+                SceneManager.ChangeCurrentScene(UIBranch);
             }
 
             public string GetSelectionDesc()
             {
-                return $"상태창(으)로 이동하기";
+                string sceneKorName = "";
+
+                switch (UIBranch)
+                {
+                    case SceneNum.Inventory:
+                        sceneKorName = "인벤토리";
+                        break;
+                    case SceneNum.SaveLoad:
+                        sceneKorName = "저장/불러오기";
+                        break;
+                    case SceneNum.State:
+                        sceneKorName = "캐릭터 상태";
+                        break;
+                    case SceneNum.Exit:
+                        sceneKorName = "종료";
+                        break;
+                    defualt:
+                        sceneKorName = "없는 장소";
+                        break;
+                }
+
+                return $"{sceneKorName}(으)로 이동하기";
             }
         }
 
-        public class ToInven : ISelections
-        {
-            public void Execute()
-            {
-               // InventoryUI inventoryUI = new InventoryUI(); // 인벤토리 class
-               // inventoryUI.UIStateScene();
-            }
+        //public class ToInven : ISelections
+        //{
+        //    public void Execute()
+        //    {
+        //       // InventoryUI inventoryUI = new InventoryUI(); // 인벤토리 class
+        //       // inventoryUI.UIStateScene();
+        //    }
 
-            public string GetSelectionDesc()
-            {
-                return $"인벤토리(으)로 이동하기";
-            }
-        }
+        //    public string GetSelectionDesc()
+        //    {
+        //        return $"인벤토리(으)로 이동하기";
+        //    }
+        //}
 
-        public class ToSaveLoad : ISelections
-        {
-            public void Execute()
-            {
-                SaveLoadUI saveLoadUI = new SaveLoadUI(); // 상태창 class
-                saveLoadUI.SaveLoadScene();
-            }
+        //public class ToSaveLoad : ISelections
+        //{
+        //    public void Execute()
+        //    {
+        //        SaveLoadUI saveLoadUI = new SaveLoadUI(); // 상태창 class
+        //        saveLoadUI.SaveLoadScene();
+        //    }
 
-            public string GetSelectionDesc()
-            {
-                return $"저장 / 불러오기(으)로 이동하기";
-            }
-        }
+        //    public string GetSelectionDesc()
+        //    {
+        //        return $"저장 / 불러오기(으)로 이동하기";
+        //    }
+        //}
 
-        public class ToExit : ISelections
-        {
-            public void Execute()
-            {
-                ExitUI exitUI = new ExitUI(); // 게임종료 class // 상태창 class
-                exitUI.ExitScene();
-            }
+        //public class ToExit : ISelections
+        //{
+        //    public void Execute()
+        //    {
+        //        ExitUI exitUI = new ExitUI(); // 게임종료 class // 상태창 class
+        //        exitUI.ExitScene();
+        //    }
 
-            public string GetSelectionDesc()
-            {
-                return $"게임 종료(으)로 이동하기";
-            }
-        }
+        //    public string GetSelectionDesc()
+        //    {
+        //        return $"게임 종료(으)로 이동하기";
+        //    }
+        //}
 
         public void  UIMainScene()
         {
