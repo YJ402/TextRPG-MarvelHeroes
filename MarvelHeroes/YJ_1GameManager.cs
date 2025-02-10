@@ -36,7 +36,7 @@ namespace MarvelHeroes
                 GameView.ViewSceneInput2_2(SM.currentScene);
 
                 TownScene townScene = new TownScene();
-                DungeonScene dungeonScene = new DungeonScene(); 
+                DungeonScene dungeonScene = new DungeonScene();
 
                 while (true)
                 {

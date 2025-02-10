@@ -57,33 +57,116 @@ namespace MarvelHeroes
         }
     }
 
-    public class ToTown : ISelections
+    public class ToUI : ISelections
     {
-
+        SceneNum currentScene;
+        public ToUI(SceneNum cucScene)
+        {
+            currentScene = cucScene;
+        }
         public void Execute()
         {
-            SceneManager.ChangeCurrentScene("Town");
+            Console.WriteLine("UI 트리거");// UI 트리거
+            WJ_UIManager UIManager = new WJ_UIManager();
+            UIManager.UIMainScene(currentScene);
         }
 
         public string GetSelectionDesc()
         {
-            return "마을로 이동하기";
+            return "UI"; // 선택지 설명
         }
     }
 
-    public class ToDungeon : ISelections
+    public class ToWhere : ISelections
     {
+        SceneNum sceneNum;
 
+        public ToWhere(SceneNum i)
+        {
+            sceneNum = i;
+        }
         public void Execute()
         {
-            SceneManager.ChangeCurrentScene("Dungeon");
+            SceneManager.ChangeCurrentScene(sceneNum);
         }
 
         public string GetSelectionDesc()
         {
-            return "던전으로 이동하기";
+            string sceneKorName ="";
+
+            switch (sceneNum)
+            {
+                case SceneNum.Town:
+                    sceneKorName = "마을";
+                    break;
+                case SceneNum.Dungeon:
+                    sceneKorName = "던전";
+                    break;
+                defualt:
+                    sceneKorName = "없는 장소";
+                    break;
+            }
+
+            return $"{sceneKorName}(으)로 이동하기"; 
         }
     }
+
+    public class ToFloor : ISelections
+    {
+        int farmingFloor;
+        int tryFloor;
+
+        public ToFloor(int trying, int high)
+        {
+            farmingFloor = trying;
+            tryFloor = high;
+        }
+        public void Execute()
+        {
+            if (GameView.SceneSelectYN("정말로 도전하시겠습니까?"))
+            {
+                Console.WriteLine($"{farmingFloor}층 공략하기");
+                //배틀매니저의 전투 시작 메서드 호출(매개변수:목적 층 );
+                //BattleManager BM = new BattleManager();
+                //BM.BattleStart(farmingFloor);
+            }
+        }
+
+        public string GetSelectionDesc()
+        {
+            if (farmingFloor == tryFloor)
+                return $"{tryFloor}층 [도전]";
+            else return $"{farmingFloor}층 [완료]";
+        }
+    }
+
+    //public class ToTown : ISelections
+    //{
+
+    //    public void Execute()
+    //    {
+    //        SceneManager.ChangeCurrentScene(SceneNum.Town);
+    //    }
+
+    //    public string GetSelectionDesc()
+    //    {
+    //        return "마을로 이동하기";
+    //    }
+    //}
+
+    //public class ToDungeon : ISelections
+    //{
+
+    //    public void Execute()
+    //    {
+    //        SceneManager.ChangeCurrentScene(SceneNum.Dungeon);
+    //    }
+
+    //    public string GetSelectionDesc()
+    //    {
+    //        return "던전으로 이동하기";
+    //    }
+    //}
 
     public class Select_1_Class : ISelections
     {

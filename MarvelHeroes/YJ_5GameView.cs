@@ -114,8 +114,9 @@ namespace MarvelHeroes
             }
         }
 
-        public static bool SceneSelectYN()
+        public static bool SceneSelectYN(string warning = "")
         {
+            Console.WriteLine(warning);
             Console.WriteLine("1.예\n2.아니오\n>> ");
 
             int input;
