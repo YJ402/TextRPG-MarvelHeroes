@@ -16,9 +16,10 @@ namespace MarvelHeroes
         {
             questlist = new List<Quest>
             {
-                new HuntQuest ("이장의 부탁1","이장이 당신에게 근처 치타우리의 처리를 부탁했습니다.", 0, 101),
-                new HuntQuest ("이장의 부탁2","이장이 당신에게 근처 치타우리의 처리를 부탁했습니다.", 0, 102),
-                new HuntQuest ("이장의 부탁3","이장이 당신에게 근처 치타우리의 처리를 부탁했습니다.", 0, 103)
+                new HuntQuest("이장의 부탁1", "이장이 당신에게 근처 치타우리의 처리를 부탁했습니다.", 3, 101),
+            new HuntQuest("이장의 부탁2", "이장이 당신에게 근처 치타우리의 처리를 부탁했습니다.", 5, 102),
+            new ItemQuest("마법 물약 수집", "마법 물약을 2개 모아오세요.", 2, 201, "마법 물약"),
+            new LevelQuest("레벨업 도전", "레벨 10을 달성하세요.", 10, 301)
             };
 
             acceptQuest = new List<Quest>(); //리스트 초기화
@@ -41,11 +42,30 @@ namespace MarvelHeroes
             }
         }
 
-        public void CompleteQuest(Quest quest)
+        public void CheckCompleteQuest(List<Monster> killMonster, Inventory inventory, Player player)
+        {
+            List<Quest> completedQuests = new List<Quest>();
+            foreach (Quest quest in acceptQuest)
+            {
+                if (quest.IsCompleted(killMonster, inventory, player))
+                {
+                    completedQuests.Add(quest);
+                }
+            }
+
+            // 완료된 퀘스트 처리
+            foreach (Quest completed in completedQuests)
+            {
+                ClearQuest(completed);
+            }
+        }
+
+        public void ClearQuest(Quest quest)
         {
             if (acceptQuest.Contains(quest)) // 받은 퀘스트인지 확인
             {
                 acceptQuest.Remove(quest); // 완료된 퀘스트 제거
+                quest.Questclear();
                 Console.WriteLine($"[퀘스트 완료] {quest.Name} 퀘스트를 완료했습니다!");
             }
             else
@@ -72,15 +92,22 @@ namespace MarvelHeroes
             QuestId = questId;
         }
 
+        public abstract bool IsCompleted(List<Monster> killMonster, Inventory inventory, Player player); // 퀘스트 완료 체크
+
         public abstract void Questclear();
     }
 
     public class ItemQuest : Quest
     {
-        public ItemQuest(string name, string descrip, int demand, int questId)
+        public string RequiredItem { get; set; }
+        public ItemQuest(string name, string descrip, int demand, int questId, string requiredItem)
             : base(name, descrip, demand, questId)
         {
-
+            RequiredItem = requiredItem;
+        }
+        public override bool IsCompleted(List<Monster> killMonster, Inventory inventory, Player player)
+        {
+            return inventory.GetItemCount(RequiredItem) >= Demand;
         }
 
         public override void Questclear()
@@ -96,6 +123,10 @@ namespace MarvelHeroes
         {
 
         }
+        public override bool IsCompleted(List<Monster> killMonster, Inventory inventory, Player player)
+        {
+            return killMonster.Count(m => m.MonsterName == "치타우리") >= Demand;
+        }
 
         public override void Questclear()
         {
@@ -109,6 +140,10 @@ namespace MarvelHeroes
             : base(name, descrip, demand, questId)
         {
 
+        }
+        public override bool IsCompleted(List<Monster> killMonster, Inventory inventory, Player player)
+        {
+            return player.Level >= Demand;
         }
 
         public override void Questclear()
