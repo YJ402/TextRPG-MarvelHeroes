@@ -1,8 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Reflection.Emit;
 using System.Text;
 using System.Threading.Tasks;
+using System.Xml.Linq;
 
 //함수나,클래스명은 PascalCase 메서드, 프로퍼티 이름 등에 사용됩니다. 단어의 첫 글자는 대문자로 시작하며, 이후 단어의 첫 글자도 대문자로 표기합니다
 //변수명은 camelCase 변수, 매개변수, 로컬 변수 이름 등에 사용됩니다 단어의 첫 글자는 소문자로 시작하며, 이후 단어의 첫 글자는 대문자로 표기합니다
@@ -30,40 +32,142 @@ namespace MarvelHeroes
     //int CH → 크리티컬 
     //int Dxi → 민첩성
 
-    public class Player
+    public class Player : Unit
     {
-        public int Level { get; set; } 
         public string Name { get; set; }
-        public string Job { get; }
-        public int Atk { get; }
-        public int EquipAtk { get; }
-        public int Def { get; }
-        public int EquipDef { get; }
+        public string PlayerJob { get; set; }
+        public int EquipAtk { get; set; }
+        public int EquipDef { get; set; }
         public int Gold { get; set; }
-        public int Hp { get; }
-        public int Mp { get; }
-        public int MaxHp { get; }
-        public int Critical {  get; }
+        public int Mp { get; set; }
+        public int MaxHp { get; set; }
+        
 
-        public int Dexterity { get; }
 
-        public Player(int level, string name, string job, int atk, int equipAtk, int def, int equipDef, int gold, int hp, int mp, int maxHp, int CH, int Dxi)
+        public Player(int _Level, string name, int gold,int _Critical, int _Dexterity, bool _isDead, JobType jobtypeName)
+            : base (_Level, 0, 0, 0, _Critical, _Dexterity, false)
         {
-            // 이런식으로 되있는게 속성
-
-            Level = 1;    
+            // 이런식으로 되있는게 속성   
             Name = name;
-            Job = job;
-            Atk = atk;
-            EquipAtk = 0;
-            Def = def;
-            EquipDef = 0;
+            PlayerJob = Job.jobStats[jobtypeName].name;
+            Atk = Job.jobStats[jobtypeName].atk;
+            Def = Job.jobStats[jobtypeName].def;
+            Hp = Job.jobStats[jobtypeName].hp;
+            Mp = Job.jobStats[jobtypeName].mp;
             Gold = 1500;
-            Hp = hp;
-            Mp = mp;
-            MaxHp = maxHp;
-            Critical = CH;
-            Dexterity = Dxi;
+            MaxHp = Hp;
+         
         }
+
+       
+        //public override Player TakeDamge(int damge)
+        //{
+        //    int newHp;
+        //    if (Hp <= 0)
+        //    {   
+        //        newHp = 0;
+        //        isDead = true;
+        //    }
+        //    else newHp = Hp - damge;
+
+        //    return new Player(Level, Name, Gold, Critical, Dexterity, isDead, );
+        //}
+        //public override Player TakeHpHeal(int heal)
+        //{
+        //    int newHp;
+
+        //    if(Hp >= 100) newHp = 100;
+        //    else newHp = Hp + heal;
+
+        //    return new Player(Level, Name, Job, Atk, EquipAtk, Def, EquipDef, Gold, newHp, Mp, MaxHp, Critical, Dexterity, isDead);
+        //}
+        //public Player TakeMana(int useMp)
+        //{
+        //    int newMp;
+
+        //    if (Mp <= 0)
+        //    {
+        //        newMp = 0;
+        //    }
+        //    else newMp = Mp - useMp;
+
+        //    return new Player(Level, Name, Job, Atk, EquipAtk, Def, EquipDef, Gold, Hp, newMp, MaxHp, Critical, Dexterity, isDead);
+        //}
+        //public Player TakeMpHeal(int heal)
+        //{
+        //    int newMp;
+
+        //    if (Hp >= 100) newMp = 100;
+        //    else newMp = Hp + heal;
+
+        //    return new Player(Level, Name, Job, Atk, EquipAtk, Def, EquipDef, Gold, Hp, newMp, MaxHp, Critical, Dexterity, isDead);
+        //}
+
+
+        // 아이언맨 리펄서건 스킬
+        public void IronManAddDex(int Adddex, int number)
+        {
+            int newDex = 0;
+
+            switch(number)
+            {
+                case 0:
+                    newDex = Dexterity + Adddex;
+                    break;
+                case 1:
+                    newDex = Dexterity - Adddex;
+                    break;                  
+            }
+        }
+        // 스파이더맨 나노슈트 스킬
+        public void NanoSuit(int addatk, int adddef, int number)
+        {
+            int newAtk = 0;
+            int newDef = 0;
+           
+            switch (number)
+            {
+                case 0:
+                    newAtk = Atk + addatk;
+                    newDef = Def + adddef;
+                    break;
+                case 1:
+                    newAtk = Atk - addatk;
+                    newDef = Def - adddef;
+                    break;
+            }
+        }
+
+        // 직업 스킬 리스트 가져오기
+        public List<Skill> JobSkills(Player player)
+        {
+            List<Skill> skills = new List<Skill>();
+
+            switch (player.PlayerJob)
+            {
+                case "IronMan":
+                    IronMan ironMan = new IronMan();
+                    skills = ironMan.IronManSKills;
+                    return skills;
+                case "SpiderMan":
+                    SpiderMan spiderMan = new SpiderMan();
+                    skills = spiderMan.SpiderManSKills;
+                    return skills;
+                case "DoctorStrange":
+                    DoctorStrange doctorStrange = new DoctorStrange();
+                    skills = doctorStrange.DoctorStrangeSKills;
+                    return skills;
+                case "Hulk":
+                    Hulk hulk = new Hulk();
+                    skills = hulk.HulkSKills;
+                    return skills;
+                default:
+                    Console.WriteLine("스킬이 없습니다.");
+                    Console.ReadKey();
+                    return skills;
+            }
+
+        }
+
     }
 }
