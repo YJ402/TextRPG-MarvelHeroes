@@ -9,17 +9,25 @@ namespace MarvelHeroes
 {
     internal class QuestManager
     {
-        List<Quest> questlist; //모든퀘스트 목록
+        List<Quest> questlist_Chief; //모든퀘스트 목록
+        List<Quest> questlist_Invagation; //모든퀘스트 목록
         List<Quest> acceptQuest; //플레이어가 받은 퀘스트
+
 
         public QuestManager()
         {
-            questlist = new List<Quest>
+            questlist_Chief = new List<Quest>
             {
-            new HuntQuest("이장의 부탁1", "이장이 당신에게 근처 고블린 처리를 부탁했습니다.", 3, 101, "Goblin"),
-            new HuntQuest("이장의 부탁2", "이장이 당신에게 근처 고블린 처리를 부탁했습니다.", 5, 102, "Goblin"),
-            new ItemQuest("마법 물약 수집", "마법 물약을 2개 모아오세요.", 2, 201, "마법 물약"),
-            new LevelQuest("레벨업 도전", "레벨 10을 달성하세요.", 10, 301)
+            new HuntQuest("시장의 토벌 의뢰", "시장이 당신에게 근처 치타우리족의 처리를 부탁했습니다.", 3, 1101, "Goblin"),
+            new ItemQuest("영웅의 품격", "사장의 신뢰를 위해 방어구를 입은 멋진 모습을 보여줍시다. ", 1, 1201,ItemType.Amor),
+            new LevelQuest("시장의 신뢰", "시장은 강한 자를 원합니다. 시장의 신뢰를 위해 레벨 10을 달성하세요.", 10, 1301)
+            };
+
+            questlist_Invagation = new List<Quest>
+            {
+            new HuntQuest("미망인의 복수", "미망인의 남편을 죽인 치타우리를 사냥해옵시다.", 3, 2101, "Goblin"),
+            new ItemQuest("전투준비", "무기를 장착하여 전투에 대비합시다.", 1, 2201, ItemType.Weapon),
+            new LevelQuest("부족한 힘", "적에 비해 당신은 약합니다. 레벨 15을 달성합시다.", 15, 2301)
             };
 
             acceptQuest = new List<Quest>(); //리스트 초기화
@@ -42,12 +50,12 @@ namespace MarvelHeroes
             }
         }
 
-        public void CheckCompleteQuest(List<Monster> killMonster, InventoryUI inventory, Player player)
+        public void CheckCompleteQuest(List<Monster> killMonster, Player player, Item item)
         {
             List<Quest> completedQuests = new List<Quest>();
             foreach (Quest quest in acceptQuest)
             {
-                if (quest.IsCompleted(killMonster, inventory, player))
+                if (quest.IsCompleted(killMonster, player, item))
                 {
                     completedQuests.Add(quest);
                 }
@@ -73,8 +81,6 @@ namespace MarvelHeroes
                 Console.WriteLine("받지 않은 퀘스트입니다.");
             }
         }
-
-
     }
 
     public abstract class Quest
@@ -92,29 +98,31 @@ namespace MarvelHeroes
             QuestId = questId;
         }
 
-        public abstract bool IsCompleted(List<Monster> killMonster, InventoryUI inventory, Player player); // 퀘스트 완료 체크
+        public abstract bool IsCompleted(List<Monster> killMonster, Player player, Item item); // 퀘스트 완료 체크
 
         public abstract void Questclear();
     }
 
     public class ItemQuest : Quest
     {
-        public string RequiredItem { get; set; }
-        public ItemQuest(string name, string descrip, int demand, int questId, string requiredItem)
+
+        public ItemType RequiredType { get; set; } // 장착해야 할 아이템 이름
+
+        public ItemQuest(string name, string descrip, int demand, int questId, ItemType requiredType)
             : base(name, descrip, demand, questId)
         {
-            RequiredItem = requiredItem;
+            RequiredType = requiredType;
         }
-        public override bool IsCompleted(List<Monster> killMonster, InventoryUI inventory, Player player)
+        public override bool IsCompleted(List<Monster> killMonster, Player player, Item item)
         {
-            foreach (Item i in InvetoryUI)
-            {
-                if (i.Name = RequiredItem)
-                {
-                    Inventory.destroy(i);
-                    return true;
-                }
-            }
+            // ⭐ 무기 장착 퀘스트일 경우, 플레이어가 무기를 장착했는지 확인
+            if (RequiredType == ItemType.Weapon && item.EquippedWeapon != null)
+                return true;
+
+            // ⭐ 방어구 장착 퀘스트일 경우, 플레이어가 방어구를 장착했는지 확인
+            if (RequiredType == ItemType.Amor && item.EquippedArmor != null)
+                return true;
+
             return false;
         }
 
@@ -132,7 +140,7 @@ namespace MarvelHeroes
         {
             targetMonster = monster; 
         }
-        public override bool IsCompleted(List<Monster> killMonster, InventoryUI inventory, Player player)
+        public override bool IsCompleted(List<Monster> killMonster, Player player, Item item)
         {
             foreach (Monster m in killMonster)
             {
@@ -155,7 +163,7 @@ namespace MarvelHeroes
         {
 
         }
-        public override bool IsCompleted(List<Monster> killMonster, InventoryUI inventory, Player player)
+        public override bool IsCompleted(List<Monster> killMonster, Player player, Item item)
         {
             return player.Level >= Demand;
         }
