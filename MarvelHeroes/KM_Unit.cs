@@ -30,12 +30,16 @@ namespace MarvelHeroes
         }
 
         // 체력 감소
-        //public virtual Unit TakeDamge(int damge)
-        //{
-        //    int newHp = Hp - damge;
+        public virtual void TakeDamge(int damge)
+        {
+            if (Hp <= 0)
+            {
+                isDead = true;
+                Hp = 0;
+            }
+            else Hp -= damge;
 
-        //    return new Unit(Level,Atk,Def,newHp, Critical, Dexterity);
-        //}
+        }
 
         //// 체력 회복
         //public virtual Unit TakeHpHeal(int heal)
