@@ -58,6 +58,8 @@ namespace MarvelHeroes
         // 선택지 메서드 2개: ViewGetSceneSelect(씬 선택지를 출력하고 입력 값을 반환함. 예외처리도 함//지금은 toDos랑 toGos로 선택지를 출력하는데 그냥 단일화할까.), SceneSelectYN(예 아니오 선택지를 출력하고 입력값에 따른 참 거짓을 반환함. 예외처리도 함) /// 
         public static int ViewGetSceneSelect2(Scene currentScene)
         {
+            //ViewSceneUI(currentScene);
+
             ViewSceneSelect2_1(currentScene);
 
             ViewSceneInput2_2(currentScene);
@@ -65,14 +67,37 @@ namespace MarvelHeroes
             return GetSceneInput2_3(currentScene);
         }
 
+        //public static void ViewSceneUI(Scene currentScene)
+        //{
+        //    if(!(currentScene is CreateCharacterScene))
+
+        //}
+
         public static void ViewSceneSelect2_1(Scene currentScene)
         {
             if (currentScene.sceneSelections != null)
             {
-                for (int i = 1; i < currentScene.sceneSelections.Count + 1; i++)
+                int temp = currentScene.sceneSelections.Count;
+
+                if (currentScene.sceneSelections.ContainsKey(0))
                 {
-                    Console.WriteLine("{0}. {1}", i, currentScene.sceneSelections[i].GetSelectionDesc());
+                    //UI 버튼이 있는 씬일때.
+                    Console.WriteLine("\t\t\t\t\t\t0.UI");
+
+                    for (int i = 1; i < temp; i++)
+                    {
+                        Console.WriteLine("{0}. {1}", i, currentScene.sceneSelections[i].GetSelectionDesc());
+                    }
                 }
+                else
+                {
+                    //UI 버튼이 없는 씬일때.
+                    for (int i = 1; i < temp + 1; i++)
+                    {
+                        Console.WriteLine("{0}. {1}", i, currentScene.sceneSelections[i].GetSelectionDesc());
+                    }
+                }
+
             }
             //while(i < scene.toDos.Count)
             //{
@@ -104,10 +129,25 @@ namespace MarvelHeroes
             {
                 //입력값 유효성 검사(숫자인지, 선택지 갯수 내의 숫자인지)
                 int input;
-                if (int.TryParse(Console.ReadLine(), out input))
+                int temp = currentScene.sceneSelections.Count();
+
+                if (currentScene.sceneSelections.ContainsKey(0))
                 {
-                    if (input < 1 + currentScene.sceneSelections.Count() && input > 0)
-                        return input;
+                    //UI 버튼이 있는 씬일때.
+                    if (int.TryParse(Console.ReadLine(), out input))
+                    {
+                        if (input < temp && input > -1)
+                            return input;
+                    }
+                }
+                else
+                {
+                    //UI 버튼이 없는 씬일때.
+                    if (int.TryParse(Console.ReadLine(), out input))
+                    {
+                        if (input < 1 + temp && input > 0)
+                            return input;
+                    }
                 }
                 Console.WriteLine("잘못된 입력입니다");
                 Console.Write(">> ");

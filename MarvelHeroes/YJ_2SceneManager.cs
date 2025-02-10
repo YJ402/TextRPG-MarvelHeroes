@@ -6,10 +6,15 @@ using System.Threading.Tasks;
 
 namespace MarvelHeroes
 {
-    enum SceneNum
+    public enum SceneNum
     {
-        Town = 1,
-        Dungeon = 2
+        State = 1,
+        Inventory,
+        SaveLoad,
+        Exit,
+
+        Town = 10,
+        Dungeon
     }
 
     public class SceneManager
@@ -27,18 +32,27 @@ namespace MarvelHeroes
             return _instance;
         }
 
+        //static DungeonScene dungeonScene = new DungeonScene();
+        //static DungeonScene dungeonScene = new DungeonScene();
+        //static DungeonScene dungeonScene = new DungeonScene();
+        //static DungeonScene dungeonScene = new DungeonScene();
+
         static TownScene townScene = new TownScene();
         static DungeonScene dungeonScene = new DungeonScene();
         public Scene currentScene;
 
-        static public void ChangeCurrentScene(string sceneName)
+        static public void ChangeCurrentScene(SceneNum sceneNum) // 매개변수 이넘타입으로 할까?
         {
-            SceneNum temp = (SceneNum)Enum.Parse(typeof(SceneNum), sceneName);
-
-            switch ((int)temp)
+            switch ((int)sceneNum)
             {
-                case 1: _instance.currentScene = townScene; break;
-                case 2: _instance.currentScene = dungeonScene; break;
+                //case 1: _instance.currentScene = ExitUI; break;
+                //case 2: _instance.currentScene = StatusUI; break;
+                //case 3: _instance.currentScene = dungeonScene; break;
+                //case 4: _instance.currentScene = dungeonScene; break;
+
+                case 10: _instance.currentScene = townScene; break;
+                case 11: _instance.currentScene = dungeonScene; break;
+
             }
         }
     }

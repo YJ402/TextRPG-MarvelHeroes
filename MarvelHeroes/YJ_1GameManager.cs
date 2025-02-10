@@ -52,6 +52,7 @@ namespace MarvelHeroes
                 
                 GameView.ViewSceneNameAndDesc1(SM.currentScene);
                 int temp2 = GameView.ViewGetSceneSelect2(SM.currentScene);
+                SM.currentScene.sceneSelections[temp2].Execute();
 
                 SM.currentScene = townScene;
 

@@ -57,33 +57,87 @@ namespace MarvelHeroes
         }
     }
 
-    public class ToTown : ISelections
+    public class ToUI : ISelections
     {
-
+        SceneNum currentScene;
+        public ToUI(SceneNum cucScene)
+        {
+            currentScene = cucScene;
+        }
         public void Execute()
         {
-            SceneManager.ChangeCurrentScene("Town");
+            Console.WriteLine("UI 트리거");// UI 트리거
+            UIManager UIManager = new UIManager();
+            UIManager.UIMainScene();
         }
 
         public string GetSelectionDesc()
         {
-            return "마을로 이동하기";
+            return "UI"; // 선택지 설명
         }
     }
 
-    public class ToDungeon : ISelections
+    public class ToWhere : ISelections
     {
+        SceneNum sceneNum;
 
+        public ToWhere(SceneNum i)
+        {
+            sceneNum = i;
+        }
         public void Execute()
         {
-            SceneManager.ChangeCurrentScene("Dungeon");
+            SceneManager.ChangeCurrentScene(sceneNum);
         }
 
         public string GetSelectionDesc()
         {
-            return "던전으로 이동하기";
+            string sceneKorName ="";
+
+            switch (sceneNum)
+            {
+                case SceneNum.Town:
+                    sceneKorName = "마을";
+                    break;
+                case SceneNum.Dungeon:
+                    sceneKorName = "던전";
+                    break;
+                defualt:
+                    sceneKorName = "없는 장소";
+                    break;
+            }
+
+            return $"{sceneKorName}(으)로 이동하기"; 
         }
     }
+
+    //public class ToTown : ISelections
+    //{
+
+    //    public void Execute()
+    //    {
+    //        SceneManager.ChangeCurrentScene(SceneNum.Town);
+    //    }
+
+    //    public string GetSelectionDesc()
+    //    {
+    //        return "마을로 이동하기";
+    //    }
+    //}
+
+    //public class ToDungeon : ISelections
+    //{
+
+    //    public void Execute()
+    //    {
+    //        SceneManager.ChangeCurrentScene(SceneNum.Dungeon);
+    //    }
+
+    //    public string GetSelectionDesc()
+    //    {
+    //        return "던전으로 이동하기";
+    //    }
+    //}
 
     public class Select_1_Class : ISelections
     {
