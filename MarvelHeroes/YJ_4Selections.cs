@@ -75,33 +75,67 @@ namespace MarvelHeroes
         }
     }
 
-    public class ToTown : ISelections
+    public class ToWhere : ISelections
     {
+        SceneNum sceneNum;
 
+        public ToWhere(SceneNum i)
+        {
+            sceneNum = i;
+        }
         public void Execute()
         {
-            SceneManager.ChangeCurrentScene(SceneNum.Town);
+            SceneManager.ChangeCurrentScene(sceneNum);
         }
 
         public string GetSelectionDesc()
         {
-            return "마을로 이동하기";
+            string sceneKorName ="";
+
+            switch (sceneNum)
+            {
+                case SceneNum.Town:
+                    sceneKorName = "마을";
+                    break;
+                case SceneNum.Dungeon:
+                    sceneKorName = "던전";
+                    break;
+                defualt:
+                    sceneKorName = "없는 장소";
+                    break;
+            }
+
+            return $"{sceneKorName}(으)로 이동하기"; 
         }
     }
 
-    public class ToDungeon : ISelections
-    {
+    //public class ToTown : ISelections
+    //{
 
-        public void Execute()
-        {
-            SceneManager.ChangeCurrentScene(SceneNum.Dungeon);
-        }
+    //    public void Execute()
+    //    {
+    //        SceneManager.ChangeCurrentScene(SceneNum.Town);
+    //    }
 
-        public string GetSelectionDesc()
-        {
-            return "던전으로 이동하기";
-        }
-    }
+    //    public string GetSelectionDesc()
+    //    {
+    //        return "마을로 이동하기";
+    //    }
+    //}
+
+    //public class ToDungeon : ISelections
+    //{
+
+    //    public void Execute()
+    //    {
+    //        SceneManager.ChangeCurrentScene(SceneNum.Dungeon);
+    //    }
+
+    //    public string GetSelectionDesc()
+    //    {
+    //        return "던전으로 이동하기";
+    //    }
+    //}
 
     public class Select_1_Class : ISelections
     {

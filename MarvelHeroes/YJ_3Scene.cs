@@ -49,7 +49,7 @@ namespace MarvelHeroes
             ISelections UI = new ToUI();
             ISelections action1 = new TalkToChief(quest);
             ISelections action2 = new Investigate(quest);
-            ISelections action3 = new ToDungeon();
+            ISelections action3 = new ToWhere(SceneNum.Dungeon);
 
             sceneSelections = new Dictionary<int, ISelections>() { {0, UI }, { 1, action1 }, { 2, action2}, {3, action3 } };
         }
@@ -73,9 +73,10 @@ namespace MarvelHeroes
             Description = "던전에선 더 높은 층으로 올라갈 수 있습니다.";
             Description2 = "도전하고 싶은 층을 입력해주세요.";
 
-            ISelections action1 = new ToTown();
+            ISelections UI = new ToUI();
+            ISelections action1 = new ToWhere(SceneNum.Town);
 
-            sceneSelections = new Dictionary<int, ISelections>() { { 1, action1 } };
+            sceneSelections = new Dictionary<int, ISelections>() { { 0, UI }, { 1, action1 } };
         }
 
         //public void Execute()
