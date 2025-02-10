@@ -16,8 +16,8 @@ namespace MarvelHeroes
         {
             questlist = new List<Quest>
             {
-            new HuntQuest("이장의 부탁1", "이장이 당신에게 근처 고블린 처리를 부탁했습니다.", 3, 101),
-            new HuntQuest("이장의 부탁2", "이장이 당신에게 근처 고블린 처리를 부탁했습니다.", 5, 102),
+            new HuntQuest("이장의 부탁1", "이장이 당신에게 근처 고블린 처리를 부탁했습니다.", 3, 101, "Goblin"),
+            new HuntQuest("이장의 부탁2", "이장이 당신에게 근처 고블린 처리를 부탁했습니다.", 5, 102, "Goblin"),
             new ItemQuest("마법 물약 수집", "마법 물약을 2개 모아오세요.", 2, 201, "마법 물약"),
             new LevelQuest("레벨업 도전", "레벨 10을 달성하세요.", 10, 301)
             };
@@ -107,7 +107,15 @@ namespace MarvelHeroes
         }
         public override bool IsCompleted(List<Monster> killMonster, InventoryUI inventory, Player player)
         {
-            return inventory.GetItemCount(RequiredItem) >= Demand;
+            foreach (Item i in InvetoryUI)
+            {
+                if (i.Name = RequiredItem)
+                {
+                    Inventory.destroy(i);
+                    return true;
+                }
+            }
+            return false;
         }
 
         public override void Questclear()
@@ -118,14 +126,20 @@ namespace MarvelHeroes
 
     public class HuntQuest : Quest
     {
-        public HuntQuest(string name, string descrip, int demand, int questId)
+        string targetMonster;
+        public HuntQuest(string name, string descrip, int demand, int questId, string monster)
             : base(name, descrip, demand, questId)
         {
-
+            targetMonster = monster; 
         }
         public override bool IsCompleted(List<Monster> killMonster, InventoryUI inventory, Player player)
         {
-            return killMonster.Count(m => m.MonsterName == "Goblin") >= Demand;
+            foreach (Monster m in killMonster)
+            {
+                if (m.MonsterName == targetMonster)
+                    Demand--;
+            }
+                return Demand <= 0;
         }
 
         public override void Questclear()

@@ -9,7 +9,6 @@ using System.Threading.Tasks;
 
 namespace MarvelHeroes
 {
-
     //아이템 - 장착유무, 이름, 공력력||방어력||회복량, 설명, 가격
 
     internal class ItemManager
