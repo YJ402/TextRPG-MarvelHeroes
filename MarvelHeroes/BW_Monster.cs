@@ -28,13 +28,13 @@ namespace MarvelHeroes
             Floor = _floor;
             Critical = _Critical;
             Dexterity = _Dex;
+            IsAtk = _isAtk;
         }
 
         public Monster IsDeadBattle(Monster monster, int beforeHp)
         {
             if (monster.Hp <= 0)
             {
-                monster.isDead = true;
                 monster.IsAtk = false;
                 Console.WriteLine("HP {0} -> Dead\n", beforeHp);
             }
@@ -99,7 +99,7 @@ namespace MarvelHeroes
                 int critical = rand.Next(5, 21); // 크리티컬 확률 (5~20%)
                 int dexterity = rand.Next(5, 21); // 민첩성 (5~20%)
 
-                monsters.Add(new Monster(level, name, hp, atk, def, floorLevel, critical, dexterity, false, true));
+                monsters.Add(new Monster(level, name, hp, atk, def, floorLevel, critical, dexterity, false));
             }
 
             return monsters;
