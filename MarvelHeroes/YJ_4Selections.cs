@@ -13,6 +13,10 @@ namespace MarvelHeroes
         public string GetSelectionDesc();
     }
 
+
+
+
+
     public class TalkToChief : ISelections
     {
         private Quest quest;
@@ -54,6 +58,20 @@ namespace MarvelHeroes
         public string GetSelectionDesc()
         {
             return "마을을 조사한다."; // 선택지 설명
+        }
+    }
+
+    public class ToUI : ISelections
+    {
+
+        public void Execute()
+        {
+            Console.WriteLine("UI 트리거");// 퀘스트 트리거
+        }
+
+        public string GetSelectionDesc()
+        {
+            return "UI"; // 선택지 설명
         }
     }
 

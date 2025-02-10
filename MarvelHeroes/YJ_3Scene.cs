@@ -46,11 +46,12 @@ namespace MarvelHeroes
             Name = "마을";
             Description = "마을에선 다른 지역으로 이동할 수 있고 퀘스트를 수주할 수 있습니다.";
 
+            ISelections UI = new ToUI();
             ISelections action1 = new TalkToChief(quest);
             ISelections action2 = new Investigate(quest);
             ISelections action3 = new ToDungeon();
 
-            sceneSelections = new Dictionary<int, ISelections>() { { 1, action1 }, { 2, action2}, {3, action3 } };
+            sceneSelections = new Dictionary<int, ISelections>() { {0, UI }, { 1, action1 }, { 2, action2}, {3, action3 } };
         }
 
         //public void Execute()
