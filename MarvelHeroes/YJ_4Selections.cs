@@ -59,13 +59,140 @@ namespace MarvelHeroes
         }
     }
 
+    public class Trade_Buy : ISelections
+    {
+        List<Item> playerInventory;
+        List<Item> equipItemList;
+        List<Item> usingItemList;
+
+        List<Item> shopInventory;
+
+        public Trade_Buy()
+        {
+            playerInventory = GameManager.Instance.inventory.items;
+            equipItemList = GameManager.Instance.IM.equipItems;
+            usingItemList = GameManager.Instance.IM.usingItems;
+            shopInventory = new List<Item>();
+        }
+
+        public void Execute()
+        {
+            int num = 0;
+
+            //샵 인벤토리 업데이트 (인벤토리에 없는 것만 + 
+            foreach (Item item in equipItemList)
+            {
+                if (!playerInventory.Contains(item))
+                {
+                    shopInventory.Add(item);
+                }
+            }
+
+            foreach (Item item in usingItemList)
+            {
+                shopInventory.Add(item);
+            }
+
+            while (true)
+            {
+                //선택지 보여주고
+                for (; num < shopInventory.Count(); num++)
+                {
+                    //인벤토리 UI 뷰 활용. 1번부터~ // 0번은 나가기 버튼.
+                }
+
+                //입력 받고
+                int input;
+                Console.WriteLine("구매를 원하는 아이템 번호를 입력해주세요.");
+                while (true)
+                {
+                    //입력값 유효성 검사
+                    if (int.TryParse(Console.ReadLine(), out input))
+                    {
+                        if (input < shopInventory.Count() && input > 0)
+                            break;
+                    }
+                    Console.WriteLine("잘못된 입력입니다");
+                    Console.Write(">> ");
+                }
+
+                //선택 아이템 플레이어 인벤으로 이동, 돈 지불
+                if (input == 0)
+                    break;
+                GameManager.Instance.inventory.AddItem(shopInventory[input - 1]);
+                GameManager.Instance.player.Gold -= shopInventory[input - 1].Cost;
+                shopInventory.Remove(shopInventory[input - 1]);
+            }
+        }
+
+        public string GetSelectionDesc()
+        {
+            return "아이템 구입"; // 선택지 설명
+        }
+    }
+
+    public class Trade_Sell : ISelections
+    {
+        List<Item> playerInventory;
+
+        public Trade_Sell()
+        {
+            playerInventory = GameManager.Instance.inventory.items;
+        }
+
+        public void Execute()
+        {
+            int num = 0;
+
+            while (true)
+            {
+                //선택지 보여주고
+                for (; num < playerInventory.Count(); num++)
+                {
+                    //인벤토리 UI 뷰 활용. 1번부터~ // 0번은 나가기 버튼.
+                }
+
+                //입력 받고
+                int input;
+                Console.WriteLine("판매를 원하는 아이템 번호를 입력해주세요.");
+                while (true)
+                {
+                    //입력값 유효성 검사
+                    if (int.TryParse(Console.ReadLine(), out input))
+                    {
+                        if (input < playerInventory.Count() && input > 0)
+                            break;
+                    }
+                    Console.WriteLine("잘못된 입력입니다");
+                    Console.Write(">> ");
+                }
+
+                //선택 아이템 플레이어 인벤으로 이동, 돈 지불
+                if (input == 0)
+                    break;
+                Item targetItem = playerInventory[input - 1];
+                if (targetItem is UsingItem)
+                {
+                    (targetItem as UsingItem).Quantity--;
+                }
+                else { GameManager.Instance.inventory.RemoveItem(targetItem); }
+                GameManager.Instance.player.Gold -= playerInventory[input - 1].Cost;
+            }
+        }
+
+        public string GetSelectionDesc()
+        {
+            return "아이템 판매"; // 선택지 설명
+        }
+    }
+
     public class ToUI : ISelections
     {
-        SceneNum currentScene;
-        public ToUI(SceneNum cucScene)
-        {
-            currentScene = cucScene;
-        }
+        //SceneNum currentScene;
+        //public ToUI(SceneNum cucScene)
+        //{
+        //    currentScene = cucScene;
+        //}
         public void Execute()
         {
             Console.WriteLine("UI 트리거");// UI 트리거

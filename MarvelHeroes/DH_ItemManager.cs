@@ -13,15 +13,15 @@ namespace MarvelHeroes
 
     public class ItemManager
     {
-        public List<EquipItem> equipItems;
-        public List<UsingItem> usingItems;
+        public List<Item> equipItems;
+        public List<Item> usingItems;
         public List<Item> Alltems;
 
         //DH_ItemManager 호출시 실행
         public ItemManager()
         {
             //public EquipItem(string name, ItemType itemtype, JobType jobType, int value, string descrip, int cost)
-            equipItems = new List<EquipItem>
+            equipItems = new List<Item>
             {
                 new EquipItem("아이언맨 기본 무기", ItemType.Weapon, JobType.IronMan, 5,"아이언맨의 기본무기", 500),
                 new EquipItem("스파이더맨 기본 무기", ItemType.Weapon, JobType.SpiderMan, 5,"스파이더맨의 기본무기", 500),
@@ -34,7 +34,7 @@ namespace MarvelHeroes
             };
 
             //public UsingItem(string name, ItemType type, int value, string descrip, int cost)
-            usingItems = new List<UsingItem>
+            usingItems = new List<Item>
             {
                 new UsingItem("소형 힐링 포션", ItemType.Healing, 20, "소량의 체력을 회복시켜줍니다.", 10, 1),
                 new UsingItem("대형 힐링 포션", ItemType.Healing, 50, "대량의 체력을 회복시켜줍니다.", 30, 1),
