@@ -47,10 +47,27 @@ namespace MarvelHeroes
             Name = "마을";
             Description = "마을에선 다른 지역으로 이동할 수 있고 퀘스트를 수주할 수 있습니다.";
 
-            ISelections UI = new ToUI(SceneNum.Town);
+            ISelections UI = new ToUI();
             ISelections action1 = new TalkToChief(quest);
             ISelections action2 = new Investigate(quest);
             ISelections action3 = new ToWhere(SceneNum.Dungeon);
+
+            sceneSelections = new Dictionary<int, ISelections>() { { 0, UI }, { 1, action1 }, { 2, action2 }, { 3, action3 } };
+        }
+    }
+
+    public class ShopScene : Scene//, ISelections
+    {
+        List<Item> Shopitems;
+        public ShopScene()
+        {
+            Name = "상점";
+            Description = "상점에선 아이템 사고 팔 수 있습니다.";
+
+            ISelections UI = new ToUI();
+            ISelections action1 = new Trade_Buy();
+            ISelections action2 = new Trade_Sell(ref Shopitems);
+            ISelections action3 = new ToWhere(SceneNum.Town);
 
             sceneSelections = new Dictionary<int, ISelections>() { { 0, UI }, { 1, action1 }, { 2, action2 }, { 3, action3 } };
         }
@@ -71,7 +88,7 @@ namespace MarvelHeroes
             Description = "던전에선 더 높은 층으로 올라갈 수 있습니다.";
             Description2 = "도전하고 싶은 층을 입력해주세요.";
 
-            UI = new ToUI(SceneNum.Dungeon);
+            UI = new ToUI();
             action1 = new ToWhere(SceneNum.Town);
             //ISelections action2 = new ToFloor();
 

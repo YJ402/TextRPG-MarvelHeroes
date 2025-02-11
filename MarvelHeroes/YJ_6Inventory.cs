@@ -13,24 +13,25 @@ namespace MarvelHeroes
         public List<Item> items = new List<Item>();
         //private List<Item> equippedItems = new List<Item>();
 
-        public void AddItem(Item item)
+        public void AddItem(Item item, int i = 1)
         {
-            items.Add(item);
+            if (item is UsingItem)
+            {
+                UsingItem _item = item as UsingItem;
+
+                _item.Quantity += i;
+                if (!items.Contains(item))
+                {
+                    items.Add(item);
+                }
+            }
+            else { items.Add(item); }
         }
 
         public void RemoveItem(Item item)
         {
             items.Remove(item);
         }
-
-        //public void AddEquippedItems(Item item)
-        //{
-        //    equippedItems.Add(item);
-        //}
-        //public void RemoveEquippedItems(Item item)
-        //{
-        //    equippedItems.Remove(item);
-        //}
     }
 }
 
