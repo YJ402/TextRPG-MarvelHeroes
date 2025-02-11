@@ -202,61 +202,10 @@ namespace MarvelHeroes
             player.Def = job.jobStats[selectedJob].def;
             player.Hp = job.jobStats[selectedJob].hp;
             player.Mp = job.jobStats[selectedJob].mp;
+            player.MaxHp = player.Hp;
+            player.MaxMp = player.Mp;
             player.Critical = job.jobStats[selectedJob].critical;
             player.Dexterity = job.jobStats[selectedJob].dexerity;
-        }
-    }
-
-    public class Select_1_Class : ISelections
-    {
-
-        public void Execute()
-        {
-            Console.WriteLine("1_Class로 전직하기 트리거");//1_Class로 전직하기 트리거 ;
-        }
-
-        public string GetSelectionDesc()
-        {
-            return "1_Class";
-        }
-    }
-
-    public class Select_2_Class : ISelections
-    {
-        public void Execute()
-        {
-            Console.WriteLine("2_Class로 전직하기 트리거");//2_Class로 전직하기 트리거 ;
-        }
-
-        public string GetSelectionDesc()
-        {
-            return "2_Class";
-        }
-    }
-
-    public class Select_3_Class : ISelections
-    {
-        public void Execute()
-        {
-            Console.WriteLine("3_Class로 전직하기 트리거");//3_Class로 전직하기 트리거 ;
-        }
-
-        public string GetSelectionDesc()
-        {
-            return "3_Class";
-        }
-    }
-
-    public class Select_4_Class : ISelections
-    {
-        public void Execute()
-        {
-            Console.WriteLine("4_Class로 전직하기 트리거");//3_Class로 전직하기 트리거 ;
-        }
-
-        public string GetSelectionDesc()
-        {
-            return "3_Class";
         }
     }
 }
