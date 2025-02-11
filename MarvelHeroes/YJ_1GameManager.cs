@@ -31,19 +31,19 @@ namespace MarvelHeroes
         public Inventory inventory;
         public Player player;
         //매니저 할당
-        private GameManager() 
+        private GameManager() { }
+        public void Initialize()
         {
-            SM = new SceneManager();
             IM = new ItemManager();
-            QM = new QuestManager();
             inventory = new Inventory();
-
+            SM = new SceneManager();
+            QM = new QuestManager();
         }
 
         //게임 시작 메서드
         public void GameStart()
         {
-
+            Initialize();
             //1.캐릭터 생성씬(1회용)
             // 플레이어 할당
             player = new Player(1, "", 100, false, 0, 10);
