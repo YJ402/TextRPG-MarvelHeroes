@@ -32,32 +32,38 @@ namespace MarvelHeroes
         }
 
         Random random = new Random();
+        Player player = new Player(1,"ygm", 2000, 50, 50, false, JobType.IronMan);
 
-
-        public int BattleStart(Player player,int challengeFloor)
+        public void BattleStart(int currentFloor)
         {
-            bool isClear = false;         
-            List<Monster> floormonsters = RandomMonster(Monster.GenerateRandomMonsters(5, challengeFloor));
+            bool isClear = false;
+
+            List<Monster> floormonsters = RandomMonster(Monster.GenerateRandomMonsters(5, currentFloor));
+            List<Monster> bossMonster = new List<Monster>
+            {
+                new Monster(99,"타노스", 1000, 999, 999, 10, 99, 99, false)
+            };
+            
             int notBattleHp = player.Hp;
 
             while (!isClear)
             {
                 int selectNumber = StartPlayBattlePage(player, floormonsters);
 
-
                 switch (selectNumber)
                 {
                     case 1:
-                        isClear = AttackPlayerPage(player, floormonsters, challengeFloor, isClear, notBattleHp);
+                        if(currentFloor < 10) isClear = AttackPlayerPage(player, floormonsters, currentFloor, notBattleHp);
+                        else isClear = AttackPlayerPage(player, bossMonster, currentFloor, notBattleHp);
                         break;
                     case 2:
-                        isClear = SkillPlayerPage(player, floormonsters, challengeFloor, isClear, notBattleHp);
+                        isClear = SkillPlayerPage(player, floormonsters, currentFloor, notBattleHp);
                         break;
                     case 3:
-                        isClear = PotionPlayerPage(player, floormonsters, challengeFloor, isClear);
+                        PotionPlayerPage(player, floormonsters, currentFloor);
                         break;
                     case 0:
-                        return challengeFloor;
+                        return;
                     default:
                         Console.WriteLine("잘못된 입력입니다.");
                         break;
@@ -65,7 +71,8 @@ namespace MarvelHeroes
 
             }
 
-            return challengeFloor++;
+            currentFloor++;
+
 
         }
         // 도전할 층 선택 
@@ -252,7 +259,7 @@ namespace MarvelHeroes
         }
 
         // 공격할 몬스터 선택하는 페이지
-        public bool AttackPlayerPage(Player player, List<Monster> floormonsters, int floorinput, bool isReulst, int notBattleHp)
+        public bool AttackPlayerPage(Player player, List<Monster> floormonsters, int floorinput, int notBattleHp)
         {
             int beforPlayerHp = player.Hp;
             while (true)
@@ -272,16 +279,14 @@ namespace MarvelHeroes
 
                 int selectMonster = GetInput(0, floormonsters.Count);
 
-                if (selectMonster == 0) return isReulst = false;
+                if (selectMonster == 0) return false;
                 else if (selectMonster >= 1 && selectMonster <= floormonsters.Count)
                 {
                     if (!floormonsters[selectMonster - 1].isDead)
                     {
-                        floormonsters[selectMonster - 1] = PlayerAttack(player, floormonsters[selectMonster - 1], selectMonster);
-                        player = MonasterAttack(player, floormonsters);
-
-                        isReulst = BattleResult(player, floormonsters, notBattleHp, floorinput);
-                        return isReulst;
+                       floormonsters[selectMonster - 1] = PlayerAttack(player, floormonsters[selectMonster - 1], selectMonster);
+                       player = MonasterAttack(player, floormonsters);  
+                       return BattleResult(player, floormonsters, notBattleHp, floorinput);
 
                     }
                     else Console.WriteLine("잘못된 입력입니다.");
@@ -294,8 +299,8 @@ namespace MarvelHeroes
         // 플레이어가 공격하는 메서드
         public Monster PlayerAttack(Player player, Monster floormonster, int selectMonster)
         {
-            int attackPencent = random.Next(0, 10); // 맞을 확률
-            int hitNumber = random.Next(0, 10); // 치명타 확률
+            int attackPencent = random.Next(0, 100); // 맞을 확률
+            int hitNumber = random.Next(0, 100); // 치명타 확률
             int attackError = (int)Math.Round(player.Atk * 0.1);
             int finalDamage = random.Next(player.Atk - attackError, player.Atk + attackError);
             // 현재 몬스터 hp 이전
@@ -305,7 +310,7 @@ namespace MarvelHeroes
             {
                 Console.Clear();
                 // 몬스터가 데미지를 받는지 확인
-                if (attackPencent < player.Dexterity)
+                if (attackPencent > floormonster.Dexterity)
                 {
                     // 몬스터에게 치명타가 터지는지 확인
                     if (hitNumber < player.Critical)
@@ -370,13 +375,13 @@ namespace MarvelHeroes
                 }
 
                 Console.Clear();
-                int attackPecent = random.Next(0, 9);
-                int hitNumber = random.Next(0, 9);
+                int attackPecent = random.Next(0, 100);
+                int hitNumber = random.Next(0, 100);
                 int attackError = (int)Math.Round(floormonsters[i].Atk * 0.1);
                 int finalDamage = random.Next(floormonsters[i].Atk - attackError, floormonsters[i].Atk + attackError);
 
                 // 몬스터의 공격이 성공 했는지 확인
-                if (attackPecent < player.Dexterity && floormonsters[i].IsAtk)
+                if (attackPecent > player.Dexterity && floormonsters[i].IsAtk)
                 {
                     // 몬스터에게 치명타가 터지는지 확인
                     if (hitNumber < floormonsters[i].Critical)
@@ -420,7 +425,7 @@ namespace MarvelHeroes
         }
 
         // 플레이어 스킬 선택하는 메서드
-        public bool SkillPlayerPage(Player player, List<Monster> floormonsters, int floorinput, bool isResult, int notBattleHp)
+        public bool SkillPlayerPage(Player player, List<Monster> floormonsters, int floorinput, int notBattleHp)
         {
             List<Skill> skills = player.JobSkills(player);
             int beforBattlehp = player.hp;
@@ -443,7 +448,7 @@ namespace MarvelHeroes
 
                 int input = GetInput(0, 2);
 
-                if (input == 0) return isResult = false;
+                if (input == 0) return false;
                 else if (input >= 1 && input <= skills.Count)
                 {
                     switch (player.PlayerJob)
@@ -475,10 +480,8 @@ namespace MarvelHeroes
                             player = MonasterAttack(player, floormonsters);
                             break;
                     }
-
-                    isResult = BattleResult(player, floormonsters, notBattleHp, floorinput);
-
-                    return isResult;
+                
+                    return BattleResult(player, floormonsters, notBattleHp, floorinput);
 
                 }
                 else Console.WriteLine("잘못된 입력입니다.");
@@ -673,7 +676,7 @@ namespace MarvelHeroes
         }
 
         // 플레이어 포션 사용하는 메서드
-        public bool PotionPlayerPage(Player player, List<Monster> floormonsters, int floorinput, bool isResult)
+        public void PotionPlayerPage(Player player, List<Monster> floormonsters, int floorinput)
         {
             while (true)
             {
@@ -697,15 +700,15 @@ namespace MarvelHeroes
                 switch (selectPotion)
                 {
                     case 0:
-                        return isResult;
+                        return;
                     case 1:
                         if (player.Hp == 100) Console.WriteLine("HP가 MAX입니다.");
                         else UsePotion(player,selectPotion);
-                        return isResult;
+                        return;
                     case 2:
                         if (player.Mp == 100) Console.WriteLine("MP가 MAX입니다.");
                         else UsePotion(player, selectPotion);
-                        return isResult;
+                        return;
                     default:
                         Console.WriteLine("잘못된 입력입니다.");
                         break;
@@ -814,7 +817,7 @@ namespace MarvelHeroes
             else if (player.Hp <= 0)
             {
                 DefeatBattlePage(player, beforBattlehp);
-                return false;
+                return true;
             }
             else return false;
 
@@ -835,26 +838,26 @@ namespace MarvelHeroes
 
 
     // 층에 대한 내용 층수, 층의 상태, 클리어 여부, 다음층인지 확인
-    public class Floor
-    {
-        public int numberFloor { get; set; }
-        public string floorName { get; set; }
-        public string StatusFloor { get; set; }
-        public bool clearFloor { get; set; }
-        public bool nextFloor { get; set; }
+    //public class Floor
+    //{
+    //    public int numberFloor { get; set; }
+    //    public string floorName { get; set; }
+    //    public string StatusFloor { get; set; }
+    //    public bool clearFloor { get; set; }
+    //    public bool nextFloor { get; set; }
 
-        public static int nextFloorNumber = 1;
+    //    public static int nextFloorNumber = 1;
 
-        public Floor(int _NumberFloor, string _StatusFloor, bool _clearFloor, bool _nextFloor)
-        {
-            numberFloor = _NumberFloor;
-            StatusFloor = _StatusFloor;
-            clearFloor = _clearFloor;
-            nextFloor = _nextFloor;
-        }
+    //    public Floor(int _NumberFloor, string _StatusFloor, bool _clearFloor, bool _nextFloor)
+    //    {
+    //        numberFloor = _NumberFloor;
+    //        StatusFloor = _StatusFloor;
+    //        clearFloor = _clearFloor;
+    //        nextFloor = _nextFloor;
+    //    }
 
 
-    }
+    //}
 
     //class Monster : Unit
     //{
