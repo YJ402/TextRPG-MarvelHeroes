@@ -125,19 +125,19 @@ namespace MarvelHeroes
         {
             switch (player.PlayerJob)
             {
-                case "아이언맨":
+                case JobType.IronMan:
                     if (input == 1) floormonsters = IronManSkillPage(floormonsters, skills, input);
                     else if (input == 2) player.IronManAddDex(skills[input - 1].Adddex, 0);
                     player = MonasterAttack(floormonsters, floorinput);
                     player.IronManAddDex(skills[input - 1].Adddex, 1);
                     break;
-                case "스파이더맨":
+                case JobType.SpiderMan:
                     if (input == 1) player.NanoSuit(skills[input - 1].skillAtk, skills[input - 1].Adddef, 0);
                     else if (input == 2) floormonsters = SpiderManSkillPage(floormonsters, skills, input);
                     player = MonasterAttack(floormonsters, floorinput);
                     player.NanoSuit(skills[input - 1].skillAtk, skills[input - 1].Adddef, 1);
                     break;
-                case "닥터스트레인지":
+                case JobType.DoctorStrange:
                     if (input == 1) floormonsters = DoctorStrangeSkillPage(floormonsters, skills, input);
                     else if (input == 2)
                     {
@@ -146,7 +146,7 @@ namespace MarvelHeroes
                     }
                     player = MonasterAttack(floormonsters, floorinput);
                     break;
-                case "헐크":
+                case JobType.Hulk:
                     if (input == 1) floormonsters = HulkSkillPage(floormonsters, skills, input);
                     else if (input == 2) floormonsters = HulkSkillPage(floormonsters, skills, input);
                     player = MonasterAttack(floormonsters, floorinput);
@@ -168,16 +168,17 @@ namespace MarvelHeroes
                
                 List<UsingItem> usingItems = new List<UsingItem>();
 
-                foreach(var potion in GameManager.Instance.inventory.items)
+                foreach (var potion in GameManager.Instance.inventory.items)
                 {
                     if(potion is UsingItem)
                      usingItems.Add((UsingItem)potion);
                 }
               
-                for(int i = 1; i<=usingItems.Count; i++)
+                for(int i = 1; i< usingItems.Count; i++)
                 {
                     Console.WriteLine("{0}. {1} 수량: {2}", i, usingItems[i].Name, usingItems[i].Quantity);
-                }      
+                }
+
                 int selectPotion = GetInput(0, 2);
 
                 if (selectPotion == 0) return;
@@ -460,13 +461,6 @@ namespace MarvelHeroes
             return player;
 
         }
-
-
-
-
-
-
-
         // 스킬 메서드
 
         // 아이언맨 스킬
@@ -562,10 +556,14 @@ namespace MarvelHeroes
             }
             else if(input == 2)
             {
+                // 랜덤하게 2마리 몬스터 선택 후 HP 감소 (원본 리스트 직접 수정)
+
+                List<Monster> selectedMonsters = floormonster.OrderBy(m => random.Next()).Take(2).ToList();
+
+                selectedMonsters.RemoveAll(monster => monster.Hp <= 0);
+
                 if (floormonster.Count >= 2)
                 {
-                    // 랜덤하게 2마리 몬스터 선택 후 HP 감소 (원본 리스트 직접 수정)
-                    List<Monster> selectedMonsters = floormonster.OrderBy(m => random.Next()).Take(2).ToList();
                     for (int j = 0; j < selectedMonsters.Count; j++)
                     {
                         monsterBefor_hp = floormonster[j].Hp;
@@ -576,7 +574,7 @@ namespace MarvelHeroes
                         selectedMonsters[j].IsDead(selectedMonsters[j], monsterBefor_hp);
                     }
                 }
-                else if(floormonster.Count == 1)
+                else if (floormonster.Count == 1)
                 {
                     // 몬스터가 1마리만 있으면 그 몬스터에게만 데미지 적용
                     monsterBefor_hp = floormonster[0].Hp;
@@ -586,6 +584,7 @@ namespace MarvelHeroes
 
                     floormonster[0].IsDead(floormonster[0], monsterBefor_hp);
                 }
+                else if(floormonster.Count == 0)Console.WriteLine("죽은 몬스터를 공격했습니다.!!");
             }
             Console.WriteLine("0. 다음\n");
             int select = GetInput(0, 0);
@@ -849,6 +848,7 @@ namespace MarvelHeroes
 
             }
         }
+        
         // 패배 매서드
         public void DefeatBattlePage(int beforeBattleHp)
         {
@@ -870,6 +870,7 @@ namespace MarvelHeroes
 
 
         }
+        
         //버튼 메서드
         public int GetInput(int min, int max)
         {
