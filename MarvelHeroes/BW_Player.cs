@@ -44,8 +44,8 @@ namespace MarvelHeroes
         public int MaxHp { get; set; }
         public int MaxMp { get; set; }
 
-        private int xp { get; set; }
-        private int maxXp { get; set; }
+        public int xp { get; set; }
+        public int maxXp { get; set; }
 
         public int Xp
         {
@@ -62,7 +62,7 @@ namespace MarvelHeroes
         
 
 
-        public Player(int _Level, string name, int gold,int _Critical, int _Dexterity, bool _isDead, JobType jobtypeName, int xp, int maxXp)
+        public Player(int _Level, string name, int gold,int _Critical, int _Dexterity, bool _isDead, JobType jobtypeName, int xp, int _maxXp)
             : base (_Level, 0, 0, 0, _Critical, _Dexterity, false)
         {
             // 이런식으로 되있는게 속성
@@ -76,8 +76,9 @@ namespace MarvelHeroes
             Gold = 1500;
             MaxHp = Hp;
             MaxMp = Job.jobStats[jobtypeName].mp;
+            maxXp = _maxXp;
             Xp = 0;
-            maxXp = 10;
+
          
         }
 

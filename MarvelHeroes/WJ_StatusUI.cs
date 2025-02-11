@@ -38,15 +38,15 @@ namespace MarvelHeroes
 
         public void ShowStatus()
         {
-            //Console.WriteLine("GameManager.player.Level"); // 플레이어 레벨
-            //Console.WriteLine(""); // 플레이어 이름 및 직업
-            //string attack = GameManager.player.EquipAttack == 0 ? $"공격력 : {GameManager.player.Atk}" : $"공격력 : {GameManager.player.Atk} (+{GameManager.player.EquipAttack})"; // 공격력 보여주기
-            //Console.WriteLine(attack); // 플레이어 공격력
-            //string deffence = GameManager.player.EquipDefence == 0 ? $"방어력 : {GameManager.player.Def}" : $"공격력 : {GameManager.player.Def} (+{GameManager.player.EquipDefence})"; // 방어력 보여주기
-            //Console.WriteLine(deffence); // 플레이어 공격력
-            //Console.WriteLine($"체력 : ({GameManager.player.Hp} / {GameManager.player.MaxHp})");
-            //Console.WriteLine($"마력 : ({GameManager.player.Mp})");
-            //Console.WriteLine($"Gold : {GameManager.player.Gold} G");
+            Console.WriteLine($"Lv : {GameManager.Instance.player.Level} ({GameManager.Instance.player.Xp} / {GameManager.Instance.player.maxXp})"); // 플레이어 레벨
+            Console.WriteLine($"이름 : {GameManager.Instance.player.Level} ({GameManager.Instance.player.PlayerJob})"); // 플레이어 이름 및 직업
+            string attack = GameManager.Instance.player.EquipAtk == 0 ? $"공격력 : {GameManager.Instance.player.Atk}" : $"공격력 : {GameManager.Instance.player.Atk} (+{GameManager.Instance.player.EquipAtk})"; // 공격력 보여주기
+            Console.WriteLine(attack); // 플레이어 공격력
+            string deffence = GameManager.Instance.player.EquipDef == 0 ? $"방어력 : {GameManager.Instance.player.Def}" : $"공격력 : {GameManager.Instance.player.Def} (+{GameManager.Instance.player.EquipDef})"; // 방어력 보여주기
+            Console.WriteLine(deffence); // 플레이어 공격력
+            Console.WriteLine($"체력 : ({GameManager.Instance.player.Hp} / {GameManager.Instance.player.MaxHp})");
+            Console.WriteLine($"마력 : ({GameManager.Instance.player.Mp} / {GameManager.Instance.player.MaxMp})");
+            Console.WriteLine($"Gold : {GameManager.Instance.player.Gold} G");
         }
     }
 }
