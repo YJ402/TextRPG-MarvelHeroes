@@ -21,9 +21,9 @@ namespace MarvelHeroes
                 ISelections state = new ToUIBranch(SceneNum.State);
                 ISelections inventory = new ToUIBranch(SceneNum.Inventory);
                 ISelections saveLoad = new ToUIBranch(SceneNum.SaveLoad);
-                ISelections Exit = new ToUIBranch(SceneNum.Exit);
+                ISelections exit = new ToUIBranch(SceneNum.Exit);
 
-                sceneSelections = new Dictionary<int, ISelections>() { { 1, state }, { 2, inventory }, { 3, saveLoad }, { 4, Exit } };
+                sceneSelections = new Dictionary<int, ISelections>() { { 1, state }, { 2, inventory }, { 3, saveLoad }, { 4, exit } };
             }
         }
 
@@ -38,11 +38,26 @@ namespace MarvelHeroes
 
             public void Execute()
             {
-                //StatusUI statusUI = new StatusUI(); // 상태창 class
-                //statusUI.UIStateScene();
-                SceneManager.ChangeCurrentScene(UIBranch);
+                switch (UIBranch)
+                {
+                    case SceneNum.Inventory:
+                        //InventoryUI inventoryUI = new InventoryUI();
+                        //inventoryUI.InventoryScene();
+                        break;
+                    case SceneNum.SaveLoad:
+                        SaveLoadUI saveLoadUI = new SaveLoadUI();
+                        saveLoadUI.SaveLoadScene();
+                        break;
+                    case SceneNum.State:
+                        StatusUI statusUI = new StatusUI(); // 상태창 class
+                        statusUI.UIStateScene();
+                        break;
+                    case SceneNum.Exit:
+                        ExitUI exitUI = new ExitUI(); // 상태창 class
+                        exitUI.ExitScene();
+                        break;
+                }
             }
-
             public string GetSelectionDesc()
             {
                 string sceneKorName = "";
