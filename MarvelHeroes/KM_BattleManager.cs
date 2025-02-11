@@ -787,8 +787,8 @@ namespace MarvelHeroes
             int skillrand = random.Next(0, 100);
             int skillNumber;
 
-            if (skillrand < 10) skillNumber = 1;
-            else if (skillrand < 50) skillNumber = 2;
+            if (skillrand < 80) skillNumber = 1;
+            else if (skillrand < 95) skillNumber = 2;
             else skillNumber = 3;
 
             Console.WriteLine("Battle\n");
