@@ -58,6 +58,7 @@ namespace MarvelHeroes
                 if (quest.IsCompleted(killMonster, player, item))
                 {
                     completedQuests.Add(quest);
+                    acceptQuest.Remove(quest);
                 }
             }
 
@@ -116,11 +117,11 @@ namespace MarvelHeroes
         public override bool IsCompleted(List<Monster> killMonster, Player player, Item item)
         {
             // ⭐ 무기 장착 퀘스트일 경우, 플레이어가 무기를 장착했는지 확인
-            if (RequiredType == ItemType.Weapon && item.EquippedWeapon != null)
+            if (RequiredType == ItemType.Weapon && item.Use.IsEquip == true)
                 return true;
 
             // ⭐ 방어구 장착 퀘스트일 경우, 플레이어가 방어구를 장착했는지 확인
-            if (RequiredType == ItemType.Amor && item.EquippedArmor != null)
+            if (RequiredType == ItemType.Amor && item.EquippedArmor == true)
                 return true;
 
             return false;
