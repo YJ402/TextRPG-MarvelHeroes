@@ -14,29 +14,22 @@ namespace MarvelHeroes
 
     public class SceneManager
     {
-
-        static SceneManager _instance;
-        private SceneManager() { }
-        public static SceneManager GetInstance()
-        {
-            if (_instance == null)
-            {
-                _instance = new SceneManager();
-            }
-
-            return _instance;
-        }
-
-        static TownScene townScene = new TownScene();
-        static DungeonScene dungeonScene = new DungeonScene();
+        public TownScene townScene { get; private set; }
+        public DungeonScene dungeonScene { get; private set; }
         public Scene currentScene;
 
-        static public void ChangeCurrentScene(SceneNum sceneNum) // 매개변수 이넘타입으로 할까?
+        public SceneManager()
+        {
+            townScene = new TownScene();
+            dungeonScene = new DungeonScene();
+        }
+
+        public void ChangeCurrentScene(SceneNum sceneNum) // 매개변수 이넘타입으로 할까?
         {
             switch ((int)sceneNum)
             {
-                case 1: _instance.currentScene = townScene; break;
-                case 2: _instance.currentScene = dungeonScene; break;
+                case 1: currentScene = townScene; break;
+                case 2: currentScene = dungeonScene; break;
             }
         }
     }

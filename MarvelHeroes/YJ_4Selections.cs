@@ -16,7 +16,7 @@ namespace MarvelHeroes
     public class TalkToChief : ISelections
     {
         private Quest quest;
-        public TalkToChief(Quest q) 
+        public TalkToChief(Quest q)
         {
             quest = q;
         }
@@ -24,6 +24,7 @@ namespace MarvelHeroes
         public void Execute()
         {
             Console.WriteLine("이장으로 퀘스트 트리거");// 퀘스트 트리거
+            //GameManager.Instance.QM.QuestStart("Chief");
         }
 
         public string GetSelectionDesc()
@@ -48,6 +49,7 @@ namespace MarvelHeroes
             if (random > 70)
             {
                 Console.WriteLine("조사로 퀘스트 트리거");// 퀘스트 트리거
+                //GameManager.Instance.QM.QuestStart("investigation");
             }
         }
 
@@ -87,12 +89,12 @@ namespace MarvelHeroes
         }
         public void Execute()
         {
-            SceneManager.ChangeCurrentScene(sceneNum);
+            GameManager.Instance.SM.ChangeCurrentScene(sceneNum);
         }
 
         public string GetSelectionDesc()
         {
-            string sceneKorName ="";
+            string sceneKorName = "";
 
             switch (sceneNum)
             {
@@ -107,7 +109,7 @@ namespace MarvelHeroes
                     break;
             }
 
-            return $"{sceneKorName}(으)로 이동하기"; 
+            return $"{sceneKorName}(으)로 이동하기";
         }
     }
 

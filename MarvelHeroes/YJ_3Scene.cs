@@ -6,10 +6,10 @@ using System.Threading.Tasks;
 
 namespace MarvelHeroes
 {
-    public class Quest
-    {
-        //임시용 클래스. 나중에 삭제
-    }
+    //public class Quest
+    //{
+    //    //임시용 클래스. 나중에 삭제
+    //}
 
 
     public abstract class Scene
@@ -57,8 +57,8 @@ namespace MarvelHeroes
 
     public class DungeonScene : Scene//, ISelections
     {
-        int challengingFloor = 1;
-
+        public static int challengingFloor = 1;
+        
         public DungeonScene()
         {
             int i = 1;

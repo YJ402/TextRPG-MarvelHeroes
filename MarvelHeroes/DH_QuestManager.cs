@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace MarvelHeroes
 {
-    internal class QuestManager
+    public class QuestManager
     {
         List<Quest> questlist; //모든퀘스트 목록
         List<Quest> acceptQuest; //플레이어가 받은 퀘스트
@@ -50,6 +50,7 @@ namespace MarvelHeroes
                 if (quest.IsCompleted(killMonster, inventory, player))
                 {
                     completedQuests.Add(quest);
+                    //acceptQuest.Remove(quest);
                 }
             }
 
@@ -73,8 +74,6 @@ namespace MarvelHeroes
                 Console.WriteLine("받지 않은 퀘스트입니다.");
             }
         }
-
-
     }
 
     public abstract class Quest
@@ -111,7 +110,7 @@ namespace MarvelHeroes
             {
                 if (i.Name = RequiredItem)
                 {
-                    Inventory.destroy(i);
+                    YJ_Inventory.destroy(i);
                     return true;
                 }
             }

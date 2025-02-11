@@ -9,35 +9,47 @@ namespace MarvelHeroes
     public class GameManager
     {
         //싱글톤 패턴
-        static GameManager instance;
-        private GameManager() { }
-        public static GameManager GetInstance()
+        private static GameManager instance;
+        //프로퍼티를 활용한 싱글톤
+        public static GameManager Instance
         {
-            if (instance == null)
+            get
             {
-                instance = new GameManager();
-            }
+                if (instance == null)
+                {
+                    instance = new GameManager();
+                }
 
-            return instance;
+                return instance;
+            }
         }
 
-        //필요한 객체 생성
-        Quest quest = new Quest();
+        //게임 전역에 필요한 매니저 선언
+        public SceneManager SM{ get; private set; }
+        public ItemManager IM { get; private set; }
+        public QuestManager QM { get; private set; }
+        public Inventory inventory;
 
-        //메인에 실행할 게임 시작 메서드
+        //매니저 할당
+        private GameManager() 
+        {
+            SM = new SceneManager();
+            IM = new ItemManager();
+            QM = new QuestManager();
+            inventory = new Inventory();
+        }
+
+        //게임 시작 메서드
         public void GameStart()
         {
-            SceneManager SM = SceneManager.GetInstance();
-            SM.currentScene = new CreateCharacterScene();
 
+            //1.캐릭터 생성씬(1회용)
+            SM.currentScene = new CreateCharacterScene(); // 일회용이라서 여기서 생성.
             while (true)
             {
+                //이름 짓기
                 GameView.ViewSceneNameAndDesc1(SM.currentScene);
                 GameView.ViewSceneInput2_2(SM.currentScene);
-
-                TownScene townScene = new TownScene();
-                DungeonScene dungeonScene = new DungeonScene();
-
                 while (true)
                 {
                     string temp1 = Console.ReadLine();
@@ -49,23 +61,20 @@ namespace MarvelHeroes
                     Console.WriteLine("1~10자 사이의 문자를 입력해주세요.");
                 }
 
-                
+                //직업 선택
                 GameView.ViewSceneNameAndDesc1(SM.currentScene);
                 int temp2 = GameView.ViewGetSceneSelect2(SM.currentScene);
                 SM.currentScene.sceneSelections[temp2].Execute();
 
-                SM.currentScene = townScene;
-
+                //씬 변경 후 종료
+                SM.currentScene = SM.townScene;
                 break;
             }
 
+            //2.게임 루프
             bool isRunning = true;
             while (isRunning)
             {
-                //나중에 퀘스트 클래스가 생기면 필요할수도?
-                //ISelections talkToChief = new TalkToChief(quest);
-                //ISelections investigate = new Investigate(quest);
-
                 GameView.ViewSceneNameAndDesc1(SM.currentScene);
                 int temp = GameView.ViewGetSceneSelect2(SM.currentScene);
                 SM.currentScene.sceneSelections[temp].Execute();
