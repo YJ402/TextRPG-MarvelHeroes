@@ -198,7 +198,7 @@ namespace MarvelHeroes
             Player player = GameManager.Instance.player;
 
             player.Atk = job.jobStats[selectedJob].atk;
-            player.PlayerJob = job.jobStats[selectedJob].name;
+            player.PlayerJob = selectedJob;
             player.Def = job.jobStats[selectedJob].def;
             player.Hp = job.jobStats[selectedJob].hp;
             player.Mp = job.jobStats[selectedJob].mp;

@@ -76,7 +76,7 @@ namespace MarvelHeroes
             }
 
             // 플레이어 할당
-            player = new Player(1, "", 100, false, JobType.IronMan, 0, 10);
+            //player = new Player(1, "", 100, false, JobType.IronMan, 0, 10);
 
             //2.게임 루프
             bool isRunning = true;

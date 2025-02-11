@@ -36,7 +36,7 @@ namespace MarvelHeroes
     public class Player : Unit
     {
         public string Name { get; set; }
-        public string PlayerJob { get; set; }
+        public JobType PlayerJob { get; set; }
         public int EquipAtk { get; set; }
         public int EquipDef { get; set; }
         public int Gold { get; set; }
@@ -62,7 +62,7 @@ namespace MarvelHeroes
         
 
 
-        public Player(int _Level, string name, int gold, bool _isDead, JobType jobtypeName, int xp, int maxXp)
+        public Player(int _Level, string name, int gold, bool _isDead, int xp, int maxXp)
             : base (0, 0, 0, 0, 0, 0, false)
         {
             // 이런식으로 되있는게 속성
