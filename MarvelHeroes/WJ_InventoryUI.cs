@@ -9,6 +9,7 @@ namespace MarvelHeroes
 {
     public class InventoryUI
     {
+
         //List<EquipItem> inventory = new List<EquipItem>();
         public void InventoryScene()
         {
@@ -23,9 +24,10 @@ namespace MarvelHeroes
                 Console.WriteLine();
                 for (int i = 0; i < GameManager.Instance.inventory.items.Count; i++) // 게임매니저에서 선언한 인벤토리 리스트를 가져옴
                 {
-                    DisplayInven(i, 1);
+                    Console.WriteLine(DisplayInven(i, 1));
                 }
                 Console.WriteLine();
+                Console.WriteLine("1. 장착 관리");
                 Console.WriteLine("0. 나가기");
                 Console.WriteLine();
                 Console.WriteLine();
@@ -49,7 +51,7 @@ namespace MarvelHeroes
             string str = GameManager.Instance.inventory.items[i].IsEquip ? "[E]" : "";
             if (j == 0)
             {
-                str = $"- {i + 1}" + str + $"{GameManager.Instance.inventory.items[i].Name}\t| {DisplayType(i)}\t | {GameManager.Instance.inventory.items[i].Descrip}\t| {GameManager.Instance.inventory.items[i].Cost}";
+                str = $"- {i + 1}. " + str + $"{GameManager.Instance.inventory.items[i].Name}\t| {DisplayType(i)}\t | {GameManager.Instance.inventory.items[i].Descrip}\t| {GameManager.Instance.inventory.items[i].Cost}";
             }
             else
             {
@@ -77,7 +79,7 @@ namespace MarvelHeroes
                 Console.WriteLine();
                 for (int i = 0; i < GameManager.Instance.inventory.items.Count; i++) // 게임매니저에서 선언한 인벤토리 리스트를 가져옴
                 {
-                    DisplayInven(i, 0);
+                    Console.WriteLine(DisplayInven(i, 0));
                 }
                 Console.WriteLine();
                 Console.WriteLine("0. 나가기");
@@ -89,7 +91,13 @@ namespace MarvelHeroes
                 if (int.TryParse(Console.ReadLine(), out int choice))
                 {
                     if (choice == 0) { break; }
-                    else { ; } // 장착 메서드
+                    for (int i = 0; i < GameManager.Instance.inventory.items.Count; i++)
+                    {
+                        if (choice == i+1)
+                        {
+                            GameManager.Instance.inventory.items[i].Use(GameManager.Instance.player);
+                        } // 장착 메서드
+                    }
                 }
                 else
                 {

@@ -44,8 +44,8 @@ namespace MarvelHeroes
         public int MaxHp { get; set; }
         public int MaxMp { get; set; }
 
-        private int xp { get; set; }
-        private int maxXp { get; set; }
+        public int xp { get; set; }
+        public int maxXp { get; set; }
 
         public int Xp
         {
@@ -62,8 +62,9 @@ namespace MarvelHeroes
         
 
 
-        public Player(int _Level, string name, int gold, bool _isDead, int xp, int maxXp)
+        public Player(int _Level, string name, int gold, bool _isDead, int xp, int _maxXp)
             : base (0, 0, 0, 0, 0, 0, false)
+
         {
             // 이런식으로 되있는게 속성
             Level = _Level;
@@ -77,9 +78,10 @@ namespace MarvelHeroes
             //Dexterity = Job.jobStats[jobtypeName].dexerity;
             Gold = gold;
             MaxHp = Hp;
-            MaxMp = Mp;
+            //MaxMp = Job.jobStats[jobtypeName].mp;
+            maxXp = _maxXp;
             Xp = 0;
-            maxXp = 10;
+
          
         }
 
@@ -88,10 +90,8 @@ namespace MarvelHeroes
             Level += 1;
             Atk += 1;
             Def += 1;
-            xp = 0;
-            if (maxXp == 10) { maxXp = 35; }
-            else if (maxXp == 35) { maxXp = 65; }
-            else if (maxXp == 65) { maxXp = 100; }
+            xp = xp - maxXp;
+            maxXp = 20 + (4 * (Level - 1) * (Level - 1)) - (10 * (Level - 1));
         }
 
 
@@ -170,19 +170,19 @@ namespace MarvelHeroes
 
             switch (player.PlayerJob)
             {
-                case "아이언맨":
+                case JobType.IronMan:
                     IronMan ironMan = new IronMan();
                     skills = ironMan.IronManSKills;
                     return skills;
-                case "스파이더맨":
+                case JobType.SpiderMan:
                     SpiderMan spiderMan = new SpiderMan();
                     skills = spiderMan.SpiderManSKills;
                     return skills;
-                case "닥터스트레인지":
+                case JobType.DoctorStrange:
                     DoctorStrange doctorStrange = new DoctorStrange();
                     skills = doctorStrange.DoctorStrangeSKills;
                     return skills;
-                case "헐크":
+                case JobType.Hulk:
                     Hulk hulk = new Hulk();
                     skills = hulk.HulkSKills;
                     return skills;

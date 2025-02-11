@@ -12,7 +12,8 @@ namespace MarvelHeroes
         State,
         Inventory,
         SaveLoad,
-        Exit
+        Exit,
+        OutUI
     }
     public class UIManager
     {
@@ -28,8 +29,10 @@ namespace MarvelHeroes
                 ISelections inventory = new ToUIBranch(UINum.Inventory);
                 ISelections saveLoad = new ToUIBranch(UINum.SaveLoad);
                 ISelections exit = new ToUIBranch(UINum.Exit);
+                ISelections outUI = new ToUIBranch(UINum.OutUI);
 
-                sceneSelections = new Dictionary<int, ISelections>() { { 1, state }, { 2, inventory }, { 3, saveLoad }, { 4, exit } };
+
+                sceneSelections = new Dictionary<int, ISelections>() { { 1, state }, { 2, inventory }, { 3, saveLoad }, { 4, exit }, { 5, outUI } };
             }
         }
 
@@ -47,8 +50,8 @@ namespace MarvelHeroes
                 switch (UIBranch)
                 {
                     case UINum.Inventory:
-                        //InventoryUI inventoryUI = new InventoryUI();
-                        //inventoryUI.InventoryScene();
+                        InventoryUI inventoryUI = new InventoryUI();
+                        inventoryUI.InventoryScene();
                         break;
                     case UINum.SaveLoad:
                         SaveLoadUI saveLoadUI = new SaveLoadUI();
@@ -61,6 +64,8 @@ namespace MarvelHeroes
                     case UINum.Exit:
                         ExitUI exitUI = new ExitUI(); // 상태창 class
                         exitUI.ExitScene();
+                        break;
+                    case UINum.OutUI:
                         break;
                 }
             }
@@ -80,9 +85,12 @@ namespace MarvelHeroes
                         sceneKorName = "캐릭터 상태";
                         break;
                     case UINum.Exit:
-                        sceneKorName = "종료";
+                        sceneKorName = "게임 종료";
                         break;
-                    defualt:
+                    case UINum.OutUI:
+                        sceneKorName = "UI 종료";
+                        break;
+                        defualt:
                         sceneKorName = "없는 장소";
                         break;
                 }
@@ -185,6 +193,11 @@ namespace MarvelHeroes
                 GameView.ViewSceneNameAndDesc1(uiScene);
                 int temp = GameView.ViewGetSceneSelect2(uiScene);
                 uiScene.sceneSelections[temp].Execute();
+                if (temp == 5) 
+                {
+                    Console.Clear();
+                    break;
+                }
             }
         }
     }
