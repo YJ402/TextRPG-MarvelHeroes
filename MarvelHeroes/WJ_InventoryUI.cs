@@ -21,7 +21,7 @@ namespace MarvelHeroes
                 Console.WriteLine();
                 Console.WriteLine("[아이템 목록]");
                 Console.WriteLine();
-                for (int i = 0; i < GameManager.instance.inventory.Count; i++) // 게임매니저에서 선언한 인벤토리 리스트를 가져옴
+                for (int i = 0; i < GameManager.Instance.inventory.items.Count; i++) // 게임매니저에서 선언한 인벤토리 리스트를 가져옴
                 {
                     DisplayInven(i, 1);
                 }
@@ -46,21 +46,21 @@ namespace MarvelHeroes
 
         public string DisplayInven(int i, int j)
         {
-            string str = GameManager.instance.inventory[i].IsEquip ? "[E]" : "";
+            string str = GameManager.Instance.inventory.items[i].IsEquip ? "[E]" : "";
             if (j == 0)
             {
-                str = $"- {i + 1}" + str + $"{GameManager.instance.inventory[i].Name}\t| {DisplayType(i)}\t | {GameManager.instance.inventory[i].Descrip}\t| {GameManager.instance.inventory[i].Cost}";
+                str = $"- {i + 1}" + str + $"{GameManager.Instance.inventory.items[i].Name}\t| {DisplayType(i)}\t | {GameManager.Instance.inventory.items[i].Descrip}\t| {GameManager.Instance.inventory.items[i].Cost}";
             }
             else
             {
-                str = $"-  " + str + $"{GameManager.instance.inventory[i].Name}\t| {DisplayType(i)}\t | {GameManager.instance.inventory[i].Descrip}\t| {GameManager.instance.inventory[i].Cost}";
+                str = $"-  " + str + $"{GameManager.Instance.inventory.items[i].Name}\t| {DisplayType(i)}\t | {GameManager.Instance.inventory.items[i].Descrip}\t| {GameManager.Instance.inventory.items[i].Cost}";
             }
             return str;
         }
 
         public string DisplayType(int i)
         {
-            string str = GameManager.instance.inventory[i].ItemType == ItemType.Weapon ? $"공격력 : {GameManager.instance.inventory[i].Value}" : $"방어력 : {GameManager.instance.inventory[i].Value}";
+            string str = GameManager.Instance.inventory.items[i].ItemType == ItemType.Weapon ? $"공격력 : {GameManager.Instance.inventory.items[i].Value}" : $"방어력 : {GameManager.Instance.inventory.items[i].Value}";
             return str;
         }
 
@@ -75,7 +75,7 @@ namespace MarvelHeroes
                 Console.WriteLine();
                 Console.WriteLine("[아이템 목록]");
                 Console.WriteLine();
-                for (int i = 0; i < GameManager.instance.inventory.Count; i++) // 게임매니저에서 선언한 인벤토리 리스트를 가져옴
+                for (int i = 0; i < GameManager.Instance.inventory.items.Count; i++) // 게임매니저에서 선언한 인벤토리 리스트를 가져옴
                 {
                     DisplayInven(i, 0);
                 }

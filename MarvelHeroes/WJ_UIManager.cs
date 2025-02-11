@@ -7,7 +7,13 @@ using static MarvelHeroes.UIManager;
 
 namespace MarvelHeroes
 {
-
+    public enum UINum
+    {
+        State,
+        Inventory,
+        SaveLoad,
+        Exit
+    }
     public class UIManager
     {
         UIScene uiScene = new UIScene();
@@ -18,10 +24,10 @@ namespace MarvelHeroes
                 Name = "UI";
                 Description = "캐릭터 정보, 인벤토리, 저장, 종료를 할 수 있습니다";
 
-                ISelections state = new ToUIBranch(SceneNum.State);
-                ISelections inventory = new ToUIBranch(SceneNum.Inventory);
-                ISelections saveLoad = new ToUIBranch(SceneNum.SaveLoad);
-                ISelections exit = new ToUIBranch(SceneNum.Exit);
+                ISelections state = new ToUIBranch(UINum.State);
+                ISelections inventory = new ToUIBranch(UINum.Inventory);
+                ISelections saveLoad = new ToUIBranch(UINum.SaveLoad);
+                ISelections exit = new ToUIBranch(UINum.Exit);
 
                 sceneSelections = new Dictionary<int, ISelections>() { { 1, state }, { 2, inventory }, { 3, saveLoad }, { 4, exit } };
             }
@@ -29,9 +35,9 @@ namespace MarvelHeroes
 
         public class ToUIBranch : ISelections
         {
-            SceneNum UIBranch;
+            UINum UIBranch;
 
-            public ToUIBranch(SceneNum i)
+            public ToUIBranch(UINum i)
             {
                 UIBranch = i;
             }
@@ -40,19 +46,19 @@ namespace MarvelHeroes
             {
                 switch (UIBranch)
                 {
-                    case SceneNum.Inventory:
+                    case UINum.Inventory:
                         //InventoryUI inventoryUI = new InventoryUI();
                         //inventoryUI.InventoryScene();
                         break;
-                    case SceneNum.SaveLoad:
+                    case UINum.SaveLoad:
                         SaveLoadUI saveLoadUI = new SaveLoadUI();
                         saveLoadUI.SaveLoadScene();
                         break;
-                    case SceneNum.State:
+                    case UINum.State:
                         StatusUI statusUI = new StatusUI(); // 상태창 class
                         statusUI.UIStateScene();
                         break;
-                    case SceneNum.Exit:
+                    case UINum.Exit:
                         ExitUI exitUI = new ExitUI(); // 상태창 class
                         exitUI.ExitScene();
                         break;
@@ -64,16 +70,16 @@ namespace MarvelHeroes
 
                 switch (UIBranch)
                 {
-                    case SceneNum.Inventory:
+                    case UINum.Inventory:
                         sceneKorName = "인벤토리";
                         break;
-                    case SceneNum.SaveLoad:
+                    case UINum.SaveLoad:
                         sceneKorName = "저장/불러오기";
                         break;
-                    case SceneNum.State:
+                    case UINum.State:
                         sceneKorName = "캐릭터 상태";
                         break;
-                    case SceneNum.Exit:
+                    case UINum.Exit:
                         sceneKorName = "종료";
                         break;
                     defualt:
@@ -127,7 +133,7 @@ namespace MarvelHeroes
         //    }
         //}
 
-        public void  UIMainScene()
+        public void UIMainScene()
         {
             //int sceneTmep = temp; // UI 전 씬에서 씬의 정보를 저장함
             //Console.Clear();

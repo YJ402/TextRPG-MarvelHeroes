@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace MarvelHeroes
 {
-    internal class QuestManager
+    public class QuestManager
     {
         public static List<Quest> questlist_Chief; //모든퀘스트 목록
         public static List<Quest> questlist_Invagation; //모든퀘스트 목록

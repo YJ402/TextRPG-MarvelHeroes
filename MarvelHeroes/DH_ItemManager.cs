@@ -40,7 +40,9 @@ namespace MarvelHeroes
                 new UsingItem("대형 힐링 포션", ItemType.Healing, 50, "대량의 체력을 회복시켜줍니다.", 30, 1)
             };
 
-            foreach(Item item in equipItems)
+            Alltems = new List<Item>();
+
+            foreach (Item item in equipItems)
             {
                 Alltems.Add(item);
             }
@@ -77,6 +79,7 @@ namespace MarvelHeroes
         public int Value { get; set; }
         public string Descrip { get; set; }
         public int Cost { get; set; }
+        public bool IsEquip { get; set; }
 
         public Item(string name, ItemType itemtype, int value, string descrip, int cost)
         {
@@ -85,6 +88,7 @@ namespace MarvelHeroes
             Value = value;
             Descrip = descrip;
             Cost = cost;
+            IsEquip = false;
         }
 
         public abstract void Use(Player Player);
@@ -96,7 +100,6 @@ namespace MarvelHeroes
     {
         public ITemJobType ItemJobType { get; set; }
         public bool IsPurchase { get; set; }
-        public bool IsEquip { get; set; }
 
         //public Child(int X) : base(X) { } //base키워드를 이용하여 상속
         public EquipItem(string name, ItemType itemtype, ITemJobType itemJobType, int value, string descrip, int cost) : base(name, itemtype, value, descrip, cost)

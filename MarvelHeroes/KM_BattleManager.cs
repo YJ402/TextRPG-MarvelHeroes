@@ -13,35 +13,34 @@ using System.Xml.Serialization;
 
 namespace MarvelHeroes
 {
-    internal class BattleManager
+    public class BattleManager
     {
 
-        static BattleManager Battleinstance;
+        //static BattleManager Battleinstance;
 
-        private BattleManager() { }
+        //private BattleManager() { }
 
-        // 배틀메니저 싱글톤 패턴 구현
-        public static BattleManager Getinstance()
-        {
-            if (Battleinstance == null)
-            {
-                Battleinstance = new BattleManager();
-            }
+        //// 배틀메니저 싱글톤 패턴 구현
+        //public static BattleManager Getinstance()
+        //{
+        //    if (Battleinstance == null)
+        //    {
+        //        Battleinstance = new BattleManager();
+        //    }
 
-            return Battleinstance;
-        }
+        //    return Battleinstance;
+        //}
 
         Random random = new Random();
-        Player player = new Player(1, "ygm", 2000, 50, 50, false, JobType.IronMan);
 
-        public void BattleStart(int currentFloor)
+        public void BattleStart(Player player, int currentFloor)
         {
             bool isClear = false;
 
             List<Monster> floormonsters = RandomMonster(Monster.GenerateRandomMonsters(5, currentFloor));
 
 
-            int notBattleHp = player.Hp;
+            int notBattleHp = GameManager.Instance.player.Hp;
 
             while (!isClear)
             {
@@ -932,7 +931,7 @@ namespace MarvelHeroes
 
             while (true)
             {
-                //DungeionScene.challengeFloor ++;
+                GameManager.Instance.SM.dungeonScene.challengingFloor ++;
                 Console.Clear();
                 Console.WriteLine("Battle!! - Result\n");
                 Console.WriteLine("Victory\n");
