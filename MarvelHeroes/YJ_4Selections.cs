@@ -130,7 +130,7 @@ namespace MarvelHeroes
                 Console.WriteLine($"{farmingFloor}층 공략하기");
                 //배틀매니저의 전투 시작 메서드 호출(매개변수:목적 층 );
                 BattleManager BM = new BattleManager();
-                BM.BattleStart(GameManager.Instance.player, farmingFloor);
+                BM.BattleStart(farmingFloor);
             }
         }
 
