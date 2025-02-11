@@ -56,8 +56,8 @@ namespace MarvelHeroes
         {
             for (int i = 1; i <= skills.Count; i++)
             {
-                Console.WriteLine("{0} {1} - MP {2}\n", i, skills[i].SkillName, skills[i].UseMp);
-                Console.WriteLine("{0}", skills[i].Description);
+                Console.WriteLine(" {0} {1} - MP {2}\n", i, skills[i-1].SkillName, skills[i-1].UseMp);
+                Console.WriteLine(" {0}\n", skills[i - 1].Description);
             }
 
         }
@@ -108,7 +108,7 @@ namespace MarvelHeroes
         public List<Skill> hulkSkills = new List<Skill>()
         {
             new Skill(_SkillLevel: 1, SkillNames.VibraniumPunch,"비뷰라늄 펀치", "비브라늄 너클을 사용하여 100의 데미를 가합니다.",_skillAtk:100, _UseMp: 10),
-            new Skill(_SkillLevel: 1, SkillNames.HulkShouting,"헐크의 샤우팅","분노와 함께 강력한 소리를 내뿜어 몬스터 1마리가 스턴에 걸립니다.", _UseMp:10)
+            new Skill(_SkillLevel: 1, SkillNames.HulkShouting,"헐크의 샤우팅","분노와 함께 강력한 소리를 내뿜어 영구적으로 공격력을 낮춥니다.",_skillAtk: 50, _UseMp:50)
         };
 
         public List<Skill> HulkSKills

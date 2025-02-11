@@ -78,9 +78,18 @@ namespace MarvelHeroes
             return monster;
         }
 
-        public Monster IsStun(Monster monster)
+        public Monster HulkShouting(Monster monster, int beforAtk)
         {
-            monster.IsAtk = false;
+            if (monster.Atk <= 0)
+            {
+                monster.Atk = 0;
+                Console.WriteLine("ATk {0} -> 0\n", beforAtk);
+            }
+            else
+            {
+                Console.WriteLine("ATK {0} -> {1}\n", beforAtk, monster.Atk);
+            }
+
             return monster;
         }
 
@@ -89,21 +98,33 @@ namespace MarvelHeroes
             List<Monster> monsters = new List<Monster>();
             string[] names = { "Goblin", "Orc", "Slime", "Skeleton", "Wolf", "Zombie", "Troll" };
 
-            for (int i = 0; i < count; i++)
+            List<Monster> bossMonsters = new List<Monster>
             {
-                string name = names[rand.Next(names.Length)];
-                int level = floorLevel + rand.Next(3); // 층에 따라 레벨 반영
-                int hp = 50 + level * 10 + rand.Next(20); // 레벨 기반 체력 설정
-                int def = 10 + level * 10 + rand.Next(20);
-                int atk = 5 + level * 2 + rand.Next(5); // 공격력
-                int critical = rand.Next(5, 21); // 크리티컬 확률 (5~20%)
-                int dexterity = rand.Next(5, 21); // 민첩성 (5~20%)
+                new Monster(99,"울트론", 1000, 100, 100, 10, 50, 50, false),
+                new Monster(99,"타노스", 1000, 100, 100, 10, 50, 50, false)
+            };
 
-                monsters.Add(new Monster(level, name, hp, atk, def, floorLevel, critical, dexterity, false));
+            if (floorLevel < 10)
+            {
+                for (int i = 0; i < count; i++)
+                {
+                    string name = names[rand.Next(names.Length)];
+                    int level = floorLevel + rand.Next(3); // 층에 따라 레벨 반영
+                    int hp = 50 + level * 10 + rand.Next(20); // 레벨 기반 체력 설정
+                    int def = 10 + level * 10 + rand.Next(20);
+                    int atk = 5 + level * 2 + rand.Next(5); // 공격력
+                    int critical = rand.Next(5, 21); // 크리티컬 확률 (5~20%)
+                    int dexterity = rand.Next(5, 21); // 민첩성 (5~20%)
+
+                    monsters.Add(new Monster(level, name, hp, atk, def, floorLevel, critical, dexterity, false));
+                }
+
+                return monsters;
             }
+            else return bossMonsters;
 
-            return monsters;
         }
+
 
         public void TakeStatus(int minus, BattlStatusPage monsterstatus)
         {

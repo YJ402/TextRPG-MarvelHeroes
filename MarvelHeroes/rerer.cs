@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace MarvelHeroes
 {
-    internal class YJ_GameManager
+    internal class rerer
     {
     }
 }
