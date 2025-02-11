@@ -7,7 +7,7 @@
             //GameManager instance = GameManager.GetInstance();
             //instance.GameStart();
             BattleManager instance = BattleManager.Getinstance();
-            instance.BattleStart();
+            instance.BattleStart(10);
         }
     }
 }
