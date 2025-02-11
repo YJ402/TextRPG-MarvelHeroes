@@ -38,8 +38,8 @@ namespace MarvelHeroes
 
         public void ShowStatus()
         {
-            Console.WriteLine(""); // 플레이어 레벨
-            Console.WriteLine(""); // 플레이어 이름 및 직업
+            //Console.WriteLine("GameManager.player.Level"); // 플레이어 레벨
+            //Console.WriteLine(""); // 플레이어 이름 및 직업
             //string attack = GameManager.player.EquipAttack == 0 ? $"공격력 : {GameManager.player.Atk}" : $"공격력 : {GameManager.player.Atk} (+{GameManager.player.EquipAttack})"; // 공격력 보여주기
             //Console.WriteLine(attack); // 플레이어 공격력
             //string deffence = GameManager.player.EquipDefence == 0 ? $"방어력 : {GameManager.player.Def}" : $"공격력 : {GameManager.player.Def} (+{GameManager.player.EquipDefence})"; // 방어력 보여주기

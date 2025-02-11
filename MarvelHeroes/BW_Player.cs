@@ -43,13 +43,30 @@ namespace MarvelHeroes
         public int Mp { get; set; }
         public int MaxHp { get; set; }
         public int MaxMp { get; set; }
+
+        private int xp { get; set; }
+        private int maxXp { get; set; }
+
+        public int Xp
+        {
+            get { return xp; }
+            set
+            {
+                if (xp >= maxXp)
+                {
+                    LevelUp();
+                }
+                else { xp = value; }
+            }
+        }
         
 
 
-        public Player(int _Level, string name, int gold,int _Critical, int _Dexterity, bool _isDead, JobType jobtypeName)
+        public Player(int _Level, string name, int gold,int _Critical, int _Dexterity, bool _isDead, JobType jobtypeName, int xp, int maxXp)
             : base (_Level, 0, 0, 0, _Critical, _Dexterity, false)
         {
-            // 이런식으로 되있는게 속성   
+            // 이런식으로 되있는게 속성
+            Level = _Level;
             Name = name;
             PlayerJob = Job.jobStats[jobtypeName].name;
             Atk = Job.jobStats[jobtypeName].atk;
@@ -59,7 +76,20 @@ namespace MarvelHeroes
             Gold = 1500;
             MaxHp = Hp;
             MaxMp = Job.jobStats[jobtypeName].mp;
+            Xp = 0;
+            maxXp = 10;
          
+        }
+
+        public void LevelUp()
+        {
+            Level += 1;
+            Atk += 1;
+            Def += 1;
+            xp = 0;
+            if (maxXp == 10) { maxXp = 35; }
+            else if (maxXp == 35) { maxXp = 65; }
+            else if (maxXp == 65) { maxXp = 100; }
         }
 
 
