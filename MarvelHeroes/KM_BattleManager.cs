@@ -39,10 +39,10 @@ namespace MarvelHeroes
             bool isClear = false;
 
             List<Monster> floormonsters = RandomMonster(Monster.GenerateRandomMonsters(5, currentFloor));
-            List<Monster> bossMonster = new List<Monster>
-            {
-                new Monster(99,"타노스", 1000, 999, 999, 10, 99, 99, false)
-            };
+            //List<Monster> bossMonster = new List<Monster>
+            //{
+            //    new Monster(99,"타노스", 1000, 999, 999, 10, 99, 99, false)
+            //};
             
             int notBattleHp = player.Hp;
 
@@ -53,8 +53,7 @@ namespace MarvelHeroes
                 switch (selectNumber)
                 {
                     case 1:
-                        if(currentFloor < 10) isClear = AttackPlayerPage(player, floormonsters, currentFloor, notBattleHp);
-                        else isClear = AttackPlayerPage(player, bossMonster, currentFloor, notBattleHp);
+                        isClear = AttackPlayerPage(player, floormonsters, currentFloor, notBattleHp);
                         break;
                     case 2:
                         isClear = SkillPlayerPage(player, floormonsters, currentFloor, notBattleHp);
@@ -69,10 +68,8 @@ namespace MarvelHeroes
                         break;
                 }
 
+
             }
-
-            currentFloor++;
-
 
         }
         // 도전할 층 선택 
@@ -754,6 +751,7 @@ namespace MarvelHeroes
 
             while (true)
             {
+                //DungeionScene.challengeFloor ++;
                 Console.Clear();
                 Console.WriteLine("Battle!! - Result\n");
                 Console.WriteLine("Victory\n");
