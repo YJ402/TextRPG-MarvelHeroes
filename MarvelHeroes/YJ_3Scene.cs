@@ -66,7 +66,7 @@ namespace MarvelHeroes
 
             ISelections UI = new ToUI();
             ISelections action1 = new Trade_Buy();
-            ISelections action2 = new Trade_Sell(ref Shopitems);
+            ISelections action2 = new Trade_Sell();
             ISelections action3 = new ToWhere(SceneNum.Town);
 
             sceneSelections = new Dictionary<int, ISelections>() { { 0, UI }, { 1, action1 }, { 2, action2 }, { 3, action3 } };
