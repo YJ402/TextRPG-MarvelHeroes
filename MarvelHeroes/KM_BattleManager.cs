@@ -16,24 +16,9 @@ namespace MarvelHeroes
     public class BattleManager
     {
 
-        //static BattleManager Battleinstance;
-
-        //private BattleManager() { }
-
-        //// 배틀메니저 싱글톤 패턴 구현
-        //public static BattleManager Getinstance()
-        //{
-        //    if (Battleinstance == null)
-        //    {
-        //        Battleinstance = new BattleManager();
-        //    }
-
-        //    return Battleinstance;
-        //}
-
         Random random = new Random();
 
-        public void BattleStart(Player player, int currentFloor)
+        public void BattleStart(int currentFloor)
         {
             bool isClear = false;
 
@@ -41,6 +26,7 @@ namespace MarvelHeroes
 
 
             int notBattleHp = GameManager.Instance.player.Hp;
+            Player player = GameManager.Instance.player;
 
             while (!isClear)
             {
@@ -68,97 +54,7 @@ namespace MarvelHeroes
             }
 
         }
-        // 도전할 층 선택 
-        //public int SelectBattlePage()
-        //{
-        //    int nextFloorNumber = Floor.nextFloorNumber;
-
-        //    foreach (var floor in floors)
-        //    {
-        //        if (floor.nextFloor)
-        //        {
-        //            nextFloorNumber = floor.numberFloor;
-        //        }
-        //    }
-
-        //    while (true)
-        //    {
-        //        Console.Clear();
-        //        Console.WriteLine("던전\n");
-        //        Console.WriteLine("현재 도전할 층은 {0} 층입니다.", nextFloorNumber);
-        //        Console.WriteLine("        #.UI\n");
-
-        //        foreach (var floor in floors)
-        //        {
-        //            if (nextFloorNumber == floor.numberFloor)
-        //            {
-        //                floor.StatusFloor = "도전";
-        //            }
-
-        //            if (floor.numberFloor == 4)
-        //            {
-        //                Console.WriteLine("{0}.{1}층 {2}", floor.numberFloor, floor.numberFloor, floor.StatusFloor);
-
-        //            }
-        //            else Console.WriteLine("{0}.{1}층 {2}", floor.numberFloor, floor.numberFloor, floor.StatusFloor);
-        //        }
-
-        //        int input = GetInput(1, 4);
-
-        //        if (input == 0) return 0;
-        //        else if (input >= 1 && input <= 4)
-        //        {
-        //            if (input == 1) return 1;
-        //            else if (input == 2)
-        //            {
-        //                if (floors[input - 1].StatusFloor == " ") return 2;
-        //                else Console.WriteLine("입장 할 수 없습니다.");
-        //                Console.ReadKey();
-        //            }
-        //            else if (input == 3)
-        //            {
-        //                if (floors[input - 1].StatusFloor == " ") return 3;
-        //                else Console.WriteLine("입장 할 수 없습니다.");
-        //                Console.ReadKey();
-        //            }
-        //            else if (input == 4)
-        //            {
-        //                if (floors[input - 1].StatusFloor == " ") return 4;
-        //                else Console.WriteLine("입장 할 수 없습니다.");
-        //                Console.ReadKey();
-        //            }
-        //        }
-        //        else Console.WriteLine("잘못된 입력입니다.");
-
-        //    }
-
-        //}
-
-        // 도전 할지 다시 묻는 선택 페이지
-        //public bool FloorBattleExit(int floorinput, List<Monster> floorMonsters, Player player)
-        //{
-        //    while (true)
-        //    {
-        //        Console.Clear();
-        //        Console.WriteLine("던전\n");
-        //        Console.WriteLine("{0}층에 진입하려 합니다.", floorinput);
-        //        Console.WriteLine("도전에 진입하면 UI에 접근하실 수 없습니다\n");
-        //        Console.WriteLine("도전하시겠습니까?");
-        //        Console.WriteLine("        #.UI\n");
-        //        //Console.WriteLine("1. 예");
-        //        //Console.WriteLine("2. 아니오\n");
-        //        Console.WriteLine("원하시는 행동을 입력해주세요.");
-
-        //        bool choice = GameView.SceneSelectYN();
-
-        //        if (choice == true) return true;
-        //        else if (player.Hp <= 0) Console.WriteLine("Hp가 0이라 진입 할 수 없습니다.");
-        //        else return false;
-        //    }
-
-        //}
-
-        // 공격, 스킬, 포션 사용 선택 창
+        
         public int StartPlayBattlePage(Player player, List<Monster> floormonsters)
         {
 
@@ -309,6 +205,8 @@ namespace MarvelHeroes
                     if (hitNumber < player.Critical)
                     {
                         int hitDamage = (int)Math.Round(finalDamage * 1.6); // 1.6으로 수정 할 것
+                        hitDamage -= (int)(floormonster.Def*0.3);
+                        if (hitDamage <= 0) hitDamage = 10;
                         floormonster.TakeDamge(hitDamage);
                         //floormonster.Hp -= hitDamage;
 
@@ -323,13 +221,15 @@ namespace MarvelHeroes
                     // 치명타 안 터지면 출력
                     else
                     {
+                        finalDamage -= (int)(floormonster.Def * 0.3);
+                        if(finalDamage <= 0) finalDamage = 5;
                         floormonster.TakeDamge(finalDamage);
                         //floormonster.Hp -= finalDamage;
 
 
                         Console.WriteLine("Battle\n");
                         Console.WriteLine("{0} 의 공격", player.Name);
-                        Console.WriteLine("Lv.{0} {1} 을(를) 맞췄습니다. [데미지 : {2}]\n", floormonster.Level, floormonster.MonsterName, floormonster.Atk);
+                        Console.WriteLine("Lv.{0} {1} 을(를) 맞췄습니다. [데미지 : {2}]\n", floormonster.Level, floormonster.MonsterName, finalDamage);
                         Console.WriteLine("Lv. {0} {1}", floormonster.Level, floormonster.MonsterName);
 
                         floormonster.IsDeadBattle(floormonster, monsterBefor_hp);
@@ -402,7 +302,9 @@ namespace MarvelHeroes
                         if (hitNumber < floormonsters[i].Critical)
                         {
                             int hitdamage = (int)Math.Round(finalDamage * 1.2);
-                            player.Hp -= hitdamage;
+                            hitdamage -= (int)(player.Def*0.5);
+                            if (hitdamage <= 0) hitdamage = 10;
+                            player.TakeDamge(hitdamage);
 
                             Console.WriteLine("Battle\n");
                             Console.WriteLine("Lv. {0} {1}의 공격!", floormonsters[i].Level, floormonsters[i].MonsterName);
@@ -415,7 +317,9 @@ namespace MarvelHeroes
                         // 치명타 안 터지면 출력
                         else
                         {
-                            player.Hp -= finalDamage;
+                            finalDamage -= (int)(player.Def*0.5);
+                            if (finalDamage <= 0) finalDamage = 5;
+                            player.TakeDamge(finalDamage);
 
                             Console.WriteLine("Battle\n");
                             Console.WriteLine("Lv. {0} {1}의 공격!", floormonsters[i].Level, floormonsters[i].MonsterName);
@@ -489,7 +393,9 @@ namespace MarvelHeroes
                     if (hitNumber < floormonsters[i].Critical)
                     {
                         int hitdamage = (int)Math.Round(finalDamage * 1.2);
-                        player.Hp -= hitdamage;
+                        hitdamage -= (int)(player.Def*0.5);
+                        if (hitdamage <= 0) hitdamage = 10;
+                        player.TakeDamge(hitdamage);
 
                         Console.WriteLine("Battle\n");
                         Console.WriteLine("Lv. {0} {1}의 공격!", floormonsters[i].Level, floormonsters[i].MonsterName);
@@ -502,7 +408,9 @@ namespace MarvelHeroes
                     // 치명타 안 터지면 출력
                     else
                     {
-                        player.Hp -= finalDamage;
+                        finalDamage -= (int)(player.Def*0.5);
+                        if(finalDamage <= 0) finalDamage = 5;
+                        player.TakeDamge(finalDamage);
 
                         Console.WriteLine("Battle\n");
                         Console.WriteLine("Lv. {0} {1}의 공격!", floormonsters[i].Level, floormonsters[i].MonsterName);
@@ -668,54 +576,54 @@ namespace MarvelHeroes
         {
             int monsterBefor_hp;
             player.Mp -= skill[input - 1].UseMp;
+            int skillDamage = 0;
 
-
+            Console.Clear();
             Console.WriteLine("Battle\n");
             Console.WriteLine("{0} 의 공격\n", player.Name);
 
-            for (int i = 0; i < floormonster.Count; i++)
+            if(input == 1)
             {
-                int skillDamage = 0;
-
-                monsterBefor_hp = floormonster[i].Hp;
-
-                if (input == 1)
+                for (int i = 0; i < floormonster.Count; i++)
                 {
+                    monsterBefor_hp = floormonster[i].Hp;
                     skillDamage = random.Next(skill[input - 1].skillAtk, skill[input - 1].skillAtk + 40);
                     floormonster[i].Hp -= skillDamage;
                     Console.WriteLine("Lv.{0} {1} 을(를) 맞췄습니다. [데미지 : {2}] - 스킬 공격!!\n", floormonster[i].Level, floormonster[i].MonsterName, skillDamage);
                     Console.WriteLine("Lv. {0} {1}", floormonster[i].Level, floormonster[i].MonsterName);
 
+                    floormonster[i].IsDead(floormonster[i], monsterBefor_hp);
                 }
-                else if (input == 2)
-                {
-                    if (floormonster.Count >= 2)
-                    {
-                        // 랜덤하게 2마리 몬스터 선택 후 HP 감소 (원본 리스트 직접 수정)
-                        List<Monster> selectedMonsters = floormonster.OrderBy(m => random.Next()).Take(2).ToList();
-                        for (int j = 0; j <= selectedMonsters.Count; j++)
-                        {
-                            selectedMonsters[j].Hp -= skill[input - 1].skillAtk;
-                            Console.WriteLine("Lv.{0} {1} 을(를) 맞췄습니다. [데미지 : {2}] - 스킬 공격!!\n", selectedMonsters[i].Level, selectedMonsters[i].MonsterName, skill[input - 1].skillAtk);
-                            Console.WriteLine("Lv. {0} {1}", selectedMonsters[i].Level, selectedMonsters[i].MonsterName);
-
-                        }
-                    }
-                    else if (floormonster.Count == 1)
-                    {
-                        // 몬스터가 1마리만 있으면 그 몬스터에게만 데미지 적용
-                        floormonster[0].Hp -= skill[input - 1].skillAtk;
-                        Console.WriteLine("Lv.{0} {1} 을(를) 맞췄습니다. [데미지 : {2}] - 스킬 공격!!\n", floormonster[0].Level, floormonster[0].MonsterName, skill[input - 1].skillAtk);
-                        Console.WriteLine("Lv. {0} {1}", floormonster[0].Level, floormonster[0].MonsterName);
-                    }
-                }
-
-                floormonster[i].IsDead(floormonster[i], monsterBefor_hp);
             }
+            else if(input == 2)
+            {
+                if (floormonster.Count >= 2)
+                {
+                    // 랜덤하게 2마리 몬스터 선택 후 HP 감소 (원본 리스트 직접 수정)
+                    List<Monster> selectedMonsters = floormonster.OrderBy(m => random.Next()).Take(2).ToList();
+                    for (int j = 0; j < selectedMonsters.Count; j++)
+                    {
+                        monsterBefor_hp = floormonster[j].Hp;
+                        selectedMonsters[j].Hp -= skill[input - 1].skillAtk;
+                        Console.WriteLine("Lv.{0} {1} 을(를) 맞췄습니다. [데미지 : {2}] - 스킬 공격!!\n", selectedMonsters[j].Level, selectedMonsters[j].MonsterName, skill[input - 1].skillAtk);
+                        Console.WriteLine("Lv. {0} {1}", selectedMonsters[j].Level, selectedMonsters[j].MonsterName);
 
+                        selectedMonsters[j].IsDead(selectedMonsters[j], monsterBefor_hp);
+                    }
+                }
+                else if(floormonster.Count == 1)
+                {
+                    // 몬스터가 1마리만 있으면 그 몬스터에게만 데미지 적용
+                    monsterBefor_hp = floormonster[0].Hp;
+                    floormonster[0].Hp -= skill[input - 1].skillAtk;
+                    Console.WriteLine("Lv.{0} {1} 을(를) 맞췄습니다. [데미지 : {2}] - 스킬 공격!!\n", floormonster[0].Level, floormonster[0].MonsterName, skill[input - 1].skillAtk);
+                    Console.WriteLine("Lv. {0} {1}", floormonster[0].Level, floormonster[0].MonsterName);
+
+                    floormonster[0].IsDead(floormonster[0], monsterBefor_hp);
+                }
+            }
             Console.WriteLine("0. 다음\n");
             int select = GetInput(0, 0);
-
             if (select != 0)
             {
                 Console.WriteLine("잘못된 입력입니다.");
@@ -928,6 +836,7 @@ namespace MarvelHeroes
         // 클리어 메서드
         public void ClearBattlePage(Player player, int beforeBattleHp, int clearfloor, List<Monster> floorMonsters)
         {
+            int Adddgold = random.Next(10, 10*clearfloor);
 
             while (true)
             {
@@ -936,8 +845,13 @@ namespace MarvelHeroes
                 Console.WriteLine("Battle!! - Result\n");
                 Console.WriteLine("Victory\n");
                 Console.WriteLine("던전에서 몬스터 {0}마리를 잡았습니다.\n", floorMonsters.Count);
+
+                Console.WriteLine("[캐릭터 정보]");
                 Console.WriteLine("Lv. {0} {1} {2}", player.Level, player.Name, player.PlayerJob);
                 Console.WriteLine("HP {0} -> {1}\n", beforeBattleHp, player.Hp);
+
+                Console.WriteLine("[획득 아이템]");
+                Console.WriteLine("Gold {0} -> {1}", player.Gold, player.Gold +=Adddgold);           
                 Console.WriteLine("0. 다음");
 
                 int input = GetInput(0, 0);
@@ -1002,6 +916,9 @@ namespace MarvelHeroes
 
         }
 
+
+
+
     }
 
     // 배틀스테이지 필요한 enum
@@ -1015,135 +932,7 @@ namespace MarvelHeroes
     }
 
 
-    // 층에 대한 내용 층수, 층의 상태, 클리어 여부, 다음층인지 확인
-    //public class Floor
-    //{
-    //    public int numberFloor { get; set; }
-    //    public string floorName { get; set; }
-    //    public string StatusFloor { get; set; }
-    //    public bool clearFloor { get; set; }
-    //    public bool nextFloor { get; set; }
-
-    //    public static int nextFloorNumber = 1;
-
-    //    public Floor(int _NumberFloor, string _StatusFloor, bool _clearFloor, bool _nextFloor)
-    //    {
-    //        numberFloor = _NumberFloor;
-    //        StatusFloor = _StatusFloor;
-    //        clearFloor = _clearFloor;
-    //        nextFloor = _nextFloor;
-    //    }
-
-
-    //}
-
-    //class Monster : Unit
-    //{
-    //    public string Name { get; private set; }
-    //    int floor { get; set; }
-    //    public bool isAtk { get; private set; }
-
-    //    private static Random rand = new Random();
-
-    //public Monster(int _Level, string _Name, int _Hp, int _Atk,int _Def ,int _floor, int _Critical, int _Dex, bool _isDaed, bool _isAtk)
-    //    : base(_Level, _Atk, _Def, _Hp, _Critical, _Dex, false)
-    //{
-    //    Level = _Level;
-    //    Name = _Name;
-    //    Hp = _Hp;
-    //    Atk = _Atk;
-    //    Hp = _Hp;
-    //    Atk = _Atk;
-    //    floor = _floor;
-    //    Critical = _Critical;
-    //    Dexterity = _Dex;
-    //    isAtk = true;          
-    //}
-
-    // 몬스터 데미지 받는 메서드
-    //public override TestMonster TakeDamge(int damge)
-    //{
-    //    int newHp;
-    //    if (Hp <= 0)
-    //    {
-    //        newHp = 0;
-    //        isDead = true;
-    //    }
-    //    else newHp = Hp - damge;
-
-    //    return new TestMonster(Level,Name, newHp, Atk, Def, floor, Critical, Dexterity, isDead, isAtk);
-    //}
-
-    // 몬스터 스테이지 감소 메서드
-    //public Monster TakeStatus(int minus, BattlStatusPage monsterstatus)
-    //{
-    //    int newStatus = 0;
-
-    //    switch(monsterstatus)
-    //    {
-    //        case BattlStatusPage.MinusDex:
-    //            if (Dexterity <= 0) newStatus = 0;
-    //            else newStatus = Dexterity - minus;
-    //            return new Monster(Level, Name, Hp, Atk, Def, floor, Critical, newStatus, isDead, isAtk);
-    //        case BattlStatusPage.MinusDef:
-    //            if (Def <= 0) newStatus = 0;
-    //            else newStatus = Def - minus;
-    //            return new Monster(Level, Name, Hp, Atk, newStatus, floor, Critical, Dexterity, isDead, isAtk);
-    //        case BattlStatusPage.MinusAtk:
-    //            if (Dexterity <= 0) newStatus = 0;
-    //            else newStatus = Dexterity - minus;
-    //            return new Monster(Level, Name, Hp, newStatus, Def, floor, Critical, Dexterity, isDead, isAtk);
-    //        default:
-    //            return new Monster(Level, Name, Hp, newStatus, Def, floor, Critical, Dexterity, isDead, isAtk);
-    //    }
-    //}
-
-    // 몬스터 생존 확인 메서드
-    //public override TestMonster IsDead(Unit monster, int beforeHp)
-    //{
-    //    if (monster.Hp <= 0)
-    //    {
-    //        int newHp = 0;
-    //        Console.WriteLine("HP {0} -> Dead\n", beforeHp);
-    //        return new TestMonster(Level, Name, newHp, Atk, Def, floor, Critical, Dexterity, isDead, isAtk);
-    //    }
-    //    else
-    //    {
-    //        Console.WriteLine("HP {0} -> {1}\n", beforeHp, monster.Hp);
-    //        return new TestMonster(Level, Name, Hp, Atk, Def, floor, Critical, Dexterity, isDead, isAtk);
-    //    }
-    //}
-
-    //public TestMonster IsStun(TestMonster monster)
-    //{
-    //    return new TestMonster(Level, Name, Hp, Atk, Def, floor, Critical, Dexterity, isDead, false);
-    //}
-
-    //몬스터 랜덤 생성 메서드
-    //public static List<TestMonster> GenerateRandomMonsters(int count, int floorLevel)
-    //{
-    //    List<TestMonster> monsters = new List<TestMonster>();
-    //    string[] names = { "Goblin", "Orc", "Slime", "Skeleton", "Wolf", "Zombie", "Troll" };
-
-    //    for (int i = 0; i < count; i++)
-    //    {
-    //        string name = names[rand.Next(names.Length)];
-    //        int level = floorLevel + rand.Next(3); // 층에 따라 레벨 반영
-    //        int hp = 50 + level * 10 + rand.Next(20); // 레벨 기반 체력 설정
-    //        int def = 10 + level * 10 + rand.Next(20);
-    //        int atk = 5 + level * 2 + rand.Next(5); // 공격력
-    //        int critical = rand.Next(5, 21); // 크리티컬 확률 (5~20%)
-    //        int dexterity = rand.Next(5, 21); // 민첩성 (5~20%)
-
-    //        monsters.Add(new TestMonster(level, name, hp, atk, def, floorLevel, critical, dexterity, false, false));
-    //    }
-
-    //    return monsters;
-    //}
-
-
-
-    //}
+    
 
 }
 
