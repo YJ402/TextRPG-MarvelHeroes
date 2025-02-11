@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
+using System.Numerics;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -14,18 +15,19 @@ namespace MarvelHeroes
         public List<Quest> acceptQuest; //플레이어가 받은 퀘스트
 
 
+
         public QuestManager()
         {
             questlist_Chief = new List<Quest>
             {
-            new HuntQuest("시장의 토벌 의뢰", "시장이 당신에게 근처 치타우리족의 처리를 부탁했습니다.\n치타우리 3마리를 처리합시다.", 3, 1101, "Goblin"),
+            new HuntQuest("시장의 토벌 의뢰", "시장이 당신에게 근처 쉐도우 가디언의 처리를 부탁했습니다.\n쉐도우 가디언 3마리를 처리합시다.", 3, 1101, "쉐도우 가디언"),
             new EquipQuest("영웅의 품격", "사장의 신뢰를 위해 방어구를 입은 멋진 모습을 보여줍시다. ", 1, 1201,ItemType.Amor),
             new LevelQuest("시장의 신뢰", "시장은 강한 자를 원합니다. 시장의 신뢰를 위해 레벨 10을 달성하세요.", 10, 1301)
             };
 
             questlist_Investigation = new List<Quest>
             {
-            new HuntQuest("미망인의 복수", "미망인의 남편을 죽인 치타우리를 사냥해옵시다.", 3, 2101, "Goblin"),
+            new HuntQuest("미망인의 복수", "미망인의 남편을 죽인 메탈 울프 3마리를 사냥해옵시다.", 3, 2101, "메탈 울프"),
             new EquipQuest("전투준비", "무기를 장착하여 전투에 대비합시다.", 1, 2201, ItemType.Weapon),
             new LevelQuest("부족한 힘", "적에 비해 당신은 약합니다. 레벨 15을 달성합시다.", 15, 2301)
             };
@@ -33,7 +35,7 @@ namespace MarvelHeroes
             acceptQuest = new List<Quest>(); //리스트 초기화
         }
 
-        public void MainQueststart(string questTrigger)
+        public void QuestStart(string questTrigger)
         {
             List<Quest> list = new List<Quest>();
 
@@ -41,7 +43,7 @@ namespace MarvelHeroes
             {
                 list = questlist_Chief;
             }
-            else if(questTrigger == "Investigation")
+            else if (questTrigger == "Investigation")
             {
                 list = questlist_Investigation;
             }
@@ -50,7 +52,7 @@ namespace MarvelHeroes
 
             for (int i = 0; i < list.Count; i++)
             {
-                Console.WriteLine($"{i+1}. {list[i].Name} | {list[i].Descrip}");
+                Console.WriteLine($"{i + 1}. {list[i].Name} | {list[i].Descrip}");
             }
 
             Console.WriteLine("");
@@ -83,10 +85,6 @@ namespace MarvelHeroes
             }
         }
 
-
-
-
-
         public void AcceptQuest(Quest quest)
         {
             //public bool Contains (T item);
@@ -109,7 +107,7 @@ namespace MarvelHeroes
             List<Quest> completedQuests = new List<Quest>();
             foreach (Quest quest in acceptQuest)
             {
-                if (quest.IsCompleted(Monster, player,item))
+                if (quest.IsCompleted(Monster, player, item))
                 {
                     completedQuests.Add(quest);
                     acceptQuest.Remove(quest);
@@ -136,6 +134,28 @@ namespace MarvelHeroes
                 Console.WriteLine("받지 않은 퀘스트입니다.");
             }
         }
+
+        public void GiveReward(Quest quest, Player player)
+        {
+            List<Item> itemlist = GameManager.Instance.IM.Alltems;
+            while (true)
+            {
+                int random = new Random().Next(0,itemlist.Count());
+                if (!GameManager.Instance.inventory.items.Contains(itemlist[random]))
+                {
+                    //아이템 주는 로직 작성
+                    GameManager.Instance.inventory.AddItem(itemlist[random]);
+                    Console.WriteLine($"보상획득! 아이템 획득 {itemlist[random].Name}");
+                    break;
+                }
+
+            }
+
+            int RewardGold = new Random().Next(100, 200);
+            player.Gold += RewardGold;
+            Console.WriteLine($"보상획득! 골드 + {RewardGold}");
+        }
+
     }
 
     public abstract class Quest
@@ -144,6 +164,7 @@ namespace MarvelHeroes
         public string Descrip { get; set; }
         public int Demand { get; set; }
         public int QuestId { get; set; }
+
         
         public Quest(string name, string descrip, int demand, int questId) 
         {
@@ -151,9 +172,10 @@ namespace MarvelHeroes
             Descrip = descrip;
             Demand = demand;
             QuestId = questId;
+
         }
 
-        public abstract bool IsCompleted(List<Monster> killMonster, Player player, EquipItem item); // 퀘스트 완료 체크
+        public abstract bool IsCompleted(List<Monster> Monster, Player player, EquipItem item); // 퀘스트 완료 체크
 
         public abstract void Questclear();
     }
@@ -168,7 +190,7 @@ namespace MarvelHeroes
         {
             RequiredType = requiredType;
         }
-        public override bool IsCompleted(List<Monster> killMonster, Player player, EquipItem item)
+        public override bool IsCompleted(List<Monster> Monster, Player player, EquipItem item)
         {
             // 무기 장착 퀘스트 확인
             if (RequiredType == ItemType.Weapon && item.IsEquip != false)
@@ -223,7 +245,7 @@ namespace MarvelHeroes
         {
 
         }
-        public override bool IsCompleted(List<Monster> killMonster, Player player, EquipItem item)
+        public override bool IsCompleted(List<Monster> Monster, Player player, EquipItem item)
         {
             return player.Level >= Demand;
         }
