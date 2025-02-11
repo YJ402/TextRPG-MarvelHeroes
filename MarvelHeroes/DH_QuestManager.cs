@@ -9,8 +9,8 @@ namespace MarvelHeroes
 {
     internal class QuestManager
     {
-        List<Quest> questlist_Chief; //모든퀘스트 목록
-        List<Quest> questlist_Invagation; //모든퀘스트 목록
+        public static List<Quest> questlist_Chief; //모든퀘스트 목록
+        public static List<Quest> questlist_Invagation; //모든퀘스트 목록
         List<Quest> acceptQuest; //플레이어가 받은 퀘스트
 
 
@@ -50,12 +50,12 @@ namespace MarvelHeroes
             }
         }
 
-        public void CheckCompleteQuest(List<Monster> killMonster, Player player, Item item)
+        public void CheckCompleteQuest(List<Monster> killMonster, Player player, EquipItem item)
         {
             List<Quest> completedQuests = new List<Quest>();
             foreach (Quest quest in acceptQuest)
             {
-                if (quest.IsCompleted(killMonster, player, item))
+                if (quest.IsCompleted(killMonster, player,item))
                 {
                     completedQuests.Add(quest);
                     acceptQuest.Remove(quest);
@@ -99,7 +99,7 @@ namespace MarvelHeroes
             QuestId = questId;
         }
 
-        public abstract bool IsCompleted(List<Monster> killMonster, Player player, Item item); // 퀘스트 완료 체크
+        public abstract bool IsCompleted(List<Monster> killMonster, Player player, EquipItem item); // 퀘스트 완료 체크
 
         public abstract void Questclear();
     }
@@ -107,24 +107,29 @@ namespace MarvelHeroes
     public class ItemQuest : Quest
     {
 
-        public ItemType RequiredType { get; set; } // 장착해야 할 아이템 이름
+        public ItemType RequiredType { get; set; } // 장착해야 할 아이템 타입
 
         public ItemQuest(string name, string descrip, int demand, int questId, ItemType requiredType)
             : base(name, descrip, demand, questId)
         {
             RequiredType = requiredType;
         }
-        public override bool IsCompleted(List<Monster> killMonster, Player player, Item item)
+        public override bool IsCompleted(List<Monster> killMonster, Player player, EquipItem item)
         {
-            // ⭐ 무기 장착 퀘스트일 경우, 플레이어가 무기를 장착했는지 확인
-            if (RequiredType == ItemType.Weapon && item.Use.IsEquip == true)
+            // 무기 장착 퀘스트 확인
+            if (RequiredType == ItemType.Weapon && item.IsEquip != false)
+            {
                 return true;
+            }
 
-            // ⭐ 방어구 장착 퀘스트일 경우, 플레이어가 방어구를 장착했는지 확인
-            if (RequiredType == ItemType.Amor && item.EquippedArmor == true)
+            // 방어구 장착 퀘스트 확인
+            if (RequiredType == ItemType.Amor && item.IsEquip != false)
+            {
+
                 return true;
+            }
 
-            return false;
+            return false; // 아직 퀘스트 완료 조건을 충족하지 않음
         }
 
         public override void Questclear()
@@ -141,7 +146,7 @@ namespace MarvelHeroes
         {
             targetMonster = monster; 
         }
-        public override bool IsCompleted(List<Monster> killMonster, Player player, Item item)
+        public override bool IsCompleted(List<Monster> killMonster, Player player, EquipItem item)
         {
             foreach (Monster m in killMonster)
             {
@@ -164,7 +169,7 @@ namespace MarvelHeroes
         {
 
         }
-        public override bool IsCompleted(List<Monster> killMonster, Player player, Item item)
+        public override bool IsCompleted(List<Monster> killMonster, Player player, EquipItem item)
         {
             return player.Level >= Demand;
         }
