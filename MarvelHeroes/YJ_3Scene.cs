@@ -58,16 +58,11 @@ namespace MarvelHeroes
 
     public class DungeonScene : Scene//, ISelections
     {
-<<<<<<< Updated upstream
-        public static int challengingFloor = 1;
-        
-=======
         public int challengingFloor = 1;
         public int i = 1;
         ISelections UI;
         ISelections action1;
 
->>>>>>> Stashed changes
         public DungeonScene()
         {
             //int i = 1;

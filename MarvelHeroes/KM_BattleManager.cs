@@ -931,8 +931,11 @@ namespace MarvelHeroes
 
             while (true)
             {
-                GameManager.Instance.SM.dungeonScene.challengingFloor++;
+                //던전씬 정보 업뎃용
+                int challengingFloor = GameManager.Instance.SM.dungeonScene.challengingFloor++;
+                challengingFloor  = (challengingFloor == clearfloor) ? challengingFloor++ : challengingFloor;
                 GameManager.Instance.SM.dungeonScene.UpdateDungeonSelections();
+
                 Console.Clear();
                 Console.WriteLine("Battle!! - Result\n");
                 Console.WriteLine("Victory\n");
