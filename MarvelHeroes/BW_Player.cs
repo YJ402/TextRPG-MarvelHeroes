@@ -40,11 +40,25 @@ namespace MarvelHeroes
         public int EquipAtk { get; set; }
         public int EquipDef { get; set; }
         public int Gold { get; set; }
-        public int Mp { get; set; }
+        public int mp;
+        public int Mp
+        {
+            get => mp;
+
+            set
+            {
+                if (value <= 0)
+                {
+                    mp = 0;
+                    
+                }
+                else mp = value;
+            }
+        }
         public int MaxHp { get; set; }
         public int MaxMp { get; set; }
 
-        public int xp { get; set; }
+        public int xp;
         public int maxXp { get; set; }
 
         public int Xp
