@@ -44,6 +44,8 @@ namespace MarvelHeroes
         {
 
             //1.캐릭터 생성씬(1회용)
+            // 플레이어 할당
+            player = new Player(1, "", 100, false, JobType.IronMan, 0, 10);
             SM.currentScene = new CreateCharacterScene(); // 일회용이라서 여기서 생성.
             while (true)
             {
@@ -56,6 +58,7 @@ namespace MarvelHeroes
                     if (temp1.Count() < 10 && temp1.Count() > 0)
                     {
                         Console.WriteLine("플레이어의 이름에 temp 입력 메서드"); // 이름 바꾸는 메서드 트리거
+                        player.Name = temp1;
                         break;
                     }
                     Console.WriteLine("1~10자 사이의 문자를 입력해주세요.");
@@ -63,7 +66,7 @@ namespace MarvelHeroes
 
                 //직업 선택
                 GameView.ViewSceneNameAndDesc1(SM.currentScene);
-                int temp2 = GameView.ViewGetSceneSelect2(SM.currentScene);
+                int temp2 = GameView.ViewGetSceneSelect2(SM.currentScene, "원하시는 직업을 선택해주세요.");
                 SM.currentScene.sceneSelections[temp2].Execute();
 
                 //씬 변경 후 종료
