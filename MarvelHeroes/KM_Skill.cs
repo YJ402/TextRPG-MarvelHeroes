@@ -82,7 +82,7 @@ namespace MarvelHeroes
         public List<Skill> spiderManSkills = new List<Skill>()
         {
             new Skill(_SkillLevel: 1, SkillNames.NanoSuit,"나노슈트 발동!", " 공격력, 방어력을 20씩 올립니다.", _skillAtk:20, _Adddef: 20,_UseMp: 25),
-            new Skill(_SkillLevel: 1, SkillNames.SpiderWeb,"거미줄 발사!","거미줄 발사해 10의 데미지와 명중률을 50% 다운 시킵니다.",_skillAtk: 20, _Adddex: 5, _UseMp:25)
+            new Skill(_SkillLevel: 1, SkillNames.SpiderWeb,"거미줄 발사!","거미줄 발사해 20의 데미지와 명중률을 50% 다운 시킵니다.",_skillAtk: 20, _Adddex: 5, _UseMp:25)
         };
         public List<Skill> SpiderManSKills
         {
