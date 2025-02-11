@@ -170,6 +170,43 @@ namespace MarvelHeroes
     //    }
     //}
 
+
+    public class SelectClass : ISelections
+    {
+        JobType selectedJob;
+        Job job;
+
+        public SelectClass(JobType _selectedJob)
+        {
+            selectedJob = _selectedJob;
+            job = new Job();
+        }
+
+        public void Execute()
+        {
+            Console.WriteLine($"{selectedJob}전직하기 트리거");//1_Class로 전직하기 트리거 ;
+            SetJobToPlayer();
+        }
+
+        public string GetSelectionDesc()
+        {
+            return $"{job.jobStats[selectedJob].name}";
+        }
+
+        public void SetJobToPlayer()
+        {
+            Player player = GameManager.Instance.player;
+
+            player.Atk = job.jobStats[selectedJob].atk;
+            player.PlayerJob = job.jobStats[selectedJob].name;
+            player.Def = job.jobStats[selectedJob].def;
+            player.Hp = job.jobStats[selectedJob].hp;
+            player.Mp = job.jobStats[selectedJob].mp;
+            player.Critical = job.jobStats[selectedJob].critical;
+            player.Dexterity = job.jobStats[selectedJob].dexerity;
+        }
+    }
+
     public class Select_1_Class : ISelections
     {
 

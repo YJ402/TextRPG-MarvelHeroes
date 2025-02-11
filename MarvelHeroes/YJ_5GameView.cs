@@ -56,13 +56,13 @@ namespace MarvelHeroes
 
 
         // 선택지 메서드 2개: ViewGetSceneSelect(씬 선택지를 출력하고 입력 값을 반환함. 예외처리도 함//지금은 toDos랑 toGos로 선택지를 출력하는데 그냥 단일화할까.), SceneSelectYN(예 아니오 선택지를 출력하고 입력값에 따른 참 거짓을 반환함. 예외처리도 함) /// 
-        public static int ViewGetSceneSelect2(Scene currentScene)
+        public static int ViewGetSceneSelect2(Scene currentScene, string str = "원하시는 행동을 입력해주세요.")
         {
             //ViewSceneUI(currentScene);
 
             ViewSceneSelect2_1(currentScene);
 
-            ViewSceneInput2_2(currentScene);
+            ViewSceneInput2_2(currentScene, str);
 
             return GetSceneInput2_3(currentScene);
         }
@@ -113,13 +113,13 @@ namespace MarvelHeroes
             //Console.WriteLine();
         }
 
-        public static void ViewSceneInput2_2(Scene currentScene)
+        public static void ViewSceneInput2_2(Scene currentScene, string str = "원하시는 행동을 입력해주세요.")
         {
             //씬 선택지를 출력하기
             if (currentScene.Description2 != null)
                 Console.WriteLine(currentScene.Description2);
             else
-                Console.WriteLine("원하시는 행동을 입력해주세요.");
+                Console.WriteLine(str);
             Console.Write(">> ");
         }
 
