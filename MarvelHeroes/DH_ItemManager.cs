@@ -36,8 +36,10 @@ namespace MarvelHeroes
             //public UsingItem(string name, ItemType type, int value, string descrip, int cost)
             usingItems = new List<UsingItem>
             {
-                new UsingItem("소형 힐링 포션", ItemType.Healing, 20, "소량의 체력을 회복시켜줍니다.", 10, 2),
-                new UsingItem("대형 힐링 포션", ItemType.Healing, 50, "대량의 체력을 회복시켜줍니다.", 30, 1)
+                new UsingItem("소형 힐링 포션", ItemType.Healing, 20, "소량의 체력을 회복시켜줍니다.", 10, 1),
+                new UsingItem("대형 힐링 포션", ItemType.Healing, 50, "대량의 체력을 회복시켜줍니다.", 30, 1),
+                new UsingItem("소형 마나 포션", ItemType.Regeneration, 20, "소량의 마나를 재생시켜줍니다.", 20, 1),
+                new UsingItem("대형 마나 포션", ItemType.Regeneration, 50, "대량의 마나를 재생시켜줍니다.", 40, 1)
             };
 
             Alltems = new List<Item>();
@@ -68,7 +70,8 @@ namespace MarvelHeroes
     {
         Weapon,
         Amor,
-        Healing
+        Healing,
+        Regeneration
     }
 
     //아이템 클래스
@@ -179,12 +182,17 @@ namespace MarvelHeroes
             {
                 player.Hp += this.Value;
 
-                if (player.Hp > player.MaxHp)
-                    player.Hp = player.MaxHp;
-
                 Quantity--;
                 Console.WriteLine($"{player.Name}이(가) {Name}을 사용하였습니다.");
                 Console.WriteLine($"체력을 {Value}만큼 회복합니다.(남은 개수 : {Quantity})");
+            }
+            else if(ItemType == ItemType.Regeneration)
+            {
+                player.Mp += this.Value;
+
+                Quantity--;
+                Console.WriteLine($"{player.Name}이(가) {Name}을 사용하였습니다.");
+                Console.WriteLine($"마나가 {Value}만큼 재생합니다.(남은 개수 : {Quantity})");
             }
             else
             {

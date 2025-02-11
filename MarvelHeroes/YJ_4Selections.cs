@@ -24,7 +24,7 @@ namespace MarvelHeroes
         public void Execute()
         {
             Console.WriteLine("이장으로 퀘스트 트리거");// 퀘스트 트리거
-            //GameManager.Instance.QM.QuestStart("Chief");
+            GameManager.Instance.QM.QuestStart("Chief");
         }
 
         public string GetSelectionDesc()
@@ -49,7 +49,7 @@ namespace MarvelHeroes
             if (random > 70)
             {
                 Console.WriteLine("조사로 퀘스트 트리거");// 퀘스트 트리거
-                //GameManager.Instance.QM.QuestStart("investigation");
+                GameManager.Instance.QM.QuestStart("investigation");
             }
         }
 
