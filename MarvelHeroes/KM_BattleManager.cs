@@ -18,29 +18,35 @@ namespace MarvelHeroes
 
         Random random = new Random();
 
-        // 배틀 메서드
+        Player player { get; set; }
+
+        public BattleManager()
+        {
+            player = GameManager.Instance.player;
+        }
+
+        // 배틀 시작 씬
         public void BattleStart(int currentFloor)
         {
             bool isClear = false;
 
             List<Monster> floormonsters = RandomMonster(Monster.GenerateRandomMonsters(5, currentFloor));
-            int notBattleHp = GameManager.Instance.player.Hp;
-            Player player = GameManager.Instance.player;
+            int notBattleHp = player.Hp;
 
             while (!isClear)
             {
-                int selectNumber = StartPlayBattlePage(player, floormonsters);
+                int selectNumber = StartPlayBattlePage(floormonsters);
 
                 switch (selectNumber)
                 {
                     case 1:
-                        isClear = AttackPlayerPage(player, floormonsters, currentFloor, notBattleHp);
+                        isClear = AttackPlayerPage(floormonsters, currentFloor, notBattleHp, selectNumber);
                         break;
                     case 2:
-                        isClear = SkillPlayerPage(player, floormonsters, currentFloor, notBattleHp);
+                        isClear = SkillPlayerPage(floormonsters, currentFloor, notBattleHp, selectNumber);
                         break;
                     case 3:
-                        PotionPlayerPage(player, floormonsters, currentFloor);
+                        PotionPlayerPage(floormonsters, currentFloor, selectNumber);
                         break;
                     case 0:
                         return;
@@ -52,106 +58,50 @@ namespace MarvelHeroes
 
             }
 
-        }
-       
-        // 배틀 시작하는 씬
-        public int StartPlayBattlePage(Player player, List<Monster> floormonsters)
-        {
-            while (true)
-
-            {
-                Console.Clear();
-                Console.WriteLine("Battle!! -  Player Turn\n");
-
-                FloorSelectMontersView(floormonsters);
-
-                Console.WriteLine("");
-                Console.WriteLine("[내정보]\n");
-                Console.WriteLine("{0} {1} ({2})", player.Level, player.Name, player.PlayerJob);
-                Console.WriteLine("{0}/{1}", player.Hp, player.MaxHp);
-                Console.WriteLine("{0}/{1}\n", player.Mp, player.MaxMp);
-                Console.WriteLine("1. 공격");
-                Console.WriteLine("2. 스킬");
-                Console.WriteLine("3. 포션사용\n");
-                Console.WriteLine("0. 도망가기\n");
-
-                int input = GetInput(0, 3);
-
-                switch (input)
-                {
-                    case 0:
-                        return 0;
-                    case 1:
-                        return 1;
-                    case 2:
-                        if (player.Mp <= 0)
-                        {
-                            Console.WriteLine("MP가 부족합니다.");
-                            break;
-                        }
-                        else return 2;
-                    case 3:
-                        return 3;
-                    default:
-                        Console.WriteLine("잘못된 입력입니다.");
-                        break;
-                }
-                Console.ReadKey();
-            }
-
-        }
-
-        public void ViewPlayerAndMonster(Player player, List<Monster> floormonsters)
-        {
-            Console.Clear();
-
-            FloorSelectMontersView(floormonsters, BattlStatusPage.BattleAttack);
-
-            Console.WriteLine("Battle!!\n");
-            Console.WriteLine("");
-            Console.WriteLine("[내정보]\n");
-            Console.WriteLine("{0} {1} ({2})", player.Level, player.Name, player.PlayerJob);
-            Console.WriteLine("{0}/{1}", player.Hp, player.MaxHp);
-            Console.WriteLine("{0}/{1}\n", player.Mp, player.MaxMp);
-            Console.WriteLine("0. 취소\n");
-            Console.WriteLine("대상을 선택해주세요.");
-        }
+        }  
 
         // 플레이어 공격 선택 씬
-        public bool AttackPlayerPage(Player player, List<Monster> floormonsters, int floorinput, int notBattleHp)
+        public bool AttackPlayerPage(List<Monster> floormonsters, int floorinput, int notBattleHp, int selectNumber)
         {
             int beforPlayerHp = player.Hp;
             while (true)
             {
-                ViewPlayerAndMonster(player, floormonsters);
+                ViewPlayerAndMonster(floormonsters, selectNumber, BattlStatusPage.BattleAttack);
 
                 int selectMonster = GetInput(0, floormonsters.Count);
 
                 if (selectMonster == 0) return false;
                 else if (selectMonster >= 1 && selectMonster <= floormonsters.Count)
-                {
-                    if (!floormonsters[selectMonster - 1].isDead)
-                    {
-                        floormonsters[selectMonster - 1] = PlayerAttack(player, floormonsters[selectMonster - 1], selectMonster);
-                        player = MonasterAttack(player, floormonsters, floorinput);
-                        return BattleResult(player, floormonsters, notBattleHp, floorinput);
-
-                    }
-                    else Console.WriteLine("잘못된 입력입니다.");
-                }
+                    return NormalAttackBattleScene(floormonsters, selectMonster, floorinput, notBattleHp);
                 else Console.WriteLine("잘못된 입력입니다.");
             }
-
         }
+
+        // 일반공격한 플레이어와 몬스터 배틀!
+        public bool NormalAttackBattleScene(List<Monster> floormonsters, int selectMonster, int floorinput, int notBattleHp)
+        {
+            if (!floormonsters[selectMonster - 1].isDead)
+            {
+                PlayerAttack(floormonsters[selectMonster - 1], selectMonster);
+                MonasterAttack(floormonsters, floorinput);
+                return BattleResult(floormonsters, notBattleHp, floorinput);
+            }
+            else
+            {
+                Console.WriteLine("잘못된 입력입니다.");
+                return false;
+            }
+        }
+
         // 플레이어 스킬 선택 씬
-        public bool SkillPlayerPage(Player player, List<Monster> floormonsters, int floorinput, int notBattleHp)
+        public bool SkillPlayerPage(List<Monster> floormonsters, int floorinput, int notBattleHp, int selectNumber)
         {
             List<Skill> skills = player.JobSkills(player);
             int beforBattlehp = player.hp;
 
             while (true)
             {
-                ViewPlayerAndMonster(player, floormonsters);
+                ViewPlayerAndMonster(floormonsters, selectNumber);
 
                 Skill.SkillListView(skills);
 
@@ -161,40 +111,7 @@ namespace MarvelHeroes
 
                 if (input == 0) return false;
                 else if (input >= 1 && input <= skills.Count)
-                {
-                    switch (player.PlayerJob)
-                    {
-                        case "아이언맨":
-                            if (input == 1) floormonsters = IronManSkillPage(player, floormonsters, skills, input);
-                            else if (input == 2) player.IronManAddDex(skills[input - 1].Adddex, 0);
-                            player = MonasterAttack(player, floormonsters, floorinput);
-                            player.IronManAddDex(skills[input - 1].Adddex, 1);
-                            break;
-                        case "스파이더맨":
-                            if (input == 1) player.NanoSuit(skills[input - 1].skillAtk, skills[input - 1].Adddef, 0);
-                            else if (input == 2) floormonsters = SpiderManSkillPage(player, floormonsters, skills, input);
-                            player = MonasterAttack(player, floormonsters, floorinput);
-                            player.NanoSuit(skills[input - 1].skillAtk, skills[input - 1].Adddef, 1);
-                            break;
-                        case "닥터스트레인지":
-                            if (input == 1) floormonsters = DoctorStrangeSkillPage(player, floormonsters, skills, input);
-                            else if (input == 2)
-                            {
-                                floormonsters = DoctorStrangeSkillPage(player, floormonsters, skills, input);
-                                break;
-                            }
-                            player = MonasterAttack(player, floormonsters, floorinput);
-                            break;
-                        case "헐크":
-                            if (input == 1) floormonsters = HulkSkillPage(player, floormonsters, skills, input);
-                            else if (input == 2) floormonsters = HulkSkillPage(player, floormonsters, skills, input);
-                            player = MonasterAttack(player, floormonsters, floorinput);
-                            break;
-                    }
-
-                    return BattleResult(player, floormonsters, notBattleHp, floorinput);
-
-                }
+                    return SkillBattlePlayerAndMonster(floormonsters, skills, input, floorinput, notBattleHp);
                 else Console.WriteLine("잘못된 입력입니다.");
 
 
@@ -203,54 +120,98 @@ namespace MarvelHeroes
 
         }
 
+        // 플레이어 스킬로 싸우는 배틀 씬
+        public bool SkillBattlePlayerAndMonster(List<Monster> floormonsters, List<Skill> skills, int input, int floorinput, int notBattleHp)
+        {
+            switch (player.PlayerJob)
+            {
+                case "아이언맨":
+                    if (input == 1) floormonsters = IronManSkillPage(floormonsters, skills, input);
+                    else if (input == 2) player.IronManAddDex(skills[input - 1].Adddex, 0);
+                    player = MonasterAttack(floormonsters, floorinput);
+                    player.IronManAddDex(skills[input - 1].Adddex, 1);
+                    break;
+                case "스파이더맨":
+                    if (input == 1) player.NanoSuit(skills[input - 1].skillAtk, skills[input - 1].Adddef, 0);
+                    else if (input == 2) floormonsters = SpiderManSkillPage(floormonsters, skills, input);
+                    player = MonasterAttack(floormonsters, floorinput);
+                    player.NanoSuit(skills[input - 1].skillAtk, skills[input - 1].Adddef, 1);
+                    break;
+                case "닥터스트레인지":
+                    if (input == 1) floormonsters = DoctorStrangeSkillPage(floormonsters, skills, input);
+                    else if (input == 2)
+                    {
+                        floormonsters = DoctorStrangeSkillPage(floormonsters, skills, input);
+                        break;
+                    }
+                    player = MonasterAttack(floormonsters, floorinput);
+                    break;
+                case "헐크":
+                    if (input == 1) floormonsters = HulkSkillPage(floormonsters, skills, input);
+                    else if (input == 2) floormonsters = HulkSkillPage(floormonsters, skills, input);
+                    player = MonasterAttack(floormonsters, floorinput);
+                    break;
+            }
+
+            return BattleResult(floormonsters, notBattleHp, floorinput);
+
+
+
+        }
+
         // 플레이어 포션 선택 씬
-        public void PotionPlayerPage(Player player, List<Monster> floormonsters, int floorinput)
+        public void PotionPlayerPage(List<Monster> floormonsters, int floorinput, int selectNumber)
         {
             while (true)
             {
-                Console.Clear();
-                Console.WriteLine("Battle!!\n");
-                FloorSelectMontersView(floormonsters);
-                Console.WriteLine();
-                Console.WriteLine("[내정보]\n");
-                Console.WriteLine("Lv. {0} {1} {2}", player.Level, player.Name, player.PlayerJob);
-                Console.WriteLine("{0}/{1}", player.Hp, player.MaxHp);
-                Console.WriteLine("{0}/{1}\n", player.Hp, player.MaxMp);
-                Console.WriteLine("1. HP 포션(수량:{0})");
-                Console.WriteLine("2. MP 포션(수량:{0})");
+                ViewPlayerAndMonster(floormonsters, selectNumber);
+               
+                List<UsingItem> usingItems = new List<UsingItem>();
 
-                Console.WriteLine("0. 취소\n");
-                Console.WriteLine("원하시는 행동을 입력해주세요.");
-
-
+                foreach(var potion in GameManager.Instance.inventory.items)
+                {
+                    if(potion is UsingItem)
+                     usingItems.Add((UsingItem)potion);
+                }
+              
+                for(int i = 1; i<=usingItems.Count; i++)
+                {
+                    Console.WriteLine("{0}. {1} 수량: {2}", i, usingItems[i].Name, usingItems[i].Quantity);
+                }      
                 int selectPotion = GetInput(0, 2);
 
-                switch (selectPotion)
-                {
-                    case 0:
-                        return;
-                    case 1:
-                        if (player.Hp == player.MaxHp) Console.WriteLine("HP가 MAX입니다.");
-                        else UsePotion(player, selectPotion);
-                        return;
-                    case 2:
-                        if (player.Mp == player.MaxMp) Console.WriteLine("MP가 MAX입니다.");
-                        else UsePotion(player, selectPotion);
-                        return;
-                    default:
-                        Console.WriteLine("잘못된 입력입니다.");
-                        break;
-                }
-
+                if (selectPotion == 0) return;
+                else if (selectPotion == 1 || selectPotion == 2) usingItems[selectPotion - 1].Use(player);
+                else Console.WriteLine("잘못된 입력입니다.");
             }
+        }
+
+        //배틀 결과 확인
+        public bool BattleResult(List<Monster> floormonsters, int beforBattlehp, int floorinput)
+        {
+            if (floormonsters.All(m => m.Hp <= 0))
+            {
+                ClearBattlePage(beforBattlehp, floorinput, floormonsters);
+                return true;
+            }
+            else if (player.Hp <= 0)
+            {
+                DefeatBattlePage(beforBattlehp);
+                return true;
+            }
+            else return false;
 
 
         }
 
 
 
+
+
+        // 실제 전투와 관련된 메서드
+
         // 플레이어가 공격하는 씬
-        public Monster PlayerAttack(Player player, Monster floormonster, int selectMonster)
+        public Monster PlayerAttack(Monster floormonster, int selectMonster)
         {
             int attackPencent = random.Next(0, 100); // 맞을 확률
             int hitNumber = random.Next(0, 100); // 치명타 확률
@@ -319,19 +280,19 @@ namespace MarvelHeroes
         }
 
         // 몬스터가 공격하는 씬
-        public Player MonasterAttack(Player player, List<Monster> floormonsters, int floorinput)
+        public Player MonasterAttack(List<Monster> floormonsters, int floorinput)
         {
             // 전투 중 플레이어 데미지 받기 전 hp
             int playerBeforHp = player.Hp;
 
             if (floorinput < 10)
             {
-                player = NormalMonasterAttack(player, floormonsters, playerBeforHp);
+                player = NormalMonasterAttack(floormonsters, playerBeforHp);
 
             }
             else
             {
-                player = BossMonsterAttack(player, floormonsters, playerBeforHp);
+                player = BossMonsterAttack(floormonsters, playerBeforHp);
             }
 
 
@@ -339,7 +300,7 @@ namespace MarvelHeroes
         }
 
         //보스 몬스터 공격하는 씬
-        public Player BossMonsterAttack(Player player, List<Monster> floormonsters, int playerBeforHp)
+        public Player BossMonsterAttack(List<Monster> floormonsters, int playerBeforHp)
         {
             int skillrand = random.Next(0, 100);
 
@@ -419,11 +380,11 @@ namespace MarvelHeroes
                     switch (floormonsters[i].MonsterName)
                     {
                         case "타노스":
-                            player = TanosSkillPage(player, floormonsters[i]);
+                            player = TanosSkillPage(floormonsters[i]);
                             player.IsDead(player, playerBeforHp);
                             break;
                         case "울트론":
-                            player = UltronSkillPage(player, floormonsters[i]);
+                            player = UltronSkillPage(floormonsters[i]);
                             player.IsDead(player, playerBeforHp);
                             break;
                     }
@@ -435,7 +396,7 @@ namespace MarvelHeroes
         }
 
         // 일반 몬스터 공격하는 씬
-        public Player NormalMonasterAttack(Player player, List<Monster> floormonsters, int playerBeforHp)
+        public Player NormalMonasterAttack(List<Monster> floormonsters, int playerBeforHp)
         {
             for (int i = 0; i < floormonsters.Count; i++)
             {
@@ -503,54 +464,13 @@ namespace MarvelHeroes
 
 
 
-        // 랜덤으로 층별 몬스터 반환 메서드
-        public List<Monster> RandomMonster(List<Monster> monsters)
-        {
-            int takeNumber = random.Next(1, monsters.Count);
-            // 몬스터 클래스에서 층에 해당하는 몬스터 그룹화
-
-            // 몬스터 3마리 랜덤 선택
-            List<Monster> randomFloorMonsters = monsters.OrderBy(m => random.Next()).Take(takeNumber).ToList();
-
-            // 선택한 3마리 몬스터 반환
-            return randomFloorMonsters;
-
-        }
-
-        //층으로 선택된 몬스터 3~4마리 출력하는 메서드
-        public void FloorSelectMontersView(List<Monster> monsters, BattlStatusPage battlStatusPage = BattlStatusPage.BattleBase)
-        {
-            if (battlStatusPage == BattlStatusPage.BattleBase)
-            {
-                if (monsters.Count > 1)
-                {
-                    foreach (var monster in monsters)
-                    {
-                        monster.IsDeadview(monster);
-                    }
-                }
-                else monsters[0].IsDeadview(monsters[0]);
-
-            }
-            else if (battlStatusPage == BattlStatusPage.BattleAttack)
-            {
-                if (monsters.Count > 1)
-                {
-                    for (int i = 1; i <= monsters.Count; i++)
-                    {
-                        monsters[i - 1] = monsters[i - 1].IsDeadview2(monsters[i - 1], i);
-                    }
-                }
-                else monsters[0].IsDeadview2(monsters[0], 1);
-            }
-
-        }
 
 
- 
+
+        // 스킬 메서드
 
         // 아이언맨 스킬
-        public List<Monster> IronManSkillPage(Player player, List<Monster> floormonster, List<Skill> skill, int input)
+        public List<Monster> IronManSkillPage(List<Monster> floormonster, List<Skill> skill, int input)
         {
             int monsterBefor_hp;
             player.Mp -= skill[input - 1].UseMp;
@@ -582,7 +502,7 @@ namespace MarvelHeroes
         }
 
         // 스파이더맨 스킬
-        public List<Monster> SpiderManSkillPage(Player player, List<Monster> floormonster, List<Skill> skill, int input)
+        public List<Monster> SpiderManSkillPage(List<Monster> floormonster, List<Skill> skill, int input)
         {
             int monsterBefor_hp;
             player.Mp -= skill[input - 1].UseMp;
@@ -617,7 +537,7 @@ namespace MarvelHeroes
         }
 
         // 닥터스트레인지 스킬
-        public List<Monster> DoctorStrangeSkillPage(Player player, List<Monster> floormonster, List<Skill> skill, int input)
+        public List<Monster> DoctorStrangeSkillPage(List<Monster> floormonster, List<Skill> skill, int input)
         {
             int monsterBefor_hp;
             player.Mp -= skill[input - 1].UseMp;
@@ -678,7 +598,7 @@ namespace MarvelHeroes
         }
 
         // 헐크 스킬
-        public List<Monster> HulkSkillPage(Player player, List<Monster> floormonster, List<Skill> skill, int input)
+        public List<Monster> HulkSkillPage(List<Monster> floormonster, List<Skill> skill, int input)
         {
             int monsterBefor_hp;
             int monsterBefor_Atk;
@@ -733,7 +653,7 @@ namespace MarvelHeroes
         }
 
         //타노스 스킬
-        public Player TanosSkillPage(Player player, Monster bossMonster)
+        public Player TanosSkillPage(Monster bossMonster)
         {
 
             int skillrand = random.Next(0, 100);
@@ -773,7 +693,7 @@ namespace MarvelHeroes
         }
 
         //울트론 스킬
-        public Player UltronSkillPage(Player player, Monster bossMonster)
+        public Player UltronSkillPage(Monster bossMonster)
         {
             int skillrand = random.Next(0, 100);
             int skillNumber;
@@ -805,39 +725,89 @@ namespace MarvelHeroes
             return player;
         }
 
- 
 
-        public void UsePotion(Player player, int selectPotion)
+
+
+        // 기타 UI 메서드
+
+
+        // 배틀 시작하는 씬
+        public int StartPlayBattlePage(List<Monster> floormonsters)
         {
-            int beforeHp = player.Hp;
-            int beforeMp = player.Mp;
+            while (true)
 
-            if (selectPotion == 1)
             {
-                player.Hp += 30;
+                ViewPlayerAndMonster(floormonsters);
 
-                Console.WriteLine("Battle - HP 포션 사용");
-                Console.WriteLine("[내정보]");
-                Console.WriteLine("Lv 이름 직업");
-                Console.WriteLine($"{beforeHp} -> {player.Hp}");
+                int input = GetInput(0, 3);
 
+                switch (input)
+                {
+                    case 0:
+                        return 0;
+                    case 1:
+                        return 1;
+                    case 2:
+                        if (player.Mp <= 0)
+                        {
+                            Console.WriteLine("MP가 부족합니다.");
+                            break;
+                        }
+                        else return 2;
+                    case 3:
+                        return 3;
+                    default:
+                        Console.WriteLine("잘못된 입력입니다.");
+                        break;
+                }
+                Console.ReadKey();
             }
-            else if (selectPotion == 2)
-            {
-                player.Mp += 30;
-
-                Console.WriteLine("Battle - HP 포션 사용");
-                Console.WriteLine("[내정보]");
-                Console.WriteLine("Lv 이름 직업");
-                Console.WriteLine($"{beforeMp} -> {player.Mp}");
-            }
-            Console.WriteLine("아무키나 입력하세요.");
-            Console.ReadKey();
 
         }
 
+        public void ViewPlayerAndMonster(List<Monster> floormonsters, int selectNumber = 0, BattlStatusPage battlStatusPage =BattlStatusPage.BattleBase)
+        {
+       
+            if(battlStatusPage == BattlStatusPage.BattleAttack)
+            {
+                Console.Clear();
+                if (selectNumber == 1) Console.WriteLine("Battle!! - Attack\n");
+                else if (selectNumber == 2) Console.WriteLine("Battle!! - Skill\n");
+
+                FloorSelectMontersView(floormonsters, battlStatusPage);
+
+
+                Console.WriteLine("");
+                Console.WriteLine("[내정보]\n");
+                Console.WriteLine("{0} {1} ({2})", player.Level, player.Name, player.PlayerJob);
+                Console.WriteLine("{0}/{1}", player.Hp, player.MaxHp);
+                Console.WriteLine("{0}/{1}\n", player.Mp, player.MaxMp);
+                Console.WriteLine("0. 취소\n");
+                if (selectNumber == 1) Console.WriteLine("대상을 선택해주세요.");
+                else if (selectNumber == 2) Console.WriteLine("스킬을 선택해주세요.");
+                else if (selectNumber == 3) Console.WriteLine("사용할 아이템을 선택해주세요.");
+            }
+            else if(battlStatusPage == BattlStatusPage.BattleBase)
+            {
+                Console.Clear();
+                Console.WriteLine("Battle!! -  Player Turn\n");
+
+                FloorSelectMontersView(floormonsters);
+
+                Console.WriteLine("");
+                Console.WriteLine("[내정보]\n");
+                Console.WriteLine("{0} {1} ({2})", player.Level, player.Name, player.PlayerJob);
+                Console.WriteLine("{0}/{1}", player.Hp, player.MaxHp);
+                Console.WriteLine("{0}/{1}\n", player.Mp, player.MaxMp);
+                Console.WriteLine("1. 공격");
+                Console.WriteLine("2. 스킬");
+                Console.WriteLine("3. 포션사용\n");
+                Console.WriteLine("0. 도망가기\n");
+            }
+
+        }
         // 클리어 메서드
-        public void ClearBattlePage(Player player, int beforeBattleHp, int clearfloor, List<Monster> floorMonsters)
+        public void ClearBattlePage(int beforeBattleHp, int clearfloor, List<Monster> floorMonsters)
         {
             int Adddgold = random.Next(10, 10*clearfloor);
             int AddExp = 0;
@@ -880,7 +850,7 @@ namespace MarvelHeroes
             }
         }
         // 패배 매서드
-        public void DefeatBattlePage(Player player, int beforeBattleHp)
+        public void DefeatBattlePage(int beforeBattleHp)
         {
             while (true)
             {
@@ -916,21 +886,46 @@ namespace MarvelHeroes
 
         }
 
-        //배틀 결과 확인
-        public bool BattleResult(Player player, List<Monster> floormonsters, int beforBattlehp, int floorinput)
+        // 랜덤으로 층별 몬스터 반환 메서드
+        public List<Monster> RandomMonster(List<Monster> monsters)
         {
-            if (floormonsters.All(m => m.Hp <= 0))
-            {
-                ClearBattlePage(player, beforBattlehp, floorinput, floormonsters);
-                return true;
-            }
-            else if (player.Hp <= 0)
-            {
-                DefeatBattlePage(player, beforBattlehp);
-                return true;
-            }
-            else return false;
+            int takeNumber = random.Next(1, monsters.Count);
+            // 몬스터 클래스에서 층에 해당하는 몬스터 그룹화
 
+            // 몬스터 3마리 랜덤 선택
+            List<Monster> randomFloorMonsters = monsters.OrderBy(m => random.Next()).Take(takeNumber).ToList();
+
+            // 선택한 3마리 몬스터 반환
+            return randomFloorMonsters;
+
+        }
+
+        //층으로 선택된 몬스터 3~4마리 출력하는 메서드
+        public void FloorSelectMontersView(List<Monster> monsters, BattlStatusPage battlStatusPage = BattlStatusPage.BattleBase)
+        {
+            if (battlStatusPage == BattlStatusPage.BattleBase)
+            {
+                if (monsters.Count > 1)
+                {
+                    foreach (var monster in monsters)
+                    {
+                        monster.IsDeadview(monster);
+                    }
+                }
+                else monsters[0].IsDeadview(monsters[0]);
+
+            }
+            else if (battlStatusPage == BattlStatusPage.BattleAttack)
+            {
+                if (monsters.Count > 1)
+                {
+                    for (int i = 1; i <= monsters.Count; i++)
+                    {
+                        monsters[i - 1] = monsters[i - 1].IsDeadview2(monsters[i - 1], i);
+                    }
+                }
+                else monsters[0].IsDeadview2(monsters[0], 1);
+            }
 
         }
 
