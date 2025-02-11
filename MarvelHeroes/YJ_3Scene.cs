@@ -30,14 +30,15 @@ namespace MarvelHeroes
             Description = "스파르타 던전에 오신 여러분 환영합니다.\r\n";
             Description2 = "원하시는 이름을 설정해주세요.";
 
-            ISelections action1 = new Select_1_Class();
-            ISelections action2 = new Select_2_Class();
-            ISelections action3 = new Select_3_Class();
-            ISelections action4 = new Select_4_Class();
+            ISelections action1 = new SelectClass(JobType.IronMan);
+            ISelections action2 = new SelectClass(JobType.DoctorStrange);
+            ISelections action3 = new SelectClass(JobType.SpiderMan);
+            ISelections action4 = new SelectClass(JobType.Hulk);
 
             sceneSelections = new Dictionary<int, ISelections>() { { 1, action1 }, { 2, action2 }, { 3, action3 }, { 4, action4 } };
         }
     }
+
 
     public class TownScene : Scene//, ISelections
     {
@@ -57,18 +58,26 @@ namespace MarvelHeroes
 
     public class DungeonScene : Scene//, ISelections
     {
-        public int challengingFloor = 1;
+<<<<<<< Updated upstream
+        public static int challengingFloor = 1;
         
+=======
+        public int challengingFloor = 1;
+        public int i = 1;
+        ISelections UI;
+        ISelections action1;
+
+>>>>>>> Stashed changes
         public DungeonScene()
         {
-            int i = 1;
+            //int i = 1;
 
             Name = "던전";
             Description = "던전에선 더 높은 층으로 올라갈 수 있습니다.";
             Description2 = "도전하고 싶은 층을 입력해주세요.";
 
-            ISelections UI = new ToUI(SceneNum.Dungeon);
-            ISelections action1 = new ToWhere(SceneNum.Town);
+            UI = new ToUI(SceneNum.Dungeon);
+            action1 = new ToWhere(SceneNum.Town);
             //ISelections action2 = new ToFloor();
 
             //sceneSelections = new Dictionary<int, ISelections>();
@@ -88,6 +97,22 @@ namespace MarvelHeroes
         {
             ToFloor clone = new ToFloor(x, y);
             return clone;
+        }
+
+        public Dictionary<int,ISelections> UpdateDungeonSelections()
+        {
+            sceneSelections.Remove(i--);
+            sceneSelections.Remove(i);
+
+            for (; i < challengingFloor; i++)
+            {
+                sceneSelections.Add(i, CloneToFloor(i, challengingFloor));
+            }
+
+            sceneSelections.Add(i, CloneToFloor(i++, challengingFloor));
+            sceneSelections.Add(i, action1);
+
+            return sceneSelections;
         }
     }
 

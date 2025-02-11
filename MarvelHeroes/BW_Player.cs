@@ -62,20 +62,22 @@ namespace MarvelHeroes
         
 
 
-        public Player(int _Level, string name, int gold,int _Critical, int _Dexterity, bool _isDead, JobType jobtypeName, int xp, int maxXp)
-            : base (_Level, 0, 0, 0, _Critical, _Dexterity, false)
+        public Player(int _Level, string name, int gold, bool _isDead, JobType jobtypeName, int xp, int maxXp)
+            : base (0, 0, 0, 0, 0, 0, false)
         {
             // 이런식으로 되있는게 속성
             Level = _Level;
             Name = name;
-            PlayerJob = Job.jobStats[jobtypeName].name;
-            Atk = Job.jobStats[jobtypeName].atk;
-            Def = Job.jobStats[jobtypeName].def;
-            Hp = Job.jobStats[jobtypeName].hp;
-            Mp = Job.jobStats[jobtypeName].mp;
-            Gold = 1500;
+            //PlayerJob = Job.jobStats[jobtypeName].name;
+            //Atk = Job.jobStats[jobtypeName].atk;
+            //Def = Job.jobStats[jobtypeName].def;
+            //Hp = Job.jobStats[jobtypeName].hp;
+            //Mp = Job.jobStats[jobtypeName].mp;
+            //Critical = Job.jobStats[jobtypeName].critical;
+            //Dexterity = Job.jobStats[jobtypeName].dexerity;
+            Gold = gold;
             MaxHp = Hp;
-            MaxMp = Job.jobStats[jobtypeName].mp;
+            MaxMp = Mp;
             Xp = 0;
             maxXp = 10;
          
