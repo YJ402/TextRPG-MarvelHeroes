@@ -11,10 +11,11 @@ namespace MarvelHeroes
 {
     //아이템 - 장착유무, 이름, 공력력||방어력||회복량, 설명, 가격
 
-    internal class ItemManager
+    public class ItemManager
     {
-        List<EquipItem> equipItems;
-        List<UsingItem> usingItems;
+        public List<EquipItem> equipItems;
+        public List<UsingItem> usingItems;
+        public List<Item> Alltems;
 
         //DH_ItemManager 호출시 실행
         public ItemManager()
@@ -38,6 +39,16 @@ namespace MarvelHeroes
                 new UsingItem("소형 힐링 포션", ItemType.Healing, 20, "소량의 체력을 회복시켜줍니다.", 10, 2),
                 new UsingItem("대형 힐링 포션", ItemType.Healing, 50, "대량의 체력을 회복시켜줍니다.", 30, 1)
             };
+
+            foreach(Item item in equipItems)
+            {
+                Alltems.Add(item);
+            }
+
+            foreach (Item item in usingItems)
+            {
+                Alltems.Add(item);
+            }
         }
 
     }
@@ -81,7 +92,7 @@ namespace MarvelHeroes
     }
 
     //장착아이템 클래스
-    public class EquipItem : Item 
+    public class EquipItem : Item
     {
         public ITemJobType ItemJobType { get; set; }
         public bool IsPurchase { get; set; }
@@ -105,24 +116,24 @@ namespace MarvelHeroes
                 Console.WriteLine("사용이 불가능한 장비입니다!");
                 return;
             }
-            
+
             if (this.IsEquip) //장착 중인 아이템 선택시 해제
             {
                 this.IsEquip = false;
 
                 if (this.ItemType == ItemType.Weapon)
-                player.EquipAtk -= this.Value;
+                    player.EquipAtk -= this.Value;
                 else if (this.ItemType == ItemType.Amor)
-                player.EquipDef -= this.Value;
+                    player.EquipDef -= this.Value;
             }
             else //아이템 착용
             {
                 this.IsEquip = true;
 
                 if (this.ItemType == ItemType.Weapon) //타입이 무기일 경우 공격력 증가 
-                player.EquipAtk += this.Value;
+                    player.EquipAtk += this.Value;
                 else if (this.ItemType == ItemType.Amor) //타입이 갑옷일 경우 방어력 증가
-                player.EquipDef += this.Value;
+                    player.EquipDef += this.Value;
             }
         }
 
@@ -131,7 +142,18 @@ namespace MarvelHeroes
     //소모아이템 클래스
     public class UsingItem : Item
     {
-        public int Quantity { get; set; }
+        //quantity가 0이하면 삭제하는 추가 로직
+        private int quantity;
+        public int Quantity
+        {
+            get { return quantity; }
+            set
+            {
+                quantity = value;
+                if(quantity <= 0)
+                GameManager.Instance.inventory.RemoveItem(this);
+            }
+        }
 
         public UsingItem(string name, ItemType itemtype, int value, string descrip, int cost, int quantity) : base(name, itemtype, value, descrip, cost)
         {

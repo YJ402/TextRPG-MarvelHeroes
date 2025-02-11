@@ -4,11 +4,7 @@
     {
         static void Main()
         {
-            ////GameManager instance = GameManager.GetInstance();
-            ////instance.GameStart();
-            BattleManager instance = BattleManager.Getinstance();
-            instance.BattleStart(10);
+            GameManager.Instance.GameStart();
         }
-
     }
 }
