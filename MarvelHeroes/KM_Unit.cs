@@ -41,18 +41,21 @@ namespace MarvelHeroes
             Critical = _Critical;
             Dexterity = _Dexterity;
             isDead = _isdDead;
-            
+
         }
 
         // 체력 감소
-        public virtual void TakeDamge(int damge)
+        public virtual void TakeDamge(int damage)
         {
             if (Hp <= 0)
             {
                 isDead = true;
                 Hp = 0;
+            }       
+            else 
+            {
+                Hp -= damage;
             }
-            else Hp -= damge;
 
         }
 
