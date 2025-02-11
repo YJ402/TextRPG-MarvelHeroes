@@ -62,7 +62,7 @@ namespace MarvelHeroes
         
 
 
-        public Player(int _Level, string name, int gold, bool _isDead, int xp, int maxXp)
+        public Player(int _Level, string name, int gold, bool _isDead, int xp, int _maxXp)
             : base (0, 0, 0, 0, 0, 0, false)
 
         {
@@ -78,7 +78,7 @@ namespace MarvelHeroes
             //Dexterity = Job.jobStats[jobtypeName].dexerity;
             Gold = gold;
             MaxHp = Hp;
-            MaxMp = Job.jobStats[jobtypeName].mp;
+            //MaxMp = Job.jobStats[jobtypeName].mp;
             maxXp = _maxXp;
             Xp = 0;
 
@@ -90,10 +90,8 @@ namespace MarvelHeroes
             Level += 1;
             Atk += 1;
             Def += 1;
-            xp = 0;
-            if (maxXp == 10) { maxXp = 35; }
-            else if (maxXp == 35) { maxXp = 65; }
-            else if (maxXp == 65) { maxXp = 100; }
+            xp = xp - maxXp;
+            maxXp = 20 + (4 * (Level - 1) * (Level - 1)) - (10 * (Level - 1));
         }
 
 
@@ -172,19 +170,19 @@ namespace MarvelHeroes
 
             switch (player.PlayerJob)
             {
-                case "아이언맨":
+                case JobType.IronMan:
                     IronMan ironMan = new IronMan();
                     skills = ironMan.IronManSKills;
                     return skills;
-                case "스파이더맨":
+                case JobType.SpiderMan:
                     SpiderMan spiderMan = new SpiderMan();
                     skills = spiderMan.SpiderManSKills;
                     return skills;
-                case "닥터스트레인지":
+                case JobType.DoctorStrange:
                     DoctorStrange doctorStrange = new DoctorStrange();
                     skills = doctorStrange.DoctorStrangeSKills;
                     return skills;
-                case "헐크":
+                case JobType.Hulk:
                     Hulk hulk = new Hulk();
                     skills = hulk.HulkSKills;
                     return skills;

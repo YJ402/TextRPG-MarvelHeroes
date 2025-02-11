@@ -13,7 +13,6 @@ namespace MarvelHeroes
         //List<EquipItem> inventory = new List<EquipItem>();
         public void InventoryScene()
         {
-            GameManager.Instance.inventory.AddItem(new EquipItem("아이언맨 기본 무기", ItemType.Weapon, ITemJobType.IronMan, 5, "아이언맨의 기본무기", 500));
             while (true)
             {
                 Console.Clear();
@@ -96,7 +95,7 @@ namespace MarvelHeroes
                     {
                         if (choice == i+1)
                         {
-                            GameManager.Instance.IM.equipItems[i].Use(GameManager.Instance.player);
+                            GameManager.Instance.inventory.items[i].Use(GameManager.Instance.player);
                         } // 장착 메서드
                     }
                 }

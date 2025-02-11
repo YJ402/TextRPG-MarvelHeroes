@@ -44,6 +44,8 @@ namespace MarvelHeroes
             Console.WriteLine(attack); // 플레이어 공격력
             string deffence = GameManager.Instance.player.EquipDef == 0 ? $"방어력 : {GameManager.Instance.player.Def}" : $"공격력 : {GameManager.Instance.player.Def} (+{GameManager.Instance.player.EquipDef})"; // 방어력 보여주기
             Console.WriteLine(deffence); // 플레이어 공격력
+            Console.WriteLine($"크리티컬 확률 : {GameManager.Instance.player.Critical}%");
+            Console.WriteLine($"회피율 : {GameManager.Instance.player.Dexterity}%");
             Console.WriteLine($"체력 : ({GameManager.Instance.player.Hp} / {GameManager.Instance.player.MaxHp})");
             Console.WriteLine($"마력 : ({GameManager.Instance.player.Mp} / {GameManager.Instance.player.MaxMp})");
             Console.WriteLine($"Gold : {GameManager.Instance.player.Gold} G");
