@@ -14,15 +14,13 @@ namespace MarvelHeroes
             while (true)
             {
                 Console.Clear();
-                GameView.PrintText("게임종료", 0, ConsoleColor.Magenta);
-                Console.WriteLine();
+                GameView.PrintText("<게임종료>", 0, ConsoleColor.Magenta);
                 Console.WriteLine("게임이 종료됩니다.");
                 Console.WriteLine();
                 Console.WriteLine("종료 하시겠습니까?");
                 Console.WriteLine();
                 Console.WriteLine("1. 예");
                 Console.WriteLine("0. 아니오");
-                Console.WriteLine();
                 Console.WriteLine();
                 Console.WriteLine("원하시는 행동을 입력해주세요");
                 Console.Write(">>");
