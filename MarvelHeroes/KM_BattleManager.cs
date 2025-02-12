@@ -254,7 +254,7 @@ namespace MarvelHeroes
                         floormonster.TakeDamge(hitDamage);
                         //floormonster.Hp -= hitDamage;
 
-                        Console.WriteLine("<Battle - Player>\n");
+                        GameView.PrintText("<Battle - Player>\n", 200, ConsoleColor.Green);
                         Console.WriteLine("{0} 의 공격", player.Name);
                         Console.WriteLine("Lv.{0} {1} 을(를) 맞췄습니다. [데미지 : {2}] - 치명타 공격!!\n", floormonster.Level, floormonster.MonsterName, hitDamage);
                         Console.WriteLine("Lv. {0} {1}", floormonster.Level, floormonster.MonsterName);
@@ -272,7 +272,7 @@ namespace MarvelHeroes
                         //floormonster.Hp -= finalDamage;
 
 
-                        Console.WriteLine("<Battle - Player>\n");
+                        GameView.PrintText("<Battle - Player>\n", 200, ConsoleColor.Green);
                         Console.WriteLine("{0} 의 공격", player.Name);
                         Console.WriteLine("Lv.{0} {1} 을(를) 맞췄습니다. [데미지 : {2}]\n", floormonster.Level, floormonster.MonsterName, finalDamage);
                         Console.WriteLine("Lv. {0} {1}", floormonster.Level, floormonster.MonsterName);
@@ -284,7 +284,7 @@ namespace MarvelHeroes
                 // 공격 실패 시 출력
                 else
                 {
-                    Console.WriteLine("Battle\n");
+                    GameView.PrintText("<Battle - Player>\n", 200, ConsoleColor.Green);
                     Console.WriteLine("Lv. {0} {1} 을(를) 공격했지만 아무일도 일어나지 않았습니다.\n", floormonster.Level, floormonster.MonsterName);
 
                 }
@@ -346,7 +346,7 @@ namespace MarvelHeroes
                             if (hitdamage <= 0) hitdamage = 10;
                             player.TakeDamge(hitdamage);
 
-                            Console.WriteLine("Battle\n");
+                            GameView.PrintText("<Battle - Monster>\n", 200, ConsoleColor.Red);
                             Console.WriteLine("Lv.{0} {1}의 공격!", floormonsters[i].Level, floormonsters[i].MonsterName);
                             Console.WriteLine("{0} 을(를) 맞췄습니다.) [데미지 : {1}] - 치명타 데미지\n", player.Name, hitdamage);
                             Console.WriteLine("Lv.{0} {1}", player.Level, player.Name);
@@ -363,7 +363,7 @@ namespace MarvelHeroes
                             if (finalDamage <= 0) finalDamage = 5;
                             player.TakeDamge(finalDamage);
 
-                            Console.WriteLine("Battle\n");
+                            GameView.PrintText("<Battle - Monster>\n", 200, ConsoleColor.Red);
                             Console.WriteLine("Lv. {0} {1}의 공격!", floormonsters[i].Level, floormonsters[i].MonsterName);
                             Console.WriteLine("{0} 을(를) 맞췄습니다. [데미지 : {1}]\n", player.Name, finalDamage);
                             Console.WriteLine("Lv. {0} {1}", player.Level, player.Name);
@@ -374,7 +374,7 @@ namespace MarvelHeroes
                     // 공격 실패 시 출력
                     else
                     {
-                        Console.WriteLine("Battle\n");
+                        GameView.PrintText("<Battle - Monster>\n", 200, ConsoleColor.Red);
                         Console.WriteLine("Lv. {0} {1} 가 공격했지만 아무일도 일어나지 않았습니다.\n", floormonsters[i].Level, floormonsters[i].MonsterName);
 
                     }
@@ -439,7 +439,7 @@ namespace MarvelHeroes
                         player.TakeDamge(hitdamage);
 
 
-                        Console.WriteLine("<Battle - Monster>\n");
+                        GameView.PrintText("<Battle - Monster>\n", 200, ConsoleColor.Red);
                         Console.WriteLine("Lv. {0} {1}의 공격!", floormonsters[i].Level, floormonsters[i].MonsterName);
                         Console.WriteLine("{0} 을(를) 맞췄습니다.) [데미지 : {1}] - 치명타 데미지\n", player.Name, hitdamage);
                         Console.WriteLine("Lv.{0} {1}", player.Level, player.Name);
@@ -454,7 +454,7 @@ namespace MarvelHeroes
                         if (finalDamage <= 0) finalDamage = 5;
                         player.TakeDamge(finalDamage);
 
-                        Console.WriteLine("<Battle - Monster>\n");
+                        GameView.PrintText("<Battle - Monster>\n", 200, ConsoleColor.Red);
                         Console.WriteLine("Lv. {0} {1}의 공격!", floormonsters[i].Level, floormonsters[i].MonsterName);
                         Console.WriteLine("{0} 을(를) 맞췄습니다. [데미지 : {1}]\n", player.Name, finalDamage);
                         Console.WriteLine("Lv.{0} {1}", player.Level, player.Name);
@@ -465,7 +465,7 @@ namespace MarvelHeroes
                 // 공격 실패 시 출력
                 else
                 {
-                    Console.WriteLine("<Battle - Monster>\n");
+                    GameView.PrintText("<Battle - Monster>\n", 200, ConsoleColor.Red);
                     Console.WriteLine("Lv.{0} {1} 가 공격했지만 아무일도 일어나지 않았습니다.\n", floormonsters[i].Level, floormonsters[i].MonsterName);
 
                 }
@@ -488,7 +488,7 @@ namespace MarvelHeroes
             player.Mp -= skill[input - 1].UseMp;
 
             Console.Clear();
-            Console.WriteLine("<Battle - Skill>");
+            GameView.PrintText("<Battle - Skill>", 200, ConsoleColor.Blue);
             Console.WriteLine("{0} 의 공격\n", player.Name);
 
             for (int i = 0; i < floormonster.Count; i++)
@@ -520,7 +520,7 @@ namespace MarvelHeroes
             player.Mp -= skill[input - 1].UseMp;
 
             Console.Clear();
-            Console.WriteLine("<Battle - Skill>");
+            GameView.PrintText("<Battle - Skill>", 200, ConsoleColor.Blue);
             Console.WriteLine("{0} 의 공격\n", player.Name);
 
             for (int i = 0; i < floormonster.Count; i++)
@@ -554,7 +554,7 @@ namespace MarvelHeroes
             int skillDamage = 0;
 
             Console.Clear();
-            Console.WriteLine("<Battle - Skill>");
+            GameView.PrintText("<Battle - Skill>", 200, ConsoleColor.Blue);
             Console.WriteLine("{0} 의 공격\n", player.Name);
 
             if(input == 1)
@@ -620,7 +620,7 @@ namespace MarvelHeroes
             player.Mp -= skill[input - 1].UseMp;
 
             Console.Clear();
-            Console.WriteLine("<Battle - Skill>");
+            GameView.PrintText("<Battle - Skill>", 200, ConsoleColor.Blue);
             Console.WriteLine("{0} 의 공격\n", player.Name);
 
             if (input == 1)
@@ -675,7 +675,7 @@ namespace MarvelHeroes
             else if (skillrand < 95) skillNumber = 2;
             else skillNumber = 3;
 
-            Console.WriteLine("Battle\n");
+            GameView.PrintText("Battle - 타노스 스킬\n", 200, ConsoleColor.Red);
             Console.WriteLine("{0} 의 공격\n", bossMonster.MonsterName);
 
             switch (skillNumber)
@@ -714,7 +714,7 @@ namespace MarvelHeroes
             else skillNumber = 2;
 
 
-            Console.WriteLine("<Battle - 울트론 스킬\n>");
+            GameView.PrintText("<Battle - 울트론 스킬\n>", 200, ConsoleColor.Red);
             Console.WriteLine("{0} 의 공격\n", bossMonster.MonsterName);
 
             switch (skillNumber)
@@ -781,8 +781,8 @@ namespace MarvelHeroes
             if(battlStatusPage == BattlStatusPage.BattleAttack)
             {
                 Console.Clear();
-                if (selectNumber == 1) Console.WriteLine("<Battle!! - Attack>\n");
-                else if (selectNumber == 2) Console.WriteLine("<Battle!! - Skill>\n");
+                if (selectNumber == 1) GameView.PrintText("<Battle!! - Attack>\n", 200, ConsoleColor.Green);
+                else if (selectNumber == 2) GameView.PrintText("<Battle!! - Skill>\n", 200, ConsoleColor.Blue);
 
                 FloorSelectMontersView(floormonsters, battlStatusPage);
 
@@ -800,7 +800,7 @@ namespace MarvelHeroes
             else if(battlStatusPage == BattlStatusPage.BattleBase)
             {
                 Console.Clear();
-                Console.WriteLine("Battle!! -  Player Turn\n");
+                GameView.PrintText("Battle!! -  Player Turn\n", 200, ConsoleColor.Green);
 
                 FloorSelectMontersView(floormonsters);
 
@@ -874,8 +874,8 @@ namespace MarvelHeroes
             while (true)
             {
                 Console.Clear();
-                Console.WriteLine("<Battle!! - Result>\n");
-                Console.WriteLine("You Lose\n");
+                GameView.PrintText("<Battle!! - Result>\n", 200, ConsoleColor.Red);
+                GameView.PrintText("You Lose\n", 200, ConsoleColor.Red);
                 Console.WriteLine("[내정보]");
                 if (player.Hp <= 0)
                 {
@@ -890,7 +890,7 @@ namespace MarvelHeroes
                     Console.WriteLine("Lv.{0} {1} ({2})", player.Level, player.Name, player.PlayerJob);
                     Console.WriteLine("HP: {0}/{1}", player.Hp = player.Hp / 2, player.MaxHp);
                     Console.WriteLine("MP: {0}/{1}\n", player.Mp = player.Mp / 2, player.MaxMp);
-                    Console.WriteLine("[잃은 아이템]");
+                    GameView.PrintText("[잃은 아이템]", 200, ConsoleColor.Red);
                     Console.WriteLine("Gold {0} -> {1}", player.Gold, player.Gold = player.Gold / 2);
 
                     if (GameManager.Instance.inventory.items.Count > 0)
