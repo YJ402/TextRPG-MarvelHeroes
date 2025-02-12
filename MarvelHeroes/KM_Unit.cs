@@ -78,7 +78,7 @@ namespace MarvelHeroes
         {
             if (unit.Hp <= 0)
             {
-                Console.WriteLine("HP {0} -> Dead\n", beforeHp);
+                Console.WriteLine("HP {0} -> Dead\n", unit.Hp);
             }
             else
             {

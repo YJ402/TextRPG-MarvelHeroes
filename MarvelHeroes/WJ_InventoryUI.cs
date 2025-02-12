@@ -52,6 +52,7 @@ namespace MarvelHeroes
             if (j == 0)
             {
                 str = $"- {i + 1}. " + str + $"{GameManager.Instance.inventory.items[i].Name}\t| {DisplayType(i)}\t | {GameManager.Instance.inventory.items[i].Descrip}\t| {GameManager.Instance.inventory.items[i].Cost}";
+                
             }
             else
             {
