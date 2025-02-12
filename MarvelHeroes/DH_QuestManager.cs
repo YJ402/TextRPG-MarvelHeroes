@@ -38,15 +38,22 @@ namespace MarvelHeroes
         public void QuestStart(string questTrigger)
         {
             List<Quest> list = new List<Quest>();
+            List<Quest> acceptList = acceptQuest;
 
             if (questTrigger == "Chief")
             {
                 list = questlist_Chief;
             }
-            else if (questTrigger == "Investigation")
+            else if (questTrigger == "investigation")
             {
                 list = questlist_Investigation;
             }
+            else
+            {
+                Console.WriteLine("잘못된 입력입니다.");
+            }
+
+            Console.Clear();
             Console.WriteLine("메인 퀘스트");
             Console.WriteLine("[퀘스트 목록]");
 
@@ -55,9 +62,18 @@ namespace MarvelHeroes
                 Console.WriteLine($"{i + 1}. {list[i].Name} | {list[i].Descrip}");
             }
 
-            Console.WriteLine("");
+            Console.WriteLine("0. 마을로 돌아가기");
+            Console.WriteLine();
+            Console.WriteLine("[받은 퀘스트 목록]");
+
+            for (int j = 0; j < acceptList.Count; j++)
+            {
+                Console.WriteLine($"- {acceptList[j].Name} | {acceptList[j].Descrip}");
+            }
+
+            Console.WriteLine();
             Console.WriteLine("어떤 퀘스트를 수락하시겠습니까?");
-            Console.WriteLine("");
+            Console.WriteLine();
             Console.WriteLine("원하시는 행동을 입력해주세요.");
 
 
@@ -66,7 +82,7 @@ namespace MarvelHeroes
                 string input = Console.ReadLine();
                 int sellecNumber;
                 bool isNumber = int.TryParse(input, out sellecNumber);
-                if (isNumber == false || list.Count <= sellecNumber)
+                if (isNumber == false || list.Count+1 <= sellecNumber)
                 {
 
                     Console.WriteLine("잘못된 입력입니다");
@@ -118,16 +134,17 @@ namespace MarvelHeroes
             // 완료된 퀘스트 처리
             foreach (Quest completed in completedQuests)
             {
-                ClearQuest(completed);
+                ClearQuest(completed,player);
             }
         }
 
-        public void ClearQuest(Quest quest)
+        public void ClearQuest(Quest quest, Player player)
         {
             if (acceptQuest.Contains(quest)) // 받은 퀘스트인지 확인
             {
                 acceptQuest.Remove(quest); // 완료된 퀘스트 제거
                 quest.Questclear();
+                GiveReward(quest,player);
                 Console.WriteLine($"[퀘스트 완료] {quest.Name} 퀘스트를 완료했습니다!");
             }
             else
