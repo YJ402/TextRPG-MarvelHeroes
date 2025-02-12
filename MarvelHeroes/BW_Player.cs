@@ -176,6 +176,8 @@ namespace MarvelHeroes
         {
             int newDex = 0;
 
+            Mp -= 10;
+
             switch(number)
             {
                 case 0:
@@ -190,18 +192,18 @@ namespace MarvelHeroes
         // 스파이더맨 나노슈트 스킬
         public void NanoSuit(int addatk, int adddef, int number)
         {
-            int newAtk = 0;
-            int newDef = 0;
-           
+
+
             switch (number)
             {
                 case 0:
-                    newAtk = Atk + addatk;
-                    newDef = Def + adddef;
+                    Mp -= 25;
+                    Atk += addatk;
+                    Def += adddef;
                     break;
                 case 1:
-                    newAtk = Atk - addatk;
-                    newDef = Def - adddef;
+                    Atk -= addatk;
+                    Def -= adddef;
                     break;
             }
         }
@@ -215,11 +217,11 @@ namespace MarvelHeroes
             {
                 case JobType.IronMan:
                     IronMan ironMan = new IronMan();
-                    skills = ironMan.IronManSKills;
+                    skills = ironMan.ironManSkills;
                     return skills;
                 case JobType.SpiderMan:
                     SpiderMan spiderMan = new SpiderMan();
-                    skills = spiderMan.SpiderManSKills;
+                    skills = spiderMan.spiderManSkills;
                     return skills;
                 case JobType.DoctorStrange:
                     DoctorStrange doctorStrange = new DoctorStrange();
