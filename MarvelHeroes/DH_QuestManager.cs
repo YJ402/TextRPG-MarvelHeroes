@@ -55,7 +55,20 @@ namespace MarvelHeroes
                 Console.WriteLine($"{i + 1}. {list[i].Name} | {list[i].Descrip}");
             }
 
+<<<<<<< Updated upstream
             Console.WriteLine("");
+=======
+            Console.WriteLine("0. 뉴욕으로 돌아가기");
+            Console.WriteLine();
+            Console.WriteLine("[받은 퀘스트 목록]");
+
+            for (int j = 0; j < acceptList.Count; j++)
+            {
+                Console.WriteLine($"- {acceptList[j].Name} | {acceptList[j].Descrip}");
+            }
+
+            Console.WriteLine();
+>>>>>>> Stashed changes
             Console.WriteLine("어떤 퀘스트를 수락하시겠습니까?");
             Console.WriteLine("");
             Console.WriteLine("원하시는 행동을 입력해주세요.");

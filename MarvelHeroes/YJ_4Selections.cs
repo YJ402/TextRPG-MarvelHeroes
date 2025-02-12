@@ -23,13 +23,12 @@ namespace MarvelHeroes
 
         public void Execute()
         {
-            Console.WriteLine("이장으로 퀘스트 트리거");// 퀘스트 트리거
             GameManager.Instance.QM.QuestStart("Chief");
         }
 
         public string GetSelectionDesc()
         {
-            return "마을의 이장과 대화한다."; // 선택지 설명
+            return "닉퓨리와 대화하기"; // 선택지 설명
         }
     }
 
@@ -45,17 +44,18 @@ namespace MarvelHeroes
 
         public void Execute()
         {
+            GameManager.Instance.player.Gold -= 10;
             int random = new Random().Next(1, 100);
             if (random > 70)
             {
-                Console.WriteLine("조사로 퀘스트 트리거");// 퀘스트 트리거
                 GameManager.Instance.QM.QuestStart("investigation");
             }
+            else { GameView.PrintText("뉴욕은 안전한 것 같다!", 1000, ConsoleColor.Magenta);  }
         }
 
         public string GetSelectionDesc()
         {
-            return "마을을 조사한다."; // 선택지 설명
+            return "뉴욕 길거리 치안 유지 활동하기(10G)"; // 선택지 설명
         }
     }
 
@@ -100,15 +100,18 @@ namespace MarvelHeroes
 
 
                 //선택지 보여주고
+                Console.Clear();
+                GameView.ViewSceneNameAndDesc1(GameManager.Instance.SM.currentScene);
+                Console.WriteLine("\n[구매 가능 아이템 목록]");
                 for (; num < shopInventory.Count(); num++)
                 {
                         Console.WriteLine(GameView.DisplayInven(num, 0, shopInventory));
                 }
-                Console.WriteLine("0. 나가기");
+                Console.WriteLine("\n0. 나가기");
 
                 //입력 받고
                 int input;
-                Console.WriteLine("구매를 원하는 아이템 번호를 입력해주세요.");
+                Console.Write("\n구매를 원하는 아이템 번호를 입력해주세요.\n>>");
                 while (true)
                 {
                     //입력값 유효성 검사
@@ -162,14 +165,17 @@ namespace MarvelHeroes
                 int num = 0;
 
                 //선택지 보여주고
+                Console.Clear();
+                GameView.ViewSceneNameAndDesc1(GameManager.Instance.SM.currentScene);
+                Console.WriteLine("\n[판매 가능 아이템 목록]");
                 for (; num < playerInventory.Count(); num++)
                 {
                     Console.WriteLine(GameView.DisplayInven(num, 0, playerInventory));
                 }
-                Console.WriteLine("0. 나가기");
+                Console.WriteLine("\n0. 나가기");
                 //입력 받고
                 int input;
-                Console.WriteLine("판매를 원하는 아이템 번호를 입력해주세요.");
+                Console.Write("\n판매를 원하는 아이템 번호를 입력해주세요.\n>>");
                 while (true)
                 {
                     //입력값 유효성 검사
@@ -252,13 +258,13 @@ namespace MarvelHeroes
             switch (sceneNum)
             {
                 case SceneNum.Town:
-                    sceneKorName = "마을";
+                    sceneKorName = "뉴욕";
                     break;
                 case SceneNum.Dungeon:
-                    sceneKorName = "던전";
+                    sceneKorName = "인피니티 타워";
                     break;
                 case SceneNum.Shop:
-                    sceneKorName = "상점";
+                    sceneKorName = "쉴드 무기고";
                     break;
                 defualt:
                     sceneKorName = "없는 장소";

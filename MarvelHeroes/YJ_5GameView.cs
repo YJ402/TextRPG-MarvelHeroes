@@ -22,9 +22,16 @@ namespace MarvelHeroes
         }
 
 
-        public static void ViewSceneNameAndDesc1(Scene scene)
+        public static void ViewSceneNameAndDesc1(Scene scene, ConsoleColor color = ConsoleColor.Green)
         {
+<<<<<<< Updated upstream
             Console.WriteLine(scene.Name);
+=======
+            Console.Clear();
+            if(scene is DungeonScene)
+            { color = ConsoleColor.DarkRed; }
+            PrintText($"<{scene.Name}>", 0, color);
+>>>>>>> Stashed changes
             Console.WriteLine(scene.Description);
             Console.WriteLine();
         }
@@ -97,7 +104,7 @@ namespace MarvelHeroes
                         Console.WriteLine("{0}. {1}", i, currentScene.sceneSelections[i].GetSelectionDesc());
                     }
                 }
-
+                Console.WriteLine();
             }
             //while(i < scene.toDos.Count)
             //{

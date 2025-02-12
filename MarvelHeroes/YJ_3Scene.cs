@@ -27,7 +27,7 @@ namespace MarvelHeroes
         public CreateCharacterScene()
         {
             Name = "캐릭터 생성창";
-            Description = "스파르타 던전에 오신 여러분 환영합니다.\r\n";
+            Description = "마블 히어로즈에 오신 여러분 환영합니다.\r\n";
             Description2 = "원하시는 이름을 설정해주세요.";
 
             ISelections action1 = new SelectClass(JobType.IronMan);
@@ -44,8 +44,8 @@ namespace MarvelHeroes
     {
         public TownScene()
         {
-            Name = "마을";
-            Description = "마을에선 다른 지역으로 이동할 수 있고 퀘스트를 수주할 수 있습니다.";
+            Name = "뉴욕";
+            Description = "히어로들의 중심지이자 전장의 한가운데. 평화와 혼돈이 공존하는 마블 세계의 심장부. 이곳에서 다양한 퀘스트를 받고 새로운 장소로 이동할 수 있다.";
 
             ISelections UI = new ToUI();
             ISelections action1 = new TalkToChief(quest);
@@ -62,8 +62,8 @@ namespace MarvelHeroes
         List<Item> Shopitems;
         public ShopScene()
         {
-            Name = "상점";
-            Description = "상점에선 아이템 사고 팔 수 있습니다.";
+            Name = "쉴드 무기고";
+            Description = "최첨단 기술과 강력한 무기가 모이는 곳. 오직 신뢰받는 자만이 이곳에서 무기를 구매하거나 사용하지 않는 장비를 처분할 수 있다.";
 
             ISelections UI = new ToUI();
             ISelections action1 = new Trade_Buy();
@@ -85,8 +85,8 @@ namespace MarvelHeroes
         {
             //int i = 1;
 
-            Name = "던전";
-            Description = "던전에선 더 높은 층으로 올라갈 수 있습니다.";
+            Name = "인피니티 타워";
+            Description = "끝없는 층을 오를수록 강력한 적이 기다리는 거대한 던전. 한 층을 정복할 때마다 새로운 공간이 드러나며, 타워 어딘가에는 모든 것을 지배하는 존재가 있다는 소문이 돈다...";
             Description2 = "도전하고 싶은 층을 입력해주세요.";
 
             UI = new ToUI();
