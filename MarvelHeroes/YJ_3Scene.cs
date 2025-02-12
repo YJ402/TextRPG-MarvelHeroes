@@ -76,7 +76,7 @@ namespace MarvelHeroes
 
     public class DungeonScene : Scene//, ISelections
     {
-        public int challengingFloor = 1;
+        public int challengingFloor = 10;
         public int i = 1;
         ISelections UI;
         ISelections action1;
