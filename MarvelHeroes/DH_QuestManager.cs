@@ -20,9 +20,9 @@ namespace MarvelHeroes
         {
             questlist_Chief = new List<Quest>
             {
-            new HuntQuest("시장의 토벌 의뢰", "시장이 당신에게 근처 쉐도우 가디언의 처리를 부탁했습니다.\n쉐도우 가디언 3마리를 처리합시다.", 3, 1101, "쉐도우 가디언"),
-            new EquipQuest("영웅의 품격", "사장의 신뢰를 위해 방어구를 입은 멋진 모습을 보여줍시다. ", 1, 1201,ItemType.Amor),
-            new LevelQuest("시장의 신뢰", "시장은 강한 자를 원합니다. 시장의 신뢰를 위해 레벨 10을 달성하세요.", 10, 1301)
+            new HuntQuest("닉 퓨리의 토벌 의뢰", "닉 퓨리가 당신에게 근처 쉐도우 가디언의 처리를 부탁했습니다.\n쉐도우 가디언 3마리를 처리합시다.", 3, 1101, "쉐도우 가디언"),
+            new EquipQuest("영웅의 품격", "닉 퓨리의 신뢰를 위해 방어구를 입은 멋진 모습을 보여줍시다. ", 1, 1201,ItemType.Amor),
+            new LevelQuest("닉 퓨리의 신뢰", "닉 퓨리는 강한 자를 원합니다. 시장의 신뢰를 위해 레벨 10을 달성하세요.", 10, 1301)
             };
 
             questlist_Investigation = new List<Quest>
@@ -169,7 +169,7 @@ namespace MarvelHeroes
 
             }
 
-            int RewardGold = new Random().Next(100, 200);
+            int RewardGold = new Random().Next(500, 1000);
             player.Gold += RewardGold;
             Console.WriteLine($"보상획득! 골드 + {RewardGold}");
         }
