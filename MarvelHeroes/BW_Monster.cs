@@ -57,7 +57,7 @@ namespace MarvelHeroes
                 }
                 else
                 {
-                    Console.WriteLine("Lv. {0}. {1} HP {2} ", monster.Level, monster.MonsterName, monster.Hp);
+                    Console.WriteLine("Lv. {0}. {1} HP {2}", monster.Level, monster.MonsterName, monster.Hp);
                 }
             
             return monster;
@@ -101,8 +101,8 @@ namespace MarvelHeroes
 
             List<Monster> bossMonsters = new List<Monster>
             {
-                new Monster(GameManager.Instance.player.Level+10,"울트론", (int)(GameManager.Instance.player.Hp*1.5), (int)(GameManager.Instance.player.Atk*3.5), GameManager.Instance.player.Def+(GameManager.Instance.player.Level/2), 10, 10, 70, false),
-                new Monster(GameManager.Instance.player.Level+10,"타노스", (int)(GameManager.Instance.player.Hp*2.5), (int)(GameManager.Instance.player.Atk*3), GameManager.Instance.player.Def+GameManager.Instance.player.Level, 10, 30, 30, false)
+                new Monster(GameManager.Instance.player.Level+10,"울트론", (int)(GameManager.Instance.player.Hp*1.5), (int)(GameManager.Instance.player.Level*20), GameManager.Instance.player.Def+(GameManager.Instance.player.Level/2), 10, 10, 70, false),
+                new Monster(GameManager.Instance.player.Level+10,"타노스", (int)(GameManager.Instance.player.Hp*2.5), (int)(GameManager.Instance.player.Level*20), GameManager.Instance.player.Def+GameManager.Instance.player.Level, 10, 30, 30, false)
             };
 
             if (floorLevel%10 != 0)
