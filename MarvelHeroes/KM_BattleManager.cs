@@ -781,7 +781,7 @@ namespace MarvelHeroes
             if(battlStatusPage == BattlStatusPage.BattleAttack)
             {
                 Console.Clear();
-                if (selectNumber == 1) Console.WriteLine("<Battle!! - Attack>\n");
+                if (selectNumber == 1) GameView.PrintText("<Battle!! - Attack>\n", 200, ConsoleColor.Red);
                 else if (selectNumber == 2) Console.WriteLine("<Battle!! - Skill>\n");
 
                 FloorSelectMontersView(floormonsters, battlStatusPage);
