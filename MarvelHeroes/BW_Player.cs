@@ -92,12 +92,12 @@ namespace MarvelHeroes
             {
                 if (xp != value)
                 {
-                    if (value >= maxXp)
+                    if (maxXp > 0 && value >= maxXp)
                     {
                         xp = value;
                         LevelUp();
                     }
-                    else { xp += value; }
+                    else { xp = value; }
                 }
             }
         }
