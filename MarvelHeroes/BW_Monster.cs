@@ -36,7 +36,7 @@ namespace MarvelHeroes
             if (monster.Hp <= 0)
             {
                 monster.IsAtk = false;
-                GameManager.Instance.QM.CheckCompleteQuest(monster);
+                GameManager.Instance.QM.CheckCompleteQuest(GameManager.Instance.player, monster);
                 Console.WriteLine("HP {0} -> Dead\n", beforeHp);
             }
             else

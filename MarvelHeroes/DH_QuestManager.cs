@@ -119,15 +119,15 @@ namespace MarvelHeroes
             }
         }
 
-        public void CheckCompleteQuest(Monster Monster, Player player = null, EquipItem item = null)
+        public void CheckCompleteQuest(Player player = null, Monster Monster = null,  EquipItem item = null)
         {
             List<Quest> completedQuests = new List<Quest>();
             foreach (Quest quest in acceptQuest)
             {
-                if (quest.IsCompleted(Monster, player, item))
+                if (quest.IsCompleted(player, Monster, item))
                 {
                     completedQuests.Add(quest);
-                    acceptQuest.Remove(quest);
+                    //acceptQuest.Remove(quest);
                 }
             }
 
@@ -193,7 +193,7 @@ namespace MarvelHeroes
 
         }
 
-        public abstract bool IsCompleted(Monster Monster, Player player, EquipItem item); // 퀘스트 완료 체크
+        public abstract bool IsCompleted(Player player, Monster Monster,  EquipItem item); // 퀘스트 완료 체크
 
         public abstract void Questclear();
     }
@@ -208,7 +208,7 @@ namespace MarvelHeroes
         {
             RequiredType = requiredType;
         }
-        public override bool IsCompleted(Monster Monster, Player player, EquipItem item)
+        public override bool IsCompleted(Player player, Monster Monster,  EquipItem item)
         {
             if (item == null) return false;
             // 무기 장착 퀘스트 확인
@@ -241,7 +241,7 @@ namespace MarvelHeroes
         {
             targetMonster = monster; 
         }
-        public override bool IsCompleted(Monster Monster, Player player, EquipItem item)
+        public override bool IsCompleted(Player player, Monster Monster, EquipItem item)
         {
 
                 if (Monster.MonsterName == targetMonster)
@@ -263,7 +263,7 @@ namespace MarvelHeroes
         {
 
         }
-        public override bool IsCompleted(Monster Monster, Player player, EquipItem item)
+        public override bool IsCompleted(Player player, Monster Monster, EquipItem item)
         {
             return player.Level >= Demand;
         }

@@ -140,6 +140,18 @@ namespace MarvelHeroes
                     player.EquipAtk += this.Value;
                 else if (this.ItemType == ItemType.Amor) //타입이 갑옷일 경우 방어력 증가
                     player.EquipDef += this.Value;
+
+                foreach(var q in GameManager.Instance.QM.acceptQuest)
+                {
+                    if ((q as EquipQuest).RequiredType == ItemType)
+                    { 
+                        GameManager.Instance.QM.CheckCompleteQuest(GameManager.Instance.player, null, this);
+                        Console.ReadKey();
+                        break;
+                    }
+
+                }
+
             }
         }
 
