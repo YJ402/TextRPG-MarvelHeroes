@@ -99,8 +99,8 @@ namespace MarvelHeroes
                 }
             }
         }
-        
 
+        public Player() { }
 
         public Player(int _Level, string name, int gold, bool _isDead, int xp, int _maxXp)
             : base (0, 0, 0, 0, 0, 0, false)

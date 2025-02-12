@@ -13,6 +13,8 @@ namespace MarvelHeroes
         public List<Item> items = new List<Item>();
         //private List<Item> equippedItems = new List<Item>();
 
+
+        public Inventory() { }
         public void AddItem(Item item, int i = 1)
         {
             if (item is UsingItem)

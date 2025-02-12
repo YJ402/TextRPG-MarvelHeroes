@@ -3,6 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Text.Json;
 using System.Threading.Tasks;
 
 namespace MarvelHeroes
@@ -30,7 +31,13 @@ namespace MarvelHeroes
                 if (int.TryParse(Console.ReadLine(), out int choice))
                 {
                     if (choice == 0) { break; }
-                    else if (choice == 1) {; }
+                    else if (choice == 1) SaveTextRPG(GameManager.Instance.player, GameManager.Instance.inventory);
+                    else if (choice == 2)
+                    {
+                       GameData gameData = LoadTextRPG();
+                       GameManager.Instance.player = gameData.player;
+                    }
+                   
                 }
                 else
                 {
@@ -38,5 +45,43 @@ namespace MarvelHeroes
                 }
             }
         }
+
+        public void SaveTextRPG(Player player, Inventory inventory, string filename = "MarbleSaveTextRPG.json")
+        {
+            GameData data = new GameData() { player = player };
+
+            string json = JsonSerializer.Serialize(data, new JsonSerializerOptions { WriteIndented = true });
+            File.WriteAllText(filename, json);
+            Console.WriteLine("게임이 저장되었습니다.");
+        }
+
+        public GameData LoadTextRPG(string filename = "MarbleSaveTextRPG.json")
+        {
+            if (!File.Exists(filename))
+            {
+                Console.WriteLine("저장된 데이터가 없습니다.");
+                return new GameData { player = new Player(1, "", 100, false, 0, 10)};
+            }
+            else
+            {
+                string json = File.ReadAllText(filename);
+                GameData data = JsonSerializer.Deserialize<GameData>(json);
+
+                Console.WriteLine("저장된 데이터를 불러왔습니다.");
+                return data;
+            }
+
+        }
+
+    }
+
+    public class GameData
+    {
+        // 기본값 설정
+        public Player player { get; set; } = new Player(1, "", 100, false, 0, 10);
+        // 기본 생성자 (필수), 기본 생성자 없으면 역직렬화할 때 오류가 날 수 있음
+
+        public GameData() { }
+
     }
 }
