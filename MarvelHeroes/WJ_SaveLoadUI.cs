@@ -3,14 +3,66 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using System.Text.Json;
 using System.Threading.Tasks;
-using System.Text.Json.Serialization;
+using Newtonsoft.Json;
 
 namespace MarvelHeroes
 {
     internal class SaveLoadUI
     {
+        public static string path = AppDomain.CurrentDomain.BaseDirectory;
+
+        public static void SaveData()
+        {
+            string playerData = JsonConvert.SerializeObject(GameManager.Instance.player);
+            File.WriteAllText(path + "\\playerData.json", playerData);
+
+            string inventoryData = JsonConvert.SerializeObject(GameManager.Instance.inventory.items);
+            File.WriteAllText(path + "\\UserInventoryData.json", inventoryData);
+
+            string acceptQuestData = JsonConvert.SerializeObject(GameManager.Instance.QM.acceptQuest);
+            File.WriteAllText(path + "\\acceptQuestData.json", acceptQuestData);
+        }
+
+        public static void LoadData()
+        {
+            // 유저 데이터가 없을 때 -> 세이브 데이터가 없을 때
+            if (!File.Exists(path + "\\playerData.json"))
+            {
+                SaveData();
+                return;
+            }
+            else
+            {
+                string playerLData = File.ReadAllText(path + "\\playerData.json");
+                Player playerLoadData = JsonConvert.DeserializeObject<Player>(playerLData);
+                GameManager.Instance.player = playerLoadData;
+
+                string inventoryLData = File.ReadAllText(path + "\\UserInventoryData.json");
+                EquipItem[] inventoryLoadData = JsonConvert.DeserializeObject<EquipItem[]>(inventoryLData);
+                if (GameManager.Instance.inventory.items == null)
+                {
+                    GameManager.Instance.inventory.items = new List<Item>(); // 리스트를 초기화
+                }
+                foreach (EquipItem data in inventoryLoadData)
+                {
+                    GameManager.Instance.inventory.AddItem(data);
+                }
+
+                string acceptQuestLData = File.ReadAllText(path + "\\acceptQuestData.json");
+                HuntQuest[] acceptQuestLoadData = JsonConvert.DeserializeObject<HuntQuest[]>(acceptQuestLData);
+                if (GameManager.Instance.QM.acceptQuest == null)
+                {
+                    GameManager.Instance.QM.acceptQuest = new List<Quest>(); // 리스트를 초기화
+                }
+                foreach (HuntQuest data in acceptQuestLoadData)
+                {
+                    GameManager.Instance.QM.acceptQuest.Add(data);
+                }
+            }
+        }
+
+
         public void SaveLoadScene()
         {
             while (true)
@@ -31,12 +83,8 @@ namespace MarvelHeroes
                 if (int.TryParse(Console.ReadLine(), out int choice))
                 {
                     if (choice == 0) { break; }
-                    else if (choice == 1) SaveTextRPG(GameManager.Instance.player, GameManager.Instance.inventory);
-                    else if (choice == 2)
-                    {
-                       GameData gameData = LoadTextRPG();
-                       GameManager.Instance.player = gameData.SavaPlayer;
-                    }                  
+                    else if (choice == 1) { SaveData(); }
+                    else if (choice == 2) { LoadData(); }
                 }
                 else
                 {
@@ -44,41 +92,5 @@ namespace MarvelHeroes
                 }
             }
         }
-
-        public void SaveTextRPG(Player player, Inventory inventory, string filename = "MarbleSaveTextRPG.json")
-        {
-            GameData data = new GameData() { SavaPlayer = player };
-
-            string json = JsonSerializer.Serialize(data, new JsonSerializerOptions { WriteIndented = true });
-            File.WriteAllText(filename, json);
-            Console.WriteLine("게임이 저장되었습니다.");
-        }
-
-        public GameData LoadTextRPG(string filename = "MarbleSaveTextRPG.json")
-        {
-            if (!File.Exists(filename))
-            {
-                Console.WriteLine("저장된 데이터가 없습니다.");
-                return new GameData { SavaPlayer = new Player()};
-            }
-            else
-            {
-                string json = File.ReadAllText(filename);
-                GameData data = JsonSerializer.Deserialize<GameData>(json);
-
-                Console.WriteLine("저장된 데이터를 불러왔습니다.");
-                return data;
-            }
-
-        }
-
-    }
-
-    public class GameData
-    {
-        // 기본값 설정
-        public Player SavaPlayer { get; set; } = new Player();
-
-        public GameData() { }
     }
 }

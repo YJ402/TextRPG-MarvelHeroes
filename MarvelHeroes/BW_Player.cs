@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Newtonsoft.Json;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Numerics;
@@ -81,7 +82,7 @@ namespace MarvelHeroes
         public int MaxHp { get; set; }
         public int MaxMp { get; set; }
 
-        public int xp { get; private set; }
+        public int xp;
         public int maxXp { get; set; }
 
         public int Xp
@@ -101,7 +102,24 @@ namespace MarvelHeroes
             }
         }
 
-        public Player() { }
+        [JsonConstructor]
+        public Player(string name, JobType playerJob, int equipAtk, int equipDef, int gold, int mp, int maxMp, int hp, int maxHp, int xp, int _maxXp, int level, int atk, int def, int critical, int dexterity, bool isDead = false) : base(level, atk, def, hp, critical, dexterity, isDead)
+        {
+            Name = name;
+            PlayerJob = playerJob;
+            EquipAtk = equipAtk;
+            EquipDef = equipDef;
+            Gold = gold;
+            
+
+            MaxMp = maxMp;
+            MaxHp = maxHp;
+            maxXp = _maxXp;
+
+            Mp = mp;
+            Hp = hp;
+            Xp = xp;
+        }
 
         public Player(int _Level, string name, int gold, bool _isDead, int xp, int _maxXp)
             : base (0, 0, 0, 0, 0, 0, false)
