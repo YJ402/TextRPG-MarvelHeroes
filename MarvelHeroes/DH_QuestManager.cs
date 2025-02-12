@@ -22,7 +22,7 @@ namespace MarvelHeroes
             {
             new HuntQuest("닉 퓨리의 토벌 의뢰", "닉 퓨리가 당신에게 근처 쉐도우 가디언의 처리를 부탁했습니다.\n쉐도우 가디언 3마리를 처리합시다.", 3, 1101, "쉐도우 가디언"),
             new EquipQuest("영웅의 품격", "닉 퓨리의 신뢰를 위해 방어구를 입은 멋진 모습을 보여줍시다. ", 1, 1201,ItemType.Amor),
-            new LevelQuest("닉 퓨리의 신뢰", "닉 퓨리는 강한 자를 원합니다. 시장의 신뢰를 위해 레벨 10을 달성하세요.", 10, 1301)
+            new LevelQuest("닉 퓨리의 신뢰", "닉 퓨리는 강한 자를 원합니다. 닉 퓨리의 신뢰를 위해 레벨 10을 달성하세요.", 10, 1301)
             };
 
             questlist_Investigation = new List<Quest>
@@ -54,7 +54,7 @@ namespace MarvelHeroes
             }
 
             Console.Clear();
-            Console.WriteLine("메인 퀘스트");
+            Console.WriteLine("퀘스트");
             Console.WriteLine("[퀘스트 목록]");
 
             for (int i = 0; i < list.Count; i++)
@@ -62,7 +62,7 @@ namespace MarvelHeroes
                 Console.WriteLine($"{i + 1}. {list[i].Name} | {list[i].Descrip}");
             }
 
-            Console.WriteLine("0. 마을로 돌아가기");
+            Console.WriteLine("0. 도시로 돌아가기");
             Console.WriteLine();
             Console.WriteLine("[받은 퀘스트 목록]");
 
@@ -75,6 +75,7 @@ namespace MarvelHeroes
             Console.WriteLine("어떤 퀘스트를 수락하시겠습니까?");
             Console.WriteLine();
             Console.WriteLine("원하시는 행동을 입력해주세요.");
+            Console.Write(">>");
 
 
             while (true)
