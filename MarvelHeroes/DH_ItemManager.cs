@@ -29,10 +29,28 @@ namespace MarvelHeroes
                 new EquipItem("스파이더맨 기본 무기", ItemType.Weapon, JobType.SpiderMan, 5,"스파이더맨의 기본무기", 500),
                 new EquipItem("닥터스트레인지 기본 무기", ItemType.Weapon, JobType.DoctorStrange, 5,"닥터스트레인지의 기본무기", 500),
                 new EquipItem("헐크 기본 무기", ItemType.Weapon, JobType.Hulk, 5,"헐크의 기본무기", 500),
-                new EquipItem("아이언맨 기본 갑옷", ItemType.Amor, JobType.IronMan, 5,"아이언맨의 기본방어구", 1000),
-                new EquipItem("스파이더맨 기본 갑옷", ItemType.Amor, JobType.SpiderMan, 5,"스파이더맨의 기본방어구", 1000),
-                new EquipItem("닥터스트레인지 기본 갑옷", ItemType.Amor, JobType.DoctorStrange, 5,"닥터스트레인지의 기본방어구", 1000),
-                new EquipItem("헐크 기본 갑옷", ItemType.Amor, JobType.Hulk, 5,"헐크의 기본방어구", 1000)
+                new EquipItem("아이언맨 기본 갑옷", ItemType.Amor, JobType.IronMan, 5,"아이언맨의 기본방어구", 500),
+                new EquipItem("스파이더맨 기본 갑옷", ItemType.Amor, JobType.SpiderMan, 5,"스파이더맨의 기본방어구", 500),
+                new EquipItem("닥터스트레인지 기본 갑옷", ItemType.Amor, JobType.DoctorStrange, 5,"닥터스트레인지의 기본방어구", 500),
+                new EquipItem("헐크 기본 갑옷", ItemType.Amor, JobType.Hulk, 5,"헐크의 기본방어구", 500),
+
+                new EquipItem("Mk.7 건틀렛",ItemType.Weapon, JobType.IronMan, 10,"아이언맨의 Mk.7의 건틀렛", 1000),
+                new EquipItem("웹 슈터", ItemType.Weapon, JobType.SpiderMan, 10,"스파이더맨의 거미줄 히히 발싸 장비", 1000),
+                new EquipItem("와툼의 지팡이", ItemType.Weapon, JobType.DoctorStrange, 10, "옥타 에센스라는 신들 중 하나인 와툼의 지팡이", 1000),
+                new EquipItem("로키", ItemType.Weapon, JobType.Hulk, 10, "헐크한테 다리가 잡혀 무기로 사용되는 불쌍한 로키", 1000),
+                new EquipItem( "Mk.7 아머", ItemType.Amor, JobType.IronMan, 10, "아이언맨의 Mk.7의 아머", 1000),
+                new EquipItem("스타크 슈트", ItemType.Amor, JobType.SpiderMan, 10, "아이언맨이 준 스파이더맨의 슈트", 1000),
+                new EquipItem("클록 오브 리비테이션", ItemType.Amor, JobType.DoctorStrange, 10, "닥터스트레인지의 스스로 날아다니는 망토", 1000),
+                new EquipItem("질긴 청바지", ItemType.Amor, JobType.Hulk, 10, "동대문에서 산 질긴 청바지", 1000),
+
+                new EquipItem("나노 건틀렛",ItemType.Weapon, JobType.IronMan, 30,"나노테크로 완성된 아이언맨의 건틀렛", 3000),
+                new EquipItem("웹 슈터 ver2", ItemType.Weapon, JobType.SpiderMan, 30, "스파이더맨의 거미줄 히히 발싸 슈웅 장비", 3000),
+                new EquipItem("비샨티의 서",ItemType.Weapon, JobType.DoctorStrange, 30,"비샨티의 주신인 우쉬투르가 직접 정리한 백마법서", 3000),
+                new EquipItem("헐크버스터 건틀렛", ItemType.Weapon, JobType.Hulk, 30, "아이언맨에게 강탈한 헐크버스터 건틀렛", 3000),
+                new EquipItem("Mk.85 나노 아머", ItemType.Amor, JobType.IronMan, 30, "나노테크로 완성된 Mk.85 아이언맨 아머", 3000),
+                new EquipItem("아이언 스파이더 슈트", ItemType.Amor, JobType.SpiderMan, 30, "스파이더맨 나노테크 아머", 3000),
+                new EquipItem("아가모토의 눈", ItemType.Amor, JobType.DoctorStrange, 30, "닥터스트레인지의 타임스톤이 들어가 시간조절이 가능한 목걸이", 3000),
+                new EquipItem("헐크버스터 아머", ItemType.Amor, JobType.Hulk, 30, "아이언맨에게 강탈한 헐크버스터 아머", 3000)
             };
 
             //public UsingItem(string name, ItemType type, int value, string descrip, int cost)
@@ -143,10 +161,10 @@ namespace MarvelHeroes
                 else if (this.ItemType == ItemType.Amor) //타입이 갑옷일 경우 방어력 증가
                     player.EquipDef += this.Value;
 
-                foreach(var q in GameManager.Instance.QM.acceptQuest)
+                foreach (var q in GameManager.Instance.QM.acceptQuest)
                 {
                     if ((q as EquipQuest).RequiredType == ItemType)
-                    { 
+                    {
                         GameManager.Instance.QM.CheckCompleteQuest(GameManager.Instance.player, null, this);
                         Console.ReadKey();
                         break;
@@ -200,7 +218,7 @@ namespace MarvelHeroes
                 Console.WriteLine($"{player.Name}이(가) {Name}을 사용하였습니다.");
                 Console.WriteLine($"체력을 {Value}만큼 회복합니다.(남은 개수 : {Quantity})");
             }
-            else if(ItemType == ItemType.Regeneration)
+            else if (ItemType == ItemType.Regeneration)
             {
                 player.Mp += this.Value;
 
