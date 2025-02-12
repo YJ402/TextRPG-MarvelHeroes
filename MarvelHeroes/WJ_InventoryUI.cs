@@ -98,6 +98,7 @@ namespace MarvelHeroes
                         if (choice == i+1)
                         {
                             inventory.items[i].Use(GameManager.Instance.player);
+                            break;
                         } // 장착 메서드
                     }
                 }
