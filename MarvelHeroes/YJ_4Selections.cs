@@ -72,14 +72,14 @@ namespace MarvelHeroes
             playerInventory = GameManager.Instance.inventory.items;
             equipItemList = GameManager.Instance.IM.equipItems;
             usingItemList = GameManager.Instance.IM.usingItems;
-            shopInventory = new List<Item>();
         }
 
         public void Execute()
         {
-            int num = 0;
 
             //샵 인벤토리 업데이트 (인벤토리에 없는 것만 + 
+            shopInventory = new List<Item>();
+
             foreach (Item item in equipItemList)
             {
                 if (!playerInventory.Contains(item))
@@ -95,11 +95,16 @@ namespace MarvelHeroes
 
             while (true)
             {
+                //초기화
+                int num = 0;
+
+
                 //선택지 보여주고
                 for (; num < shopInventory.Count(); num++)
                 {
-                    //인벤토리 UI 뷰 활용. 1번부터~ // 0번은 나가기 버튼.
+                        Console.WriteLine(GameView.DisplayInven(num, 0, shopInventory));
                 }
+                Console.WriteLine("0. 나가기");
 
                 //입력 받고
                 int input;
@@ -109,8 +114,17 @@ namespace MarvelHeroes
                     //입력값 유효성 검사
                     if (int.TryParse(Console.ReadLine(), out input))
                     {
-                        if (input < shopInventory.Count() && input > 0)
+                        if (input == 0) { break; }
+                        else if (input-1 < shopInventory.Count() && input > 0)
+                        {
+                            if (shopInventory[input - 1].Cost > GameManager.Instance.player.Gold)
+                            {
+                                Console.WriteLine("골드가 부족합니다.");
+                                Console.Write(">> ");
+                                continue;
+                            }
                             break;
+                        }
                     }
                     Console.WriteLine("잘못된 입력입니다");
                     Console.Write(">> ");
@@ -142,16 +156,17 @@ namespace MarvelHeroes
 
         public void Execute()
         {
-            int num = 0;
 
             while (true)
             {
+                int num = 0;
+
                 //선택지 보여주고
                 for (; num < playerInventory.Count(); num++)
                 {
-                    //인벤토리 UI 뷰 활용. 1번부터~ // 0번은 나가기 버튼.
+                    Console.WriteLine(GameView.DisplayInven(num, 0, playerInventory));
                 }
-
+                Console.WriteLine("0. 나가기");
                 //입력 받고
                 int input;
                 Console.WriteLine("판매를 원하는 아이템 번호를 입력해주세요.");
@@ -160,8 +175,11 @@ namespace MarvelHeroes
                     //입력값 유효성 검사
                     if (int.TryParse(Console.ReadLine(), out input))
                     {
-                        if (input < playerInventory.Count() && input > 0)
+                        if (input == 0) { break; }
+                        else if (input-1 < playerInventory.Count() && input > 0)
+                        {
                             break;
+                        }
                     }
                     Console.WriteLine("잘못된 입력입니다");
                     Console.Write(">> ");
@@ -175,8 +193,16 @@ namespace MarvelHeroes
                 {
                     (targetItem as UsingItem).Quantity--;
                 }
-                else { GameManager.Instance.inventory.RemoveItem(targetItem); }
-                GameManager.Instance.player.Gold -= playerInventory[input - 1].Cost;
+                else if(!targetItem.IsEquip)
+                {
+                    targetItem.Use(GameManager.Instance.player);
+                    GameManager.Instance.inventory.RemoveItem(targetItem);
+                }
+                else 
+                { 
+                    GameManager.Instance.inventory.RemoveItem(targetItem); 
+                }
+                GameManager.Instance.player.Gold += (int)(targetItem.Cost*0.6);
             }
         }
 
@@ -230,6 +256,9 @@ namespace MarvelHeroes
                     break;
                 case SceneNum.Dungeon:
                     sceneKorName = "던전";
+                    break;
+                case SceneNum.Shop:
+                    sceneKorName = "상점";
                     break;
                 defualt:
                     sceneKorName = "없는 장소";

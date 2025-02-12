@@ -34,8 +34,10 @@ namespace MarvelHeroes
         private GameManager() { }
         public void Initialize()
         {
+            //inventory = IM.inventory;
+
             IM = new ItemManager();
-            inventory = new Inventory();
+            //inventory = new Inventory();
             SM = new SceneManager();
             QM = new QuestManager();
         }
