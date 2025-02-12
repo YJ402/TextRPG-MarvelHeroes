@@ -16,10 +16,12 @@ namespace MarvelHeroes
         public List<Item> equipItems;
         public List<Item> usingItems;
         public List<Item> Alltems;
-
+        public Inventory inventory;
         //DH_ItemManager 호출시 실행
         public ItemManager()
         {
+            inventory = new Inventory();
+            GameManager.Instance.inventory = inventory;
             //public EquipItem(string name, ItemType itemtype, JobType jobType, int value, string descrip, int cost)
             equipItems = new List<Item>
             {
@@ -36,10 +38,10 @@ namespace MarvelHeroes
             //public UsingItem(string name, ItemType type, int value, string descrip, int cost)
             usingItems = new List<Item>
             {
-                new UsingItem("소형 힐링 포션", ItemType.Healing, 20, "소량의 체력을 회복시켜줍니다.", 10, 1),
-                new UsingItem("대형 힐링 포션", ItemType.Healing, 50, "대량의 체력을 회복시켜줍니다.", 30, 1),
-                new UsingItem("소형 마나 포션", ItemType.Regeneration, 20, "소량의 마나를 재생시켜줍니다.", 20, 1),
-                new UsingItem("대형 마나 포션", ItemType.Regeneration, 50, "대량의 마나를 재생시켜줍니다.", 40, 1)
+                new UsingItem("소형 힐링 포션", ItemType.Healing, 20, "소량의 체력을 회복시켜줍니다.", 10, 0),
+                new UsingItem("대형 힐링 포션", ItemType.Healing, 50, "대량의 체력을 회복시켜줍니다.", 30, 0),
+                new UsingItem("소형 마나 포션", ItemType.Regeneration, 20, "소량의 마나를 재생시켜줍니다.", 20, 0),
+                new UsingItem("대형 마나 포션", ItemType.Regeneration, 50, "대량의 마나를 재생시켜줍니다.", 40, 0)
             };
 
             Alltems = new List<Item>();
@@ -168,8 +170,8 @@ namespace MarvelHeroes
             set
             {
                 quantity = value;
-                if(quantity <= 0)
-                GameManager.Instance.inventory.RemoveItem(this);
+                if (quantity <= 0) // && GameManager.Instance.inventory.items.Contains(this)
+                    GameManager.Instance.inventory.RemoveItem(this);
             }
         }
 

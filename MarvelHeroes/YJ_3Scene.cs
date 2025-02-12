@@ -50,9 +50,10 @@ namespace MarvelHeroes
             ISelections UI = new ToUI();
             ISelections action1 = new TalkToChief(quest);
             ISelections action2 = new Investigate(quest);
-            ISelections action3 = new ToWhere(SceneNum.Dungeon);
+            ISelections action3 = new ToWhere(SceneNum.Shop);
+            ISelections action4 = new ToWhere(SceneNum.Dungeon);
 
-            sceneSelections = new Dictionary<int, ISelections>() { { 0, UI }, { 1, action1 }, { 2, action2 }, { 3, action3 } };
+            sceneSelections = new Dictionary<int, ISelections>() { { 0, UI }, { 1, action1 }, { 2, action2 }, { 3, action3 }, { 4, action4 } };
         }
     }
 
