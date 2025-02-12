@@ -24,7 +24,7 @@ namespace MarvelHeroes
                 Console.WriteLine();
                 for (int i = 0; i < GameManager.Instance.inventory.items.Count; i++) // 게임매니저에서 선언한 인벤토리 리스트를 가져옴
                 {
-                    Console.WriteLine(DisplayInven(i, 1));
+                    Console.WriteLine(GameView.DisplayInven(i, 1, GameManager.Instance.inventory.items));
                 }
                 Console.WriteLine();
                 Console.WriteLine("1. 장착 관리");
@@ -46,25 +46,25 @@ namespace MarvelHeroes
             }
         }
 
-        public string DisplayInven(int i, int j)
-        {
-            string str = GameManager.Instance.inventory.items[i].IsEquip ? "[E]" : "";
-            if (j == 0)
-            {
-                str = $"- {i + 1}. " + str + $"{GameManager.Instance.inventory.items[i].Name}\t| {DisplayType(i)}\t | {GameManager.Instance.inventory.items[i].Descrip}\t| {GameManager.Instance.inventory.items[i].Cost}";
-            }
-            else
-            {
-                str = $"-  " + str + $"{GameManager.Instance.inventory.items[i].Name}\t| {DisplayType(i)}\t | {GameManager.Instance.inventory.items[i].Descrip}\t| {GameManager.Instance.inventory.items[i].Cost}";
-            }
-            return str;
-        }
+        //public string DisplayInven(int i, int j)
+        //{
+        //    string str = GameManager.Instance.inventory.items[i].IsEquip ? "[E]" : "";
+        //    if (j == 0)
+        //    {
+        //        str = $"- {i + 1}. " + str + $"{GameManager.Instance.inventory.items[i].Name}\t| {DisplayType(i)}\t | {GameManager.Instance.inventory.items[i].Descrip}\t| {GameManager.Instance.inventory.items[i].Cost}";
+        //    }
+        //    else
+        //    {
+        //        str = $"-  " + str + $"{GameManager.Instance.inventory.items[i].Name}\t| {DisplayType(i)}\t | {GameManager.Instance.inventory.items[i].Descrip}\t| {GameManager.Instance.inventory.items[i].Cost}";
+        //    }
+        //    return str;
+        //}
 
-        public string DisplayType(int i)
-        {
-            string str = GameManager.Instance.inventory.items[i].ItemType == ItemType.Weapon ? $"공격력 : {GameManager.Instance.inventory.items[i].Value}" : $"방어력 : {GameManager.Instance.inventory.items[i].Value}";
-            return str;
-        }
+        //public string DisplayType(int i)
+        //{
+        //    string str = GameManager.Instance.inventory.items[i].ItemType == ItemType.Weapon ? $"공격력 : {GameManager.Instance.inventory.items[i].Value}" : $"방어력 : {GameManager.Instance.inventory.items[i].Value}";
+        //    return str;
+        //}
 
         public void UIEquipScene()
         {
@@ -79,7 +79,7 @@ namespace MarvelHeroes
                 Console.WriteLine();
                 for (int i = 0; i < GameManager.Instance.inventory.items.Count; i++) // 게임매니저에서 선언한 인벤토리 리스트를 가져옴
                 {
-                    Console.WriteLine(DisplayInven(i, 0));
+                    Console.WriteLine(GameView.DisplayInven(i, 0, GameManager.Instance.inventory.items));
                 }
                 Console.WriteLine();
                 Console.WriteLine("0. 나가기");
