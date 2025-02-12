@@ -53,11 +53,11 @@ namespace MarvelHeroes
                 if (monster.Hp <= 0)
                 {
                     monster.isDead = true;
-                    Console.WriteLine("Lv. {0}. {1} Dead", monster.Level, monster.MonsterName);
+                    Console.WriteLine("Lv.{0}. {1} Dead", monster.Level, monster.MonsterName);
                 }
                 else
                 {
-                    Console.WriteLine("Lv. {0}. {1} HP {2}", monster.Level, monster.MonsterName, monster.Hp);
+                    Console.WriteLine("Lv.{0}. {1} HP {2}", monster.Level, monster.MonsterName, monster.Hp);
                 }
             
             return monster;
@@ -69,11 +69,11 @@ namespace MarvelHeroes
             if (monster.Hp <= 0)
             {
                 monster.isDead = true;
-                Console.WriteLine("{0} Lv. {1}. {2} Dead", i, monster.Level, monster.MonsterName);
+                Console.WriteLine("[{0}] Lv.{1}. {2} Dead", i, monster.Level, monster.MonsterName);
             }
             else
             {
-                Console.WriteLine("{0} Lv. {1}. {2} HP {3} ", i, monster.Level, monster.MonsterName, monster.Hp);
+                Console.WriteLine("[{0}] Lv.{1}. {2} HP {3} ", i, monster.Level, monster.MonsterName, monster.Hp);
             }
 
             return monster;
@@ -99,14 +99,14 @@ namespace MarvelHeroes
             List<Monster> monsters = new List<Monster>();
             string[] names = { "쉐도우 가디언", "블러드 레이저", "메탈 울프", "스톰 크러셔", "인페르노 비스트", "사이버 스나이퍼", "포이즌 스네이크", "본 브레이커" };
 
-            List<Monster> bossMonsters = new List<Monster>
-            {
-                new Monster(GameManager.Instance.player.Level+10,"울트론", (int)(GameManager.Instance.player.Hp*1.5), (int)(GameManager.Instance.player.Level*20), GameManager.Instance.player.Def+(GameManager.Instance.player.Level/2), 10, 10, 70, false),
-                new Monster(GameManager.Instance.player.Level+10,"타노스", (int)(GameManager.Instance.player.Hp*2.5), (int)(GameManager.Instance.player.Level*20), GameManager.Instance.player.Def+GameManager.Instance.player.Level, 10, 30, 30, false)
-            };
+            List<Monster> Tanos = new List<Monster>() { new Monster(GameManager.Instance.player.Level + 10, "타노스", (int)(GameManager.Instance.player.Hp * 2.5), (int)(GameManager.Instance.player.Level * 20), GameManager.Instance.player.Def + GameManager.Instance.player.Level, 10, 30, 30, false) };
+            List<Monster> Ultron = new List<Monster>(){ new Monster(GameManager.Instance.player.Level + 5, "울트론", (int)(GameManager.Instance.player.Hp * 1.5), (int)(GameManager.Instance.player.Level * 10), GameManager.Instance.player.Def + (GameManager.Instance.player.Level / 2), 10, 10, 50, false)};
+
 
             if (floorLevel%10 != 0)
             {
+                int MiddleMonster = rand.Next(0, 100);
+
                 for (int i = 0; i < count; i++)
                 {
                     string name = names[rand.Next(names.Length)];
@@ -120,9 +120,17 @@ namespace MarvelHeroes
                     monsters.Add(new Monster(level, name, hp, atk, def, floorLevel, critical, dexterity, false));
                 }
 
-                return monsters;
+                if (MiddleMonster <= 70)
+                {
+                    return monsters;
+                }
+                else
+                {
+                    return Ultron;
+                }
+
             }
-            else return bossMonsters;
+            else return Tanos;
 
         }
 
