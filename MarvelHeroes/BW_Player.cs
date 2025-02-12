@@ -33,6 +33,7 @@ namespace MarvelHeroes
     //int CH → 크리티컬 
     //int Dxi → 민첩성
 
+
     public class Player : Unit
     {
         public string Name { get; set; }
@@ -99,8 +100,8 @@ namespace MarvelHeroes
                 }
             }
         }
-        
 
+        public Player() { }
 
         public Player(int _Level, string name, int gold, bool _isDead, int xp, int _maxXp)
             : base (0, 0, 0, 0, 0, 0, false)

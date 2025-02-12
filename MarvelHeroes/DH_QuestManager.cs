@@ -54,7 +54,10 @@ namespace MarvelHeroes
             }
 
             Console.Clear();
-            Console.WriteLine("퀘스트");
+            GameView.PrintText("<퀘스트>", 0, ConsoleColor.Blue);
+            Console.WriteLine("싈드에 상주하고 있는 사령관 닉 퓨리와 대화를 통해 의뢰를 받을 수 있다.");
+            Console.WriteLine();
+            Console.WriteLine();
             Console.WriteLine("[퀘스트 목록]");
 
             for (int i = 0; i < list.Count; i++)
@@ -62,7 +65,6 @@ namespace MarvelHeroes
                 Console.WriteLine($"{i + 1}. {list[i].Name} | {list[i].Descrip}");
             }
 
-            Console.WriteLine("0. 도시로 돌아가기");
             Console.WriteLine();
             Console.WriteLine("[받은 퀘스트 목록]");
 
@@ -72,6 +74,8 @@ namespace MarvelHeroes
             }
 
             Console.WriteLine();
+            Console.WriteLine();
+            Console.WriteLine("0. 도시로 돌아가기");
             Console.WriteLine("어떤 퀘스트를 수락하시겠습니까?");
             Console.WriteLine();
             Console.WriteLine("원하시는 행동을 입력해주세요.");

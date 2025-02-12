@@ -84,7 +84,7 @@ namespace MarvelHeroes
             bool isRunning = true;
             while (isRunning)
             {
-                GameManager.Instance.inventory.AddItem(new EquipItem("아이언맨 기본 갑옷", ItemType.Amor, JobType.IronMan, 5, "아이언맨의 기본방어구", 1000));
+               
                 GameView.ViewSceneNameAndDesc1(SM.currentScene);
                 int temp = GameView.ViewGetSceneSelect2(SM.currentScene);
                 SM.currentScene.sceneSelections[temp].Execute();

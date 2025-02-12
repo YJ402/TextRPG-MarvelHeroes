@@ -11,7 +11,7 @@ namespace MarvelHeroes
     public class Monster : Unit
     {
         public string MonsterName { get; set; }
-        int Floor { get; set; }
+        public int Floor { get; set; }
         public bool IsAtk { get; set; }
 
         private static Random rand = new Random();
@@ -99,8 +99,8 @@ namespace MarvelHeroes
             List<Monster> monsters = new List<Monster>();
             string[] names = { "쉐도우 가디언", "블러드 레이저", "메탈 울프", "스톰 크러셔", "인페르노 비스트", "사이버 스나이퍼", "포이즌 스네이크", "본 브레이커" };
 
-            List<Monster> Tanos = new List<Monster>() { new Monster(GameManager.Instance.player.Level + 10, "타노스", (int)(GameManager.Instance.player.Hp * 2.5), (int)(GameManager.Instance.player.Level * 20), GameManager.Instance.player.Def + GameManager.Instance.player.Level, 10, 30, 30, false) };
-            List<Monster> Ultron = new List<Monster>(){ new Monster(GameManager.Instance.player.Level + 5, "울트론", (int)(GameManager.Instance.player.Hp * 1.5), (int)(GameManager.Instance.player.Level * 10), GameManager.Instance.player.Def + (GameManager.Instance.player.Level / 2), 10, 10, 50, false)};
+            List<Monster> Tanos = new List<Monster>() { new Monster((int)Math.Log(GameManager.Instance.player.Level), "타노스", (int)(GameManager.Instance.player.Hp * 2.5),75*(int)Math.Log(GameManager.Instance.player.Level), GameManager.Instance.player.Def + GameManager.Instance.player.Level, 10, 30, 30, false) };
+            List<Monster> Ultron = new List<Monster>(){ new Monster((int)Math.Log(GameManager.Instance.player.Level), "울트론", (int)(GameManager.Instance.player.Hp * 1.5),50*(int)Math.Log(GameManager.Instance.player.Level), GameManager.Instance.player.Def + (GameManager.Instance.player.Level / 2), 10, 10, 50, false)};
 
 
             if (floorLevel%10 != 0)
@@ -120,7 +120,7 @@ namespace MarvelHeroes
                     monsters.Add(new Monster(level, name, hp, atk, def, floorLevel, critical, dexterity, false));
                 }
 
-                if (MiddleMonster <= 70)
+                if (MiddleMonster <= 90)
                 {
                     return monsters;
                 }

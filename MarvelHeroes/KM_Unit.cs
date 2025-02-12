@@ -32,6 +32,9 @@ namespace MarvelHeroes
         public int Dexterity { get; set; }
         public bool isDead { get; set; }
 
+
+        public Unit() { }
+
         public Unit(int _Level, int _Atk, int _Def, int _Hp, int _Critical, int _Dexterity, bool _isdDead = false)
         {
             Level = _Level;
