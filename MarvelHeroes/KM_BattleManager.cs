@@ -18,7 +18,7 @@ namespace MarvelHeroes
 
         Random random = new Random();
 
-        Player player { get; set; }
+        Player player;
 
         public BattleManager()
         {
