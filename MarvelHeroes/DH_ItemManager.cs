@@ -161,7 +161,10 @@ namespace MarvelHeroes
             {
                 foreach (Item item in GameManager.Instance.inventory.items)
                 {
-                    EquipItem nowEquie = item as EquipItem;
+                    EquipItem nowEquie = item as EquipItem; // 이거 힐링 아이템은 nowEquie이 안 들어가서 null 발생 함!!
+
+                    if (nowEquie == null) continue; // Healing 같은 아이템이면 건너뛰기
+
                     if (nowEquie.IsEquip && nowEquie.ItemType == ItemType)
                     {
                         Console.WriteLine("같은 종류의 아이템이 장착되어 있습니다.");
