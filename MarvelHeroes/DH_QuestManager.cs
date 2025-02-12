@@ -38,6 +38,7 @@ namespace MarvelHeroes
         public void QuestStart(string questTrigger)
         {
             List<Quest> list = new List<Quest>();
+            List<Quest> acceptList = acceptQuest;
 
             if (questTrigger == "Chief")
             {
@@ -47,6 +48,11 @@ namespace MarvelHeroes
             {
                 list = questlist_Investigation;
             }
+            else
+            {
+                Console.WriteLine("잘못된 입력입니다.");
+            }
+
             Console.WriteLine("메인 퀘스트");
             Console.WriteLine("[퀘스트 목록]");
 
@@ -55,7 +61,16 @@ namespace MarvelHeroes
                 Console.WriteLine($"{i + 1}. {list[i].Name} | {list[i].Descrip}");
             }
 
-            Console.WriteLine("");
+            Console.WriteLine("0. 뉴욕으로 돌아가기");
+            Console.WriteLine();
+            Console.WriteLine("[받은 퀘스트 목록]");
+
+            for (int j = 0; j < acceptList.Count; j++)
+            {
+                Console.WriteLine($"- {acceptList[j].Name} | {acceptList[j].Descrip}");
+            }
+
+            Console.WriteLine();
             Console.WriteLine("어떤 퀘스트를 수락하시겠습니까?");
             Console.WriteLine("");
             Console.WriteLine("원하시는 행동을 입력해주세요.");
