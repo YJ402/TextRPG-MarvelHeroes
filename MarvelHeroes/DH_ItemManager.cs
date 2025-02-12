@@ -142,9 +142,10 @@ namespace MarvelHeroes
             if (player.PlayerJob != ItemJobType)
             {
                 Console.WriteLine("사용이 불가능한 장비입니다!");
+                Console.ReadKey();
                 return;
             }
-            
+
             if (IsEquip) //장착 중인 아이템 선택시 해제
             {
 
@@ -158,6 +159,17 @@ namespace MarvelHeroes
 
             else //아이템 착용
             {
+                foreach (Item item in GameManager.Instance.inventory.items)
+                {
+                    EquipItem nowEquie = item as EquipItem;
+                    if (nowEquie.IsEquip && nowEquie.ItemType == ItemType)
+                    {
+                        Console.WriteLine("같은 종류의 아이템이 장착되어 있습니다.");
+                        Console.ReadKey();
+                        return;
+                    }
+                }
+
                 IsEquip = true;
 
                 if (ItemType == ItemType.Weapon) //타입이 무기일 경우 공격력 증가 

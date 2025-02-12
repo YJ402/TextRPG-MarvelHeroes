@@ -22,7 +22,11 @@ namespace MarvelHeroes
                 Console.WriteLine("[아이템 목록]");
                 for (int i = 0; i < inventory.items.Count; i++) // 게임매니저에서 선언한 인벤토리 리스트를 가져옴
                 {
-                    Console.WriteLine(GameView.DisplayInven(i, 1, inventory.items));
+                    if (inventory.items[i].IsEquip)
+                    {
+                        GameView.PrintText(GameView.DisplayInven(i, 1, inventory.items),0,ConsoleColor.Yellow);
+                    }
+                    else { Console.WriteLine(GameView.DisplayInven(i, 1, inventory.items)); }
                 }
                 Console.WriteLine();
                 Console.WriteLine("1. 장착 관리");
@@ -74,7 +78,11 @@ namespace MarvelHeroes
                 Console.WriteLine("[아이템 목록]");
                 for (int i = 0; i < inventory.items.Count; i++) // 게임매니저에서 선언한 인벤토리 리스트를 가져옴
                 {
-                    Console.WriteLine(GameView.DisplayInven(i, 0, inventory.items));
+                    if (inventory.items[i].IsEquip)
+                    {
+                        GameView.PrintText(GameView.DisplayInven(i, 0, inventory.items), 0, ConsoleColor.Yellow);
+                    }
+                    else { Console.WriteLine(GameView.DisplayInven(i, 0, inventory.items)); }
                 }
                 Console.WriteLine();
                 Console.WriteLine("0. 나가기");
@@ -90,6 +98,7 @@ namespace MarvelHeroes
                         if (choice == i+1)
                         {
                             inventory.items[i].Use(GameManager.Instance.player);
+                            break;
                         } // 장착 메서드
                     }
                 }
