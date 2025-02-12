@@ -173,6 +173,24 @@ namespace MarvelHeroes
             }
         }
 
-        
+        public static string DisplayInven(int i, int j, List<Item> inven)
+        {
+            string str = inven[i].IsEquip ? "[E]" : "";
+            if (j == 0)
+            {
+                str = $"- {i + 1}. " + str + $"{inven[i].Name}\t| {DisplayType(i, inven)}\t | {inven[i].Descrip}\t| {inven[i].Cost}";
+            }
+            else
+            {
+                str = $"-  " + str + $"{inven[i].Name}\t| {DisplayType(i, inven)}\t | {inven[i].Descrip}\t| {inven[i].Cost}";
+            }
+            return str;
+        }
+
+        public static string DisplayType(int i, List<Item> inven)
+        {
+            string str = inven[i].ItemType == ItemType.Weapon ? $"공격력 : {inven[i].Value}" : $"방어력 : {inven[i].Value}";
+            return str;
+        }
     }
 }
