@@ -52,7 +52,29 @@ namespace MarvelHeroes
                     mp = 0;
                     
                 }
+                else if(value > MaxMp)
+                {
+                    mp = MaxMp;
+                }
                 else mp = value;
+            }
+        }
+        public int Hp
+        {
+            get => hp;
+
+            set
+            {
+                if (value <= 0)
+                {
+                    hp = 0;
+                    isDead = true;
+                }
+                else if (value > MaxHp)
+                {
+                    hp = MaxHp;
+                }
+                else hp = value;
             }
         }
         public int MaxHp { get; set; }
@@ -95,7 +117,7 @@ namespace MarvelHeroes
             //Critical = Job.jobStats[jobtypeName].critical;
             //Dexterity = Job.jobStats[jobtypeName].dexerity;
             Gold = gold;
-            MaxHp = Hp;
+            //MaxHp = Hp;
             //MaxMp = Job.jobStats[jobtypeName].mp;
             maxXp = _maxXp;
             Xp = 0;

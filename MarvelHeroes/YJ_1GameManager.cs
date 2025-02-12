@@ -88,6 +88,12 @@ namespace MarvelHeroes
                 GameView.ViewSceneNameAndDesc1(SM.currentScene);
                 int temp = GameView.ViewGetSceneSelect2(SM.currentScene);
                 SM.currentScene.sceneSelections[temp].Execute();
+                if (player.isDead)
+                {
+                    GameView.PrintText("당신은 사망하였습니다.", 0, ConsoleColor.Red);
+                    Console.ReadKey();
+                    break;
+                }
             }
         }
     }
