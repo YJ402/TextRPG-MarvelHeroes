@@ -68,7 +68,7 @@ namespace MarvelHeroes
             {
                 ViewPlayerAndMonster(floormonsters, selectNumber, BattlStatusPage.BattleAttack);
 
-                int selectMonster = GetInput(0, floormonsters.Count);
+                int selectMonster = GetInput(0, floormonsters.Count, 1);
 
                 if (selectMonster == 0) return false;
                 else if (selectMonster >= 1 && selectMonster <= floormonsters.Count)
@@ -107,7 +107,8 @@ namespace MarvelHeroes
 
                 Console.WriteLine("0. 취소\n");
 
-                int input = GetInput(0, 2);
+                Console.WriteLine("[플레이어 스킬 선택]");
+                int input = GetInput(0, 2, 2);
 
                 if (input == 0) return false;
                 else if (input >= 1 && input <= skills.Count)
@@ -164,26 +165,30 @@ namespace MarvelHeroes
         {
             while (true)
             {
-                ViewPlayerAndMonster(floormonsters, selectNumber);
-               
                 List<UsingItem> usingItems = new List<UsingItem>();
 
                 foreach (var potion in GameManager.Instance.inventory.items)
                 {
-                    if(potion is UsingItem)
-                     usingItems.Add((UsingItem)potion);
-                }
-              
-                for(int i = 1; i< usingItems.Count; i++)
-                {
-                    Console.WriteLine("{0}. {1} 수량: {2}", i, usingItems[i].Name, usingItems[i].Quantity);
+                    if (potion is UsingItem)
+                        usingItems.Add((UsingItem)potion);
                 }
 
-                int selectPotion = GetInput(0, 2);
+                ViewPlayerAndMonster(floormonsters, selectNumber, BattlStatusPage.BattleBase, usingItems);
+                           
+                for(int i = 0; i< usingItems.Count; i++)
+                {
+                    Console.WriteLine("{0}. {1} 수량: {2}", i+1, usingItems[i].Name, usingItems[i].Quantity);
+                }
+
+                Console.WriteLine("");
+                Console.WriteLine("0. 취소\n");            
+                int selectPotion = GetInput(0, usingItems.Count);
 
                 if (selectPotion == 0) return;
-                else if (selectPotion == 1 || selectPotion == 2) usingItems[selectPotion - 1].Use(player);
-                else Console.WriteLine("잘못된 입력입니다.");
+                else if (selectPotion == 1 || selectPotion == 2) usingItems[selectPotion - 1].Use(player);                               
+                else GameView.PrintText("잘못된 입력입니다.", 1000);
+
+
             }
         }
 
@@ -270,12 +275,9 @@ namespace MarvelHeroes
 
                 }
 
-                Console.WriteLine("0. 다음\n");
-
-                int input = GetInput(0, 0);
-
-                if (input == 0) return floormonster;
-                else Console.WriteLine("잘못된 입력입니다.");
+                Console.WriteLine("아무키나 누르세요.\n");
+                Console.ReadKey();
+                
             }
 
         }
@@ -768,27 +770,27 @@ namespace MarvelHeroes
 
         }
 
-        public void ViewPlayerAndMonster(List<Monster> floormonsters, int selectNumber = 0, BattlStatusPage battlStatusPage =BattlStatusPage.BattleBase)
+        public void ViewPlayerAndMonster(List<Monster> floormonsters, int selectNumber = 0, BattlStatusPage battlStatusPage =BattlStatusPage.BattleBase, List<UsingItem> usingItems = null)
         {
        
             if(battlStatusPage == BattlStatusPage.BattleAttack)
             {
                 Console.Clear();
-                if (selectNumber == 1) Console.WriteLine("Battle!! - Attack\n");
-                else if (selectNumber == 2) Console.WriteLine("Battle!! - Skill\n");
+                if (selectNumber == 1) Console.WriteLine("<Battle!! - Attack>\n");
+                else if (selectNumber == 2) Console.WriteLine("<Battle!! - Skill>\n");
 
                 FloorSelectMontersView(floormonsters, battlStatusPage);
 
 
                 Console.WriteLine("");
-                Console.WriteLine("[내정보]\n");
+                Console.WriteLine("[내정보]");
                 Console.WriteLine("{0} {1} ({2})", player.Level, player.Name, player.PlayerJob);
                 Console.WriteLine("{0}/{1}", player.Hp, player.MaxHp);
                 Console.WriteLine("{0}/{1}\n", player.Mp, player.MaxMp);
                 Console.WriteLine("0. 취소\n");
-                if (selectNumber == 1) Console.WriteLine("대상을 선택해주세요.");
-                else if (selectNumber == 2) Console.WriteLine("스킬을 선택해주세요.");
-                else if (selectNumber == 3) Console.WriteLine("사용할 아이템을 선택해주세요.");
+                if (selectNumber == 1) Console.WriteLine("[플레이어 행동 선택]");
+                else if (selectNumber == 2) Console.WriteLine("스킬을 선택해주세요.\n");
+                else if (selectNumber == 3) Console.WriteLine("사용할 아이템을 선택해주세요.\n");
             }
             else if(battlStatusPage == BattlStatusPage.BattleBase)
             {
@@ -798,21 +800,29 @@ namespace MarvelHeroes
                 FloorSelectMontersView(floormonsters);
 
                 Console.WriteLine("");
-                Console.WriteLine("[내정보]\n");
+                Console.WriteLine("[내정보]");
                 Console.WriteLine("{0} {1} ({2})", player.Level, player.Name, player.PlayerJob);
                 Console.WriteLine("{0}/{1}", player.Hp, player.MaxHp);
                 Console.WriteLine("{0}/{1}\n", player.Mp, player.MaxMp);
-                Console.WriteLine("1. 공격");
-                Console.WriteLine("2. 스킬");
-                Console.WriteLine("3. 포션사용\n");
-                Console.WriteLine("0. 도망가기\n");
+
+                if (selectNumber == 0) 
+                {
+                    Console.WriteLine("1. 공격");
+                    Console.WriteLine("2. 스킬");
+                    Console.WriteLine("3. 포션\n");
+                    Console.WriteLine("0. 도망가기\n");
+                }
+                else if(selectNumber == 3 && usingItems.Count == 0) 
+                {
+                    Console.WriteLine("사용 가능한 포션이 없습니다.");
+                }
             }
 
         }
         // 클리어 메서드
         public void ClearBattlePage(int beforeBattleHp, int clearfloor, List<Monster> floorMonsters)
         {
-            int Adddgold = random.Next(10, 10*clearfloor);
+            int Adddgold = random.Next(100, 200);
             int AddExp = 0;
             Item getItem = GetRandomItem();
             GameManager.Instance.inventory.AddItem(getItem);
@@ -841,7 +851,7 @@ namespace MarvelHeroes
 
                 Console.WriteLine("[획득 아이템]");
                 Console.WriteLine("Gold {0} -> {1}", player.Gold, player.Gold +=Adddgold);
-                Console.WriteLine("{0} = 1", getItem.Name);
+                Console.WriteLine("{0} -> 1", getItem.Name);
 
                 Console.WriteLine("0. 다음");
 
@@ -876,17 +886,22 @@ namespace MarvelHeroes
         }
         
         //버튼 메서드
-        public int GetInput(int min, int max)
+        public int GetInput(int min, int max, int number = 0)
         {
             while (true) //return이 되기 전까지 반복
             {
-                Console.Write("원하시는 행동을 입력해주세요.");
+
+                if (number == 0) Console.WriteLine("원하시는 행동을 입력해주세요.");
+                else if (number == 1) Console.WriteLine("대상을 선택해주세요.");
+                else if (number == 2) Console.WriteLine("스킬을 선택해주세요.");
+                Console.Write(">>");
 
                 //int.TryParse는 int로 변환이 가능한지 bool값을 반환, 가능(true)할 경우 out int input으로 숫자도 반환
                 if (int.TryParse(Console.ReadLine(), out int input) && (input >= min) && (input <= max))
                     return input;
 
-                Console.WriteLine("잘못된 입력입니다. 다시 입력해주세요");
+                GameView.PrintText("잘못된 입력입니다.", 1000);
+
             }
 
         }

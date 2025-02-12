@@ -193,7 +193,7 @@ namespace MarvelHeroes
             {
                 case JobType.IronMan:
                     IronMan ironMan = new IronMan();
-                    skills = ironMan.IronManSKills;
+                    skills = ironMan.ironManSkills;
                     return skills;
                 case JobType.SpiderMan:
                     SpiderMan spiderMan = new SpiderMan();
