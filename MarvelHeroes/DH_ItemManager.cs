@@ -230,6 +230,7 @@ namespace MarvelHeroes
                 Quantity--;
                 Console.WriteLine($"{player.Name}이(가) {Name}을 사용하였습니다.");
                 Console.WriteLine($"체력을 {Value}만큼 회복합니다.(남은 개수 : {Quantity})");
+                Console.ReadKey();
             }
             else if (ItemType == ItemType.Regeneration)
             {
@@ -238,6 +239,7 @@ namespace MarvelHeroes
                 Quantity--;
                 Console.WriteLine($"{player.Name}이(가) {Name}을 사용하였습니다.");
                 Console.WriteLine($"마나가 {Value}만큼 재생합니다.(남은 개수 : {Quantity})");
+                Console.ReadKey();
             }
             else
             {
