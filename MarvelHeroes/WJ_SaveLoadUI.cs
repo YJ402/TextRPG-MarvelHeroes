@@ -16,8 +16,7 @@ namespace MarvelHeroes
             while (true)
             {
                 Console.Clear();
-                GameView.PrintText("게임 저장/불러오기", 0, ConsoleColor.Magenta);
-                Console.WriteLine();
+                GameView.PrintText("<게임 저장/불러오기>", 0, ConsoleColor.Magenta);
                 Console.WriteLine("현재 진행 상황이 저장/불러오기 됩니다.");
                 Console.WriteLine();
                 Console.WriteLine("게임을 저장/불러오기 하기겠습니까?");
