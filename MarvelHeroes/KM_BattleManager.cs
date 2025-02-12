@@ -885,16 +885,25 @@ namespace MarvelHeroes
                 else
                 {
                     int randomIndex = random.Next(0, GameManager.Instance.inventory.items.Count);
-
-                    Item removeitem = GameManager.Instance.inventory.items[randomIndex];
-                    GameManager.Instance.inventory.items.Remove(removeitem);
+                    Item removeitem;
                     
                     Console.WriteLine("Lv.{0} {1} ({2})", player.Level, player.Name, player.PlayerJob);
                     Console.WriteLine("HP: {0}/{1}", player.Hp = player.Hp / 2, player.MaxHp);
                     Console.WriteLine("MP: {0}/{1}\n", player.Mp = player.Mp / 2, player.MaxMp);
                     Console.WriteLine("[잃은 아이템]");
                     Console.WriteLine("Gold {0} -> {1}", player.Gold, player.Gold = player.Gold / 2);
-                    Console.WriteLine("{0} -> 1\n", removeitem.Name);
+
+                    if (GameManager.Instance.inventory.items.Count > 0)
+                    {
+                        removeitem = GameManager.Instance.inventory.items[randomIndex];
+                        GameManager.Instance.inventory.items.Remove(removeitem);
+                        Console.WriteLine("{0} -> 1\n", removeitem.Name);
+                    }
+                    else
+                    {
+                        Console.WriteLine("소지한 아이템이 없습니다.\n");
+                    }
+
                 }
 
                 Console.WriteLine("0. 다음");
@@ -904,11 +913,6 @@ namespace MarvelHeroes
                 else GameView.PrintText("잘못된 입력입니다.");
 
             }
-
-
-           
-
-
         }
         
         //버튼 메서드

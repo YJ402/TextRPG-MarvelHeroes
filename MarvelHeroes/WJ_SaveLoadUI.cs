@@ -5,6 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Text.Json;
 using System.Threading.Tasks;
+using System.Text.Json.Serialization;
 
 namespace MarvelHeroes
 {
@@ -35,9 +36,8 @@ namespace MarvelHeroes
                     else if (choice == 2)
                     {
                        GameData gameData = LoadTextRPG();
-                       GameManager.Instance.player = gameData.player;
-                    }
-                   
+                       GameManager.Instance.player = gameData.SavaPlayer;
+                    }                  
                 }
                 else
                 {
@@ -48,7 +48,7 @@ namespace MarvelHeroes
 
         public void SaveTextRPG(Player player, Inventory inventory, string filename = "MarbleSaveTextRPG.json")
         {
-            GameData data = new GameData() { player = player };
+            GameData data = new GameData() { SavaPlayer = player };
 
             string json = JsonSerializer.Serialize(data, new JsonSerializerOptions { WriteIndented = true });
             File.WriteAllText(filename, json);
@@ -60,7 +60,7 @@ namespace MarvelHeroes
             if (!File.Exists(filename))
             {
                 Console.WriteLine("저장된 데이터가 없습니다.");
-                return new GameData { player = new Player(1, "", 100, false, 0, 10)};
+                return new GameData { SavaPlayer = new Player()};
             }
             else
             {
@@ -78,10 +78,8 @@ namespace MarvelHeroes
     public class GameData
     {
         // 기본값 설정
-        public Player player { get; set; } = new Player(1, "", 100, false, 0, 10);
-        // 기본 생성자 (필수), 기본 생성자 없으면 역직렬화할 때 오류가 날 수 있음
+        public Player SavaPlayer { get; set; } = new Player();
 
         public GameData() { }
-
     }
 }

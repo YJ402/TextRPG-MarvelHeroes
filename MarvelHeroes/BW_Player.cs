@@ -33,6 +33,7 @@ namespace MarvelHeroes
     //int CH → 크리티컬 
     //int Dxi → 민첩성
 
+
     public class Player : Unit
     {
         public string Name { get; set; }
