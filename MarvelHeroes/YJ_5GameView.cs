@@ -25,7 +25,7 @@ namespace MarvelHeroes
         public static void ViewSceneNameAndDesc1(Scene scene, ConsoleColor color = ConsoleColor.Green)
         {
             Console.Clear();
-            if(scene is DungeonScene)
+            if (scene is DungeonScene)
             { color = ConsoleColor.DarkRed; }
             PrintText($"<{scene.Name}>", 0, color);
             Console.WriteLine(scene.Description);
@@ -181,7 +181,7 @@ namespace MarvelHeroes
             string str = inven[i].IsEquip ? "[E]" : "";
             if (j == 0)
             {
-                str = $"- {i + 1}. " + str + $"{inven[i].Name}\t| {DisplayType(i, inven)}\t | {inven[i].Descrip}\t| {inven[i].Cost}";
+                str = $"- {string.Format("{0:D2}", i + 1)}. " + str + $"{inven[i].Name}\t| {DisplayType(i, inven)}\t | {inven[i].Descrip}\t| {inven[i].Cost}";
             }
             else
             {
@@ -192,7 +192,12 @@ namespace MarvelHeroes
 
         public static string DisplayType(int i, List<Item> inven)
         {
-            string str = inven[i].ItemType == ItemType.Weapon ? $"공격력 : {inven[i].Value}" : $"방어력 : {inven[i].Value}";
+            string str = "";
+            if (inven[i].ItemType == ItemType.Weapon) { str = $"공격력 : {inven[i].Value}"; }
+            else if (inven[i].ItemType == ItemType.Amor) { str = $"방어력 : {inven[i].Value}"; }
+            else if (inven[i].ItemType == ItemType.Healing) { str = $"HP회복량 : {inven[i].Value}"; }
+            else if (inven[i].ItemType == ItemType.Regeneration) { str = $"MP회복량 : {inven[i].Value}"; }
+            //string str = inven[i].ItemType == ItemType.Weapon ? $"공격력 : {inven[i].Value}" : $"방어력 : {inven[i].Value}";
             return str;
         }
     }
