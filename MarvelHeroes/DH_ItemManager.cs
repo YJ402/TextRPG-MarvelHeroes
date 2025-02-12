@@ -16,12 +16,10 @@ namespace MarvelHeroes
         public List<Item> equipItems;
         public List<Item> usingItems;
         public List<Item> Alltems;
-        public Inventory inventory;
+
         //DH_ItemManager 호출시 실행
         public ItemManager()
         {
-            inventory = new Inventory();
-            GameManager.Instance.inventory = inventory;
             //public EquipItem(string name, ItemType itemtype, JobType jobType, int value, string descrip, int cost)
             equipItems = new List<Item>
             {
@@ -38,10 +36,10 @@ namespace MarvelHeroes
             //public UsingItem(string name, ItemType type, int value, string descrip, int cost)
             usingItems = new List<Item>
             {
-                new UsingItem("소형 힐링 포션", ItemType.Healing, 20, "소량의 체력을 회복시켜줍니다.", 10, 0),
-                new UsingItem("대형 힐링 포션", ItemType.Healing, 50, "대량의 체력을 회복시켜줍니다.", 30, 0),
-                new UsingItem("소형 마나 포션", ItemType.Regeneration, 20, "소량의 마나를 재생시켜줍니다.", 20, 0),
-                new UsingItem("대형 마나 포션", ItemType.Regeneration, 50, "대량의 마나를 재생시켜줍니다.", 40, 0)
+                new UsingItem("소형 힐링 포션", ItemType.Healing, 20, "소량의 체력을 회복시켜줍니다.", 10, 1),
+                new UsingItem("대형 힐링 포션", ItemType.Healing, 50, "대량의 체력을 회복시켜줍니다.", 30, 1),
+                new UsingItem("소형 마나 포션", ItemType.Regeneration, 20, "소량의 마나를 재생시켜줍니다.", 20, 1),
+                new UsingItem("대형 마나 포션", ItemType.Regeneration, 50, "대량의 마나를 재생시켜줍니다.", 40, 1)
             };
 
             Alltems = new List<Item>();
@@ -106,6 +104,8 @@ namespace MarvelHeroes
         public JobType ItemJobType { get; set; }
         public bool IsPurchase { get; set; }
 
+
+
         //public Child(int X) : base(X) { } //base키워드를 이용하여 상속
         public EquipItem(string name, ItemType itemtype, JobType itemJobType, int value, string descrip, int cost) : base(name, itemtype, value, descrip, cost)
         {
@@ -119,29 +119,31 @@ namespace MarvelHeroes
             //플레이어의 직업의 종류를 불러옴
             //조건문if 사용해서 플래이어의 직업과 무기의 직업을 비교하는 조건
             //착용 불가 메세지 후 return
-            if (player.PlayerJob != this.ItemJobType)
+            if (player.PlayerJob != ItemJobType)
             {
                 Console.WriteLine("사용이 불가능한 장비입니다!");
                 return;
             }
-
-            if (this.IsEquip) //장착 중인 아이템 선택시 해제
+            
+            if (IsEquip) //장착 중인 아이템 선택시 해제
             {
-                this.IsEquip = false;
 
-                if (this.ItemType == ItemType.Weapon)
-                    player.EquipAtk -= this.Value;
-                else if (this.ItemType == ItemType.Amor)
-                    player.EquipDef -= this.Value;
+                IsEquip = false;
+
+                if (ItemType == ItemType.Weapon)
+                    player.EquipAtk -= Value;
+                else if (ItemType == ItemType.Amor)
+                    player.EquipDef -= Value;
             }
+
             else //아이템 착용
             {
-                this.IsEquip = true;
+                IsEquip = true;
 
-                if (this.ItemType == ItemType.Weapon) //타입이 무기일 경우 공격력 증가 
-                    player.EquipAtk += this.Value;
-                else if (this.ItemType == ItemType.Amor) //타입이 갑옷일 경우 방어력 증가
-                    player.EquipDef += this.Value;
+                if (ItemType == ItemType.Weapon) //타입이 무기일 경우 공격력 증가 
+                    player.EquipAtk += Value;
+                else if (ItemType == ItemType.Amor) //타입이 갑옷일 경우 방어력 증가
+                    player.EquipDef += Value;
 
                 foreach(var q in GameManager.Instance.QM.acceptQuest)
                 {
@@ -151,12 +153,9 @@ namespace MarvelHeroes
                         Console.ReadKey();
                         break;
                     }
-
                 }
-
             }
         }
-
     }
 
     //소모아이템 클래스
@@ -170,8 +169,8 @@ namespace MarvelHeroes
             set
             {
                 quantity = value;
-                if (quantity <= 0) // && GameManager.Instance.inventory.items.Contains(this)
-                    GameManager.Instance.inventory.RemoveItem(this);
+                if(quantity <= 0)
+                GameManager.Instance.inventory.RemoveItem(this);
             }
         }
 
