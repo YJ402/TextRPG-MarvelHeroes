@@ -95,6 +95,7 @@ namespace MarvelHeroes
             {
                 acceptQuest.Add(quest);//퀘스트 추가
                 Console.WriteLine($"[퀘스트 수락] {quest.Name} 퀘스트를 받았습니다.");
+
             }
             else
             {
@@ -102,7 +103,7 @@ namespace MarvelHeroes
             }
         }
 
-        public void CheckCompleteQuest(List<Monster> Monster, Player player, EquipItem item)
+        public void CheckCompleteQuest(Monster Monster, Player player = null, EquipItem item = null)
         {
             List<Quest> completedQuests = new List<Quest>();
             foreach (Quest quest in acceptQuest)
@@ -175,7 +176,7 @@ namespace MarvelHeroes
 
         }
 
-        public abstract bool IsCompleted(List<Monster> Monster, Player player, EquipItem item); // 퀘스트 완료 체크
+        public abstract bool IsCompleted(Monster Monster, Player player, EquipItem item); // 퀘스트 완료 체크
 
         public abstract void Questclear();
     }
@@ -190,8 +191,9 @@ namespace MarvelHeroes
         {
             RequiredType = requiredType;
         }
-        public override bool IsCompleted(List<Monster> Monster, Player player, EquipItem item)
+        public override bool IsCompleted(Monster Monster, Player player, EquipItem item)
         {
+            if (item == null) return false;
             // 무기 장착 퀘스트 확인
             if (RequiredType == ItemType.Weapon && item.IsEquip != false)
             {
@@ -222,13 +224,12 @@ namespace MarvelHeroes
         {
             targetMonster = monster; 
         }
-        public override bool IsCompleted(List<Monster> Monster, Player player, EquipItem item)
+        public override bool IsCompleted(Monster Monster, Player player, EquipItem item)
         {
-            foreach (Monster m in Monster)
-            {
-                if (m.MonsterName == targetMonster)
+
+                if (Monster.MonsterName == targetMonster)
                     Demand--;
-            }
+            
                 return Demand <= 0;
         }
 
@@ -245,7 +246,7 @@ namespace MarvelHeroes
         {
 
         }
-        public override bool IsCompleted(List<Monster> Monster, Player player, EquipItem item)
+        public override bool IsCompleted(Monster Monster, Player player, EquipItem item)
         {
             return player.Level >= Demand;
         }

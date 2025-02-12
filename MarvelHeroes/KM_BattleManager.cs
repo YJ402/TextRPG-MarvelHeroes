@@ -339,6 +339,8 @@ namespace MarvelHeroes
 
                             player.IsDead(player, playerBeforHp);
 
+                            playerBeforHp = player.Hp;
+
                         }
                         // 치명타 안 터지면 출력
                         else
@@ -428,7 +430,7 @@ namespace MarvelHeroes
                         Console.WriteLine("{0} 을(를) 맞췄습니다.) [데미지 : {1}] - 치명타 데미지\n", player.Name, hitdamage);
                         Console.WriteLine("Lv. {0} {1}", player.Level, player.Name);
 
-                        player.IsDead(player, playerBeforHp);
+                        player.IsDead(player,playerBeforHp);
 
                     }
                     // 치명타 안 터지면 출력
@@ -453,6 +455,8 @@ namespace MarvelHeroes
                     Console.WriteLine("Lv. {0} {1} 가 공격했지만 아무일도 일어나지 않았습니다.\n", floormonsters[i].Level, floormonsters[i].MonsterName);
 
                 }
+
+                playerBeforHp = player.Hp;
 
                 Console.WriteLine("아무키나 누르세요.");
                 Console.ReadKey();
