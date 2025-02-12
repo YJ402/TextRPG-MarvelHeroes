@@ -38,22 +38,15 @@ namespace MarvelHeroes
         public void QuestStart(string questTrigger)
         {
             List<Quest> list = new List<Quest>();
-            List<Quest> acceptList = acceptQuest;
 
             if (questTrigger == "Chief")
             {
                 list = questlist_Chief;
             }
-            else if (questTrigger == "investigation")
+            else if (questTrigger == "Investigation")
             {
                 list = questlist_Investigation;
             }
-            else
-            {
-                Console.WriteLine("잘못된 입력입니다.");
-            }
-
-            Console.Clear();
             Console.WriteLine("메인 퀘스트");
             Console.WriteLine("[퀘스트 목록]");
 
@@ -62,7 +55,10 @@ namespace MarvelHeroes
                 Console.WriteLine($"{i + 1}. {list[i].Name} | {list[i].Descrip}");
             }
 
-            Console.WriteLine("0. 마을로 돌아가기");
+<<<<<<< Updated upstream
+            Console.WriteLine("");
+=======
+            Console.WriteLine("0. 뉴욕으로 돌아가기");
             Console.WriteLine();
             Console.WriteLine("[받은 퀘스트 목록]");
 
@@ -72,8 +68,9 @@ namespace MarvelHeroes
             }
 
             Console.WriteLine();
+>>>>>>> Stashed changes
             Console.WriteLine("어떤 퀘스트를 수락하시겠습니까?");
-            Console.WriteLine();
+            Console.WriteLine("");
             Console.WriteLine("원하시는 행동을 입력해주세요.");
 
 
@@ -82,7 +79,7 @@ namespace MarvelHeroes
                 string input = Console.ReadLine();
                 int sellecNumber;
                 bool isNumber = int.TryParse(input, out sellecNumber);
-                if (isNumber == false || list.Count+1 <= sellecNumber)
+                if (isNumber == false || list.Count <= sellecNumber)
                 {
 
                     Console.WriteLine("잘못된 입력입니다");
@@ -111,7 +108,6 @@ namespace MarvelHeroes
             {
                 acceptQuest.Add(quest);//퀘스트 추가
                 Console.WriteLine($"[퀘스트 수락] {quest.Name} 퀘스트를 받았습니다.");
-
             }
             else
             {
@@ -119,32 +115,31 @@ namespace MarvelHeroes
             }
         }
 
-        public void CheckCompleteQuest(Player player = null, Monster Monster = null,  EquipItem item = null)
+        public void CheckCompleteQuest(List<Monster> Monster, Player player, EquipItem item)
         {
             List<Quest> completedQuests = new List<Quest>();
             foreach (Quest quest in acceptQuest)
             {
-                if (quest.IsCompleted(player, Monster, item))
+                if (quest.IsCompleted(Monster, player, item))
                 {
                     completedQuests.Add(quest);
-                    //acceptQuest.Remove(quest);
+                    acceptQuest.Remove(quest);
                 }
             }
 
             // 완료된 퀘스트 처리
             foreach (Quest completed in completedQuests)
             {
-                ClearQuest(completed,player);
+                ClearQuest(completed);
             }
         }
 
-        public void ClearQuest(Quest quest, Player player)
+        public void ClearQuest(Quest quest)
         {
             if (acceptQuest.Contains(quest)) // 받은 퀘스트인지 확인
             {
                 acceptQuest.Remove(quest); // 완료된 퀘스트 제거
                 quest.Questclear();
-                GiveReward(quest,player);
                 Console.WriteLine($"[퀘스트 완료] {quest.Name} 퀘스트를 완료했습니다!");
             }
             else
@@ -193,7 +188,7 @@ namespace MarvelHeroes
 
         }
 
-        public abstract bool IsCompleted(Player player, Monster Monster,  EquipItem item); // 퀘스트 완료 체크
+        public abstract bool IsCompleted(List<Monster> Monster, Player player, EquipItem item); // 퀘스트 완료 체크
 
         public abstract void Questclear();
     }
@@ -208,9 +203,8 @@ namespace MarvelHeroes
         {
             RequiredType = requiredType;
         }
-        public override bool IsCompleted(Player player, Monster Monster,  EquipItem item)
+        public override bool IsCompleted(List<Monster> Monster, Player player, EquipItem item)
         {
-            if (item == null) return false;
             // 무기 장착 퀘스트 확인
             if (RequiredType == ItemType.Weapon && item.IsEquip != false)
             {
@@ -241,12 +235,13 @@ namespace MarvelHeroes
         {
             targetMonster = monster; 
         }
-        public override bool IsCompleted(Player player, Monster Monster, EquipItem item)
+        public override bool IsCompleted(List<Monster> Monster, Player player, EquipItem item)
         {
-
-                if (Monster.MonsterName == targetMonster)
+            foreach (Monster m in Monster)
+            {
+                if (m.MonsterName == targetMonster)
                     Demand--;
-            
+            }
                 return Demand <= 0;
         }
 
@@ -263,7 +258,7 @@ namespace MarvelHeroes
         {
 
         }
-        public override bool IsCompleted(Player player, Monster Monster, EquipItem item)
+        public override bool IsCompleted(List<Monster> Monster, Player player, EquipItem item)
         {
             return player.Level >= Demand;
         }
