@@ -356,10 +356,10 @@ namespace MarvelHeroes
             player.Atk = job.jobStats[selectedJob].atk;
             player.PlayerJob = selectedJob;
             player.Def = job.jobStats[selectedJob].def;
+            player.MaxHp = job.jobStats[selectedJob].hp;
+            player.MaxMp = job.jobStats[selectedJob].mp;
             player.Hp = job.jobStats[selectedJob].hp;
             player.Mp = job.jobStats[selectedJob].mp;
-            player.MaxHp = player.Hp;
-            player.MaxMp = player.Mp;
             player.Critical = job.jobStats[selectedJob].critical;
             player.Dexterity = job.jobStats[selectedJob].dexerity;
         }

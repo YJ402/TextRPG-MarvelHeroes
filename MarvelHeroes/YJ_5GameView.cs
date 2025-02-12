@@ -24,7 +24,7 @@ namespace MarvelHeroes
 
         public static void ViewSceneNameAndDesc1(Scene scene)
         {
-            Console.WriteLine(scene.Name);
+            Console.WriteLine($"<{scene.Name}>");
             Console.WriteLine(scene.Description);
             Console.WriteLine();
         }

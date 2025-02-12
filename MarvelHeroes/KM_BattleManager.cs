@@ -184,6 +184,7 @@ namespace MarvelHeroes
                 if (selectPotion == 0) return;
                 else if (selectPotion == 1 || selectPotion == 2) usingItems[selectPotion - 1].Use(player);
                 else Console.WriteLine("잘못된 입력입니다.");
+                break;
             }
         }
 
