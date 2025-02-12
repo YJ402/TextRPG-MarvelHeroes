@@ -58,7 +58,7 @@ namespace MarvelHeroes
         public int MaxHp { get; set; }
         public int MaxMp { get; set; }
 
-        public int xp;
+        public int xp { get; private set; }
         public int maxXp { get; set; }
 
         public int Xp
@@ -66,11 +66,15 @@ namespace MarvelHeroes
             get { return xp; }
             set
             {
-                if (xp >= maxXp)
+                if (xp != value)
                 {
-                    LevelUp();
+                    if (value >= maxXp)
+                    {
+                        xp = value;
+                        LevelUp();
+                    }
+                    else { xp += value; }
                 }
-                else { xp = value; }
             }
         }
         
@@ -101,11 +105,14 @@ namespace MarvelHeroes
 
         public void LevelUp()
         {
-            Level += 1;
-            Atk += 1;
-            Def += 1;
-            xp = xp - maxXp;
-            maxXp = 20 + (4 * (Level - 1) * (Level - 1)) - (10 * (Level - 1));
+            do
+            {
+                Level += 1;
+                Atk += 1;
+                Def += 1;
+                xp = xp - maxXp;
+                maxXp = 20 + (4 * (Level - 1) * (Level - 1)) - (10 * (Level - 1));
+            } while (xp >= maxXp);
         }
 
 

@@ -40,9 +40,9 @@ namespace MarvelHeroes
         {
             Console.WriteLine($"Lv : {GameManager.Instance.player.Level} ({GameManager.Instance.player.Xp} / {GameManager.Instance.player.maxXp})"); // 플레이어 레벨
             Console.WriteLine($"이름 : {GameManager.Instance.player.Level} ({GameManager.Instance.player.PlayerJob})"); // 플레이어 이름 및 직업
-            string attack = GameManager.Instance.player.EquipAtk == 0 ? $"공격력 : {GameManager.Instance.player.Atk}" : $"공격력 : {GameManager.Instance.player.Atk} (+{GameManager.Instance.player.EquipAtk})"; // 공격력 보여주기
+            string attack = GameManager.Instance.player.EquipAtk == 0 ? $"공격력 : {GameManager.Instance.player.Atk}" : $"공격력 : {GameManager.Instance.player.Atk + GameManager.Instance.player.EquipAtk} (+{GameManager.Instance.player.EquipAtk})"; // 공격력 보여주기
             Console.WriteLine(attack); // 플레이어 공격력
-            string deffence = GameManager.Instance.player.EquipDef == 0 ? $"방어력 : {GameManager.Instance.player.Def}" : $"공격력 : {GameManager.Instance.player.Def} (+{GameManager.Instance.player.EquipDef})"; // 방어력 보여주기
+            string deffence = GameManager.Instance.player.EquipDef == 0 ? $"방어력 : {GameManager.Instance.player.Def}" : $"공격력 : {GameManager.Instance.player.Def + GameManager.Instance.player.EquipDef} (+{GameManager.Instance.player.EquipDef})"; // 방어력 보여주기
             Console.WriteLine(deffence); // 플레이어 공격력
             Console.WriteLine($"크리티컬 확률 : {GameManager.Instance.player.Critical}%");
             Console.WriteLine($"회피율 : {GameManager.Instance.player.Dexterity}%");
