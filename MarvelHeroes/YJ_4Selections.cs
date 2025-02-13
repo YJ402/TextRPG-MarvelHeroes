@@ -220,11 +220,6 @@ namespace MarvelHeroes
 
     public class ToUI : ISelections
     {
-        //SceneNum currentScene;
-        //public ToUI(SceneNum cucScene)
-        //{
-        //    currentScene = cucScene;
-        //}
         public void Execute()
         {
             Console.WriteLine("UI 트리거");// UI 트리거
@@ -303,35 +298,6 @@ namespace MarvelHeroes
             else return $"{farmingFloor}층 [완료]";
         }
     }
-
-    //public class ToTown : ISelections
-    //{
-
-    //    public void Execute()
-    //    {
-    //        SceneManager.ChangeCurrentScene(SceneNum.Town);
-    //    }
-
-    //    public string GetSelectionDesc()
-    //    {
-    //        return "마을로 이동하기";
-    //    }
-    //}
-
-    //public class ToDungeon : ISelections
-    //{
-
-    //    public void Execute()
-    //    {
-    //        SceneManager.ChangeCurrentScene(SceneNum.Dungeon);
-    //    }
-
-    //    public string GetSelectionDesc()
-    //    {
-    //        return "던전으로 이동하기";
-    //    }
-    //}
-
 
     public class SelectClass : ISelections
     {

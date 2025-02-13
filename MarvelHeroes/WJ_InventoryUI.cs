@@ -10,7 +10,6 @@ namespace MarvelHeroes
     public class InventoryUI
     {
         Inventory inventory = GameManager.Instance.inventory;
-        //List<EquipItem> inventory = new List<EquipItem>();
         public void InventoryScene()
         {
             while (true)
@@ -46,26 +45,6 @@ namespace MarvelHeroes
                 }
             }
         }
-
-        //public string DisplayInven(int i, int j)
-        //{
-        //    string str = GameManager.Instance.inventory.items[i].IsEquip ? "[E]" : "";
-        //    if (j == 0)
-        //    {
-        //        str = $"- {i + 1}. " + str + $"{GameManager.Instance.inventory.items[i].Name}\t| {DisplayType(i)}\t | {GameManager.Instance.inventory.items[i].Descrip}\t| {GameManager.Instance.inventory.items[i].Cost}";
-        //    }
-        //    else
-        //    {
-        //        str = $"-  " + str + $"{GameManager.Instance.inventory.items[i].Name}\t| {DisplayType(i)}\t | {GameManager.Instance.inventory.items[i].Descrip}\t| {GameManager.Instance.inventory.items[i].Cost}";
-        //    }
-        //    return str;
-        //}
-
-        //public string DisplayType(int i)
-        //{
-        //    string str = GameManager.Instance.inventory.items[i].ItemType == ItemType.Weapon ? $"공격력 : {GameManager.Instance.inventory.items[i].Value}" : $"방어력 : {GameManager.Instance.inventory.items[i].Value}";
-        //    return str;
-        //}
 
         public void UIEquipScene()
         {

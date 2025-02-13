@@ -6,10 +6,6 @@ using System.Threading.Tasks;
 
 namespace MarvelHeroes
 {
-    //public class Quest
-    //{
-    //    //임시용 클래스. 나중에 삭제
-    //}
 
 
     public abstract class Scene
@@ -91,9 +87,6 @@ namespace MarvelHeroes
 
             UI = new ToUI();
             action1 = new ToWhere(SceneNum.Town);
-            //ISelections action2 = new ToFloor();
-
-            //sceneSelections = new Dictionary<int, ISelections>();
 
             sceneSelections = new Dictionary<int, ISelections>() { { 0, UI } };
 
@@ -129,16 +122,5 @@ namespace MarvelHeroes
         }
     }
 
-    //public class BattleScene : Scene
-    //{
-    //    int Floor;
-
-    //    public BattleScene()
-    //    {
-    //        Name = "Battle";
-    //        Description = "~~~~??아브라카다브라";
-    //        Description2 = "FloorScene.디스크립션2";
-    //    }
-    //}
 }
 
