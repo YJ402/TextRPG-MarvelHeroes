@@ -17,11 +17,12 @@ namespace MarvelHeroes
             string playerData = JsonConvert.SerializeObject(GameManager.Instance.player);
             File.WriteAllText(path + "\\playerData.json", playerData);
 
-            string inventoryData = JsonConvert.SerializeObject(GameManager.Instance.inventory.items);
+            string inventoryData = JsonConvert.SerializeObject(GameManager.Instance.inventory.items, new JsonSerializerSettings{ TypeNameHandling = TypeNameHandling.All });
             File.WriteAllText(path + "\\UserInventoryData.json", inventoryData);
 
-            string acceptQuestData = JsonConvert.SerializeObject(GameManager.Instance.QM.acceptQuest);
+            string acceptQuestData = JsonConvert.SerializeObject(GameManager.Instance.QM.acceptQuest, new JsonSerializerSettings { TypeNameHandling = TypeNameHandling.All });
             File.WriteAllText(path + "\\acceptQuestData.json", acceptQuestData);
+
         }
 
         public static void LoadData()
@@ -39,23 +40,23 @@ namespace MarvelHeroes
                 GameManager.Instance.player = playerLoadData;
 
                 string inventoryLData = File.ReadAllText(path + "\\UserInventoryData.json");
-                EquipItem[] inventoryLoadData = JsonConvert.DeserializeObject<EquipItem[]>(inventoryLData);
+                List<Item> inventoryLoadData = JsonConvert.DeserializeObject<List<Item>>(inventoryLData ,new JsonSerializerSettings { TypeNameHandling = TypeNameHandling.All });
                 if (GameManager.Instance.inventory.items == null)
                 {
                     GameManager.Instance.inventory.items = new List<Item>(); // 리스트를 초기화
                 }
-                foreach (EquipItem data in inventoryLoadData)
+                foreach (Item data in inventoryLoadData)
                 {
                     GameManager.Instance.inventory.AddItem(data);
                 }
 
                 string acceptQuestLData = File.ReadAllText(path + "\\acceptQuestData.json");
-                HuntQuest[] acceptQuestLoadData = JsonConvert.DeserializeObject<HuntQuest[]>(acceptQuestLData);
+                List<Quest> acceptQuestLoadData = JsonConvert.DeserializeObject<List<Quest>>(acceptQuestLData, new JsonSerializerSettings { TypeNameHandling = TypeNameHandling.All });
                 if (GameManager.Instance.QM.acceptQuest == null)
                 {
                     GameManager.Instance.QM.acceptQuest = new List<Quest>(); // 리스트를 초기화
                 }
-                foreach (HuntQuest data in acceptQuestLoadData)
+                foreach (Quest data in acceptQuestLoadData)
                 {
                     GameManager.Instance.QM.acceptQuest.Add(data);
                 }

@@ -52,9 +52,9 @@ namespace MarvelHeroes
                 if (value <= 0)
                 {
                     mp = 0;
-                    
+
                 }
-                else if(value > MaxMp)
+                else if (value > MaxMp)
                 {
                     mp = MaxMp;
                 }
@@ -92,18 +92,19 @@ namespace MarvelHeroes
             {
                 if (xp != value)
                 {
-                    if (value >= maxXp)
+                    if (maxXp > 0 && value >= maxXp) // maxXp가 0 이상일 때만 레벨업 조건 체크
                     {
                         xp = value;
                         LevelUp();
                     }
                     else { xp += value; }
+
                 }
             }
         }
 
-        [JsonConstructor]
-        public Player(string name, JobType playerJob, int equipAtk, int equipDef, int gold, int mp, int maxMp, int hp, int maxHp, int xp, int _maxXp, int level, int atk, int def, int critical, int dexterity, bool isDead = false) : base(level, atk, def, hp, critical, dexterity, isDead)
+            [JsonConstructor]
+            public Player(string name, JobType playerJob, int equipAtk, int equipDef, int gold, int mp, int maxMp, int hp, int maxHp, int xp, int _maxXp, int level, int atk, int def, int critical, int dexterity, bool isDead = false) : base(level, atk, def, hp, critical, dexterity, isDead)
         {
             Name = name;
             PlayerJob = playerJob;
@@ -122,7 +123,7 @@ namespace MarvelHeroes
         }
 
         public Player(int _Level, string name, int gold, bool _isDead, int xp, int _maxXp)
-            : base (0, 0, 0, 0, 0, 0, false)
+            : base(0, 0, 0, 0, 0, 0, false)
 
         {
             // 이런식으로 되있는게 속성
@@ -141,7 +142,7 @@ namespace MarvelHeroes
             maxXp = _maxXp;
             Xp = 0;
 
-         
+
         }
 
         public void LevelUp()
@@ -157,7 +158,7 @@ namespace MarvelHeroes
         }
 
 
- 
+
         //public override Player TakeHpHeal(int heal)
         //{
         //    int newHp;
@@ -197,7 +198,7 @@ namespace MarvelHeroes
 
             Mp -= 10;
 
-            switch(number)
+            switch (number)
             {
                 case 0:
                     newDex = Dexterity + Adddex;
@@ -205,7 +206,7 @@ namespace MarvelHeroes
                     break;
                 case 1:
                     newDex = Dexterity - Adddex;
-                    break;                  
+                    break;
             }
         }
         // 스파이더맨 나노슈트 스킬
