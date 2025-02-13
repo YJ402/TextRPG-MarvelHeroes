@@ -48,7 +48,7 @@ namespace MarvelHeroes
             Initialize();
             //1.캐릭터 생성씬(1회용)
             // 플레이어 할당
-            player = new Player(1, "", 100, false, 0, 10);
+            player = new Player(1, "", 500, false, 0, 10);
             SM.currentScene = new CreateCharacterScene(); // 일회용이라서 여기서 생성.
             while (true)
             {
