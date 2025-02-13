@@ -188,6 +188,7 @@ namespace MarvelHeroes
         public int Demand { get; set; }
         public int QuestId { get; set; }
 
+        
 
         public Quest(string name, string descrip, int demand, int questId)
         {

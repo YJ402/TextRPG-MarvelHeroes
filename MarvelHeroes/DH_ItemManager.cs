@@ -182,11 +182,13 @@ namespace MarvelHeroes
 
                 foreach (var q in GameManager.Instance.QM.acceptQuest)
                 {
+
+                    if (q is not EquipQuest) continue; 
+
                     if ((q as EquipQuest).RequiredType == ItemType)
                     {
-                        GameManager.Instance.QM.CheckCompleteQuest(GameManager.Instance.player, null, this);
+                        q.IsCompleted(GameManager.Instance.player, null, this);
                         Console.ReadKey();
-                        break;
                     }
                 }
             }
