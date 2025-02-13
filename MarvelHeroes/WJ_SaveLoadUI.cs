@@ -14,26 +14,26 @@ namespace MarvelHeroes
 
         public static void SaveData()
         {
-            string playerData = JsonConvert.SerializeObject(GameManager.Instance.player);
+            string playerData = JsonConvert.SerializeObject(GameManager.Instance.player); //플레이어
             File.WriteAllText(path + "\\playerData.json", playerData);
 
-            string inventoryData = JsonConvert.SerializeObject(GameManager.Instance.inventory.items, new JsonSerializerSettings{ TypeNameHandling = TypeNameHandling.All });
-            File.WriteAllText(path + "\\UserInventoryData.json", inventoryData);
+            string inventoryData = JsonConvert.SerializeObject(GameManager.Instance.inventory.items, new JsonSerializerSettings{ TypeNameHandling = TypeNameHandling.All }); // 인벤토리
+            File.WriteAllText(path + "\\UserInventoryData.json", inventoryData); 
 
-            string acceptQuestData = JsonConvert.SerializeObject(GameManager.Instance.QM.acceptQuest, new JsonSerializerSettings { TypeNameHandling = TypeNameHandling.All });
+            string acceptQuestData = JsonConvert.SerializeObject(GameManager.Instance.QM.acceptQuest, new JsonSerializerSettings { TypeNameHandling = TypeNameHandling.All }); // 퀘스트
             File.WriteAllText(path + "\\acceptQuestData.json", acceptQuestData);
 
         }
 
         public static void LoadData()
         {
-            // 유저 데이터가 없을 때 -> 세이브 데이터가 없을 때
+            // 플레이어 데이터가 없을 때 -> 세이브 데이터가 없을 때
             if (!File.Exists(path + "\\playerData.json"))
             {
                 SaveData();
                 return;
             }
-            else
+            else // 데이터가 있을때 불러오기
             {
                 string playerLData = File.ReadAllText(path + "\\playerData.json");
                 Player playerLoadData = JsonConvert.DeserializeObject<Player>(playerLData);

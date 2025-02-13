@@ -42,7 +42,7 @@ namespace MarvelHeroes
             string attack = player.EquipAtk == 0 ? $"공격력 : {player.Atk}" : $"공격력 : {player.Atk + player.EquipAtk} (+{player.EquipAtk})"; // 공격력 보여주기
             Console.WriteLine(attack); // 플레이어 공격력
             string deffence = player.EquipDef == 0 ? $"방어력 : {player.Def}" : $"방어력 : {player.Def + player.EquipDef} (+{player.EquipDef})"; // 방어력 보여주기
-            Console.WriteLine(deffence); // 플레이어 공격력
+            Console.WriteLine(deffence); // 플레이어 방어력
             Console.WriteLine($"크리티컬 확률 : {player.Critical}%");
             Console.WriteLine($"회피율 : {player.Dexterity}%");
             Console.WriteLine($"체력 : ({player.Hp} / {player.MaxHp})");

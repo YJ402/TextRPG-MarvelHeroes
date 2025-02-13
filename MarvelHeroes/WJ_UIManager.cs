@@ -35,7 +35,6 @@ namespace MarvelHeroes
                 sceneSelections = new Dictionary<int, ISelections>() { { 1, state }, { 2, inventory }, { 3, saveLoad }, { 4, exit }, { 5, outUI } };
             }
         }
-
         public class ToUIBranch : ISelections
         {
             UINum UIBranch;
@@ -50,22 +49,22 @@ namespace MarvelHeroes
                 switch (UIBranch)
                 {
                     case UINum.Inventory:
-                        InventoryUI inventoryUI = new InventoryUI();
+                        InventoryUI inventoryUI = new InventoryUI(); // 인벤토리ui class
                         inventoryUI.InventoryScene();
                         break;
                     case UINum.SaveLoad:
-                        SaveLoadUI saveLoadUI = new SaveLoadUI();
+                        SaveLoadUI saveLoadUI = new SaveLoadUI(); // 저장 불러오기ui class
                         saveLoadUI.SaveLoadScene();
                         break;
                     case UINum.State:
-                        StatusUI statusUI = new StatusUI(); // 상태창 class
+                        StatusUI statusUI = new StatusUI(); // 상태창ui class
                         statusUI.UIStateScene();
                         break;
                     case UINum.Exit:
-                        ExitUI exitUI = new ExitUI(); // 상태창 class
+                        ExitUI exitUI = new ExitUI(); // 게임종료 class
                         exitUI.ExitScene();
                         break;
-                    case UINum.OutUI:
+                    case UINum.OutUI: // ui종료
                         break;
                 }
             }
@@ -99,101 +98,16 @@ namespace MarvelHeroes
             }
         }
 
-        //public class ToInven : ISelections
-        //{
-        //    public void Execute()
-        //    {
-        //       // InventoryUI inventoryUI = new InventoryUI(); // 인벤토리 class
-        //       // inventoryUI.UIStateScene();
-        //    }
-
-        //    public string GetSelectionDesc()
-        //    {
-        //        return $"인벤토리(으)로 이동하기";
-        //    }
-        //}
-
-        //public class ToSaveLoad : ISelections
-        //{
-        //    public void Execute()
-        //    {
-        //        SaveLoadUI saveLoadUI = new SaveLoadUI(); // 상태창 class
-        //        saveLoadUI.SaveLoadScene();
-        //    }
-
-        //    public string GetSelectionDesc()
-        //    {
-        //        return $"저장 / 불러오기(으)로 이동하기";
-        //    }
-        //}
-
-        //public class ToExit : ISelections
-        //{
-        //    public void Execute()
-        //    {
-        //        ExitUI exitUI = new ExitUI(); // 게임종료 class // 상태창 class
-        //        exitUI.ExitScene();
-        //    }
-
-        //    public string GetSelectionDesc()
-        //    {
-        //        return $"게임 종료(으)로 이동하기";
-        //    }
-        //}
 
         public void UIMainScene()
         {
-            //int sceneTmep = temp; // UI 전 씬에서 씬의 정보를 저장함
-            //Console.Clear();
-            //Console.WriteLine("UI");
-            //Console.WriteLine();
-            //Console.WriteLine("캐릭터 정보, 인벤토리, 저장, 종료를 할 수 있습니다");
-            //Console.WriteLine();
-            //Console.WriteLine("1. 캐릭터 정보");
-            //Console.WriteLine("2. 인벤토리");
-            //Console.WriteLine("3. 게임 저장");
-            //Console.WriteLine("4. 게임 종료");
-            //Console.WriteLine();
-            //Console.WriteLine("0. 나가기");
-            //Console.WriteLine();
-            //Console.WriteLine();
-            //Console.WriteLine("원하시는 행동을 입력해주세요");
-            //Console.Write(">>");
-            //while (true)
-            //{
-            //    if (int.TryParse(Console.ReadLine(), out int choice))
-            //    {
-            //        switch (choice)
-            //        {
-            //            case 1:
-            //                // 캐릭터정보
-            //                statusUI.UIStateScene(); // 씬의 정보를 잃지 않기 위해서 상태창 갈때도 보내주고 그대로 반환받음
-            //                break;
-            //            case 2:
-            //                // 인벤토리
-            //                break;
-            //            case 3:
-            //                // 게임저장
-            //                break;
-            //            case 4:
-            //                // 게임종료
-            //                break;
-            //        }
-            //        if (choice == 0) { break; } // 0일때 while문 break
-            //    }
-            //    else
-            //    {
-            //        Console.WriteLine("입력을 다시시도해 주세요"); // 오류처리
-            //    }
-            //}
-            // return sceneTmep; // 저장한 씬 정보를 반환
             while (true)
             {
                 Console.Clear();
                 GameView.ViewSceneNameAndDesc1(uiScene);
                 int temp = GameView.ViewGetSceneSelect2(uiScene);
                 uiScene.sceneSelections[temp].Execute();
-                if (temp == 5) 
+                if (temp == 5) // 5일때 while문 break
                 {
                     Console.Clear();
                     break;
