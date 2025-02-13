@@ -84,12 +84,20 @@ namespace MarvelHeroes
                 if (int.TryParse(Console.ReadLine(), out int choice))
                 {
                     if (choice == 0) { break; }
-                    else if (choice == 1) { SaveData(); }
-                    else if (choice == 2) { LoadData(); }
+                    else if (choice == 1) 
+                    { 
+                        SaveData();
+                        GameView.PrintText("저장 중입니다...", 1000,ConsoleColor.Cyan);
+                    }
+                    else if (choice == 2) 
+                    { 
+                        LoadData();
+                        GameView.PrintText("불러오는 중입니다...", 1000, ConsoleColor.Cyan);
+                    }
                 }
                 else
                 {
-                    Console.WriteLine("입력을 다시시도해 주세요");
+                    GameView.PrintText("입력을 다시시도해 주세요", 800);
                 }
             }
         }

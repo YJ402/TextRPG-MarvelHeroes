@@ -188,7 +188,9 @@ namespace MarvelHeroes
                     if ((q as EquipQuest).RequiredType == ItemType)
                     {
                         q.IsCompleted(GameManager.Instance.player, null, this);
+                        GameManager.Instance.QM.ClearQuest(q, player);
                         Console.ReadKey();
+                        break;
                     }
                 }
             }

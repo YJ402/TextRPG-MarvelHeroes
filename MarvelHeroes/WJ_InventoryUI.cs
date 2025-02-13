@@ -42,7 +42,7 @@ namespace MarvelHeroes
                 }
                 else
                 {
-                    Console.WriteLine("입력을 다시시도해 주세요");
+                    GameView.PrintText("입력을 다시시도해 주세요", 800);
                 }
             }
         }
@@ -104,7 +104,7 @@ namespace MarvelHeroes
                 }
                 else
                 {
-                    Console.WriteLine("입력을 다시시도해 주세요");
+                    GameView.PrintText("입력을 다시시도해 주세요", 800);
                 }
             }
         }
