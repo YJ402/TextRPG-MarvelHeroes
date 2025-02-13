@@ -103,15 +103,15 @@ namespace MarvelHeroes
             }
         }
 
-            [JsonConstructor]
-            public Player(string name, JobType playerJob, int equipAtk, int equipDef, int gold, int mp, int maxMp, int hp, int maxHp, int xp, int _maxXp, int level, int atk, int def, int critical, int dexterity, bool isDead = false) : base(level, atk, def, hp, critical, dexterity, isDead)
+        [JsonConstructor]
+        public Player(string name, JobType playerJob, int equipAtk, int equipDef, int gold, int mp, int maxMp, int hp, int maxHp, int xp, int _maxXp, int level, int atk, int def, int critical, int dexterity, bool isDead = false) : base(level, atk, def, hp, critical, dexterity, isDead)
         {
             Name = name;
             PlayerJob = playerJob;
             EquipAtk = equipAtk;
             EquipDef = equipDef;
             Gold = gold;
-            
+
 
             MaxMp = maxMp;
             MaxHp = maxHp;
@@ -129,23 +129,13 @@ namespace MarvelHeroes
             // 이런식으로 되있는게 속성
             Level = _Level;
             Name = name;
-            //PlayerJob = Job.jobStats[jobtypeName].name;
-            //Atk = Job.jobStats[jobtypeName].atk;
-            //Def = Job.jobStats[jobtypeName].def;
-            //Hp = Job.jobStats[jobtypeName].hp;
-            //Mp = Job.jobStats[jobtypeName].mp;
-            //Critical = Job.jobStats[jobtypeName].critical;
-            //Dexterity = Job.jobStats[jobtypeName].dexerity;
             Gold = gold;
-            //MaxHp = Hp;
-            //MaxMp = Job.jobStats[jobtypeName].mp;
             maxXp = _maxXp;
             Xp = 0;
 
-
         }
 
-        public void LevelUp()
+        public void LevelUp() // 레벨업
         {
             do
             {
@@ -157,38 +147,6 @@ namespace MarvelHeroes
             } while (xp >= maxXp);
         }
 
-
-
-        //public override Player TakeHpHeal(int heal)
-        //{
-        //    int newHp;
-
-        //    if(Hp >= 100) newHp = 100;
-        //    else newHp = Hp + heal;
-
-        //    return new Player(Level, Name, Job, Atk, EquipAtk, Def, EquipDef, Gold, newHp, Mp, MaxHp, Critical, Dexterity, isDead);
-        //}
-        //public Player TakeMana(int useMp)
-        //{
-        //    int newMp;
-
-        //    if (Mp <= 0)
-        //    {
-        //        newMp = 0;
-        //    }
-        //    else newMp = Mp - useMp;
-
-        //    return new Player(Level, Name, Job, Atk, EquipAtk, Def, EquipDef, Gold, Hp, newMp, MaxHp, Critical, Dexterity, isDead);
-        //}
-        //public Player TakeMpHeal(int heal)
-        //{
-        //    int newMp;
-
-        //    if (Hp >= 100) newMp = 100;
-        //    else newMp = Hp + heal;
-
-        //    return new Player(Level, Name, Job, Atk, EquipAtk, Def, EquipDef, Gold, Hp, newMp, MaxHp, Critical, Dexterity, isDead);
-        //}
 
 
         // 아이언맨 리펄서건 스킬

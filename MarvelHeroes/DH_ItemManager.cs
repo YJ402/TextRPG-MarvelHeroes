@@ -76,14 +76,6 @@ namespace MarvelHeroes
         }
 
     }
-    //직업종류의 상수
-    //public enum ITemJobType
-    //{
-    //    IronMan,
-    //    Spiderman,
-    //    Dr,
-    //    Hulk
-    //}
 
     //아이템 종류의 상수
     public enum ItemType

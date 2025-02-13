@@ -34,10 +34,7 @@ namespace MarvelHeroes
         private GameManager() { }
         public void Initialize()
         {
-            //inventory = IM.inventory;
-
             IM = new ItemManager();
-            //inventory = new Inventory();
             SM = new SceneManager();
             QM = new QuestManager();
         }
@@ -76,9 +73,6 @@ namespace MarvelHeroes
                 SM.currentScene = SM.townScene;
                 break;
             }
-
-            // 플레이어 할당
-            //player = new Player(1, "", 100, false, JobType.IronMan, 0, 10);
 
             //2.게임 루프
             bool isRunning = true;
